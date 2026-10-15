@@ -2,7 +2,7 @@
 /**
  * A field of live blobs (see .jx-blob in site.css). Put it inside a position:relative parent.
  * Each blob: x/y position (any CSS length), size, gradient (green | blue | royal | css), duration,
- * drift (dx/dy), opacity, soft (blurred glow, ignores the cursor). Crisp blobs react to touch (site.ts).
+ * drift (dx/dy), opacity, soft (blurred glow, ignores the cursor).
  */
 interface BlobSpec {
   x: string;
@@ -13,7 +13,7 @@ interface BlobSpec {
   delay?: number;
   dx?: string;
   dy?: string;
-  /** @deprecated no longer used (blobs react to touch instead of following the cursor) */
+  /** @deprecated no longer used: blobs only float, they do not react to the cursor */
   depth?: number;
   o?: number;
   soft?: boolean;

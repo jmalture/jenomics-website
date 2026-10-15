@@ -28,8 +28,8 @@ const customers: { name: string; logo?: string; h?: number }[] = [
 ---
 
 <section class="jx-trust" aria-label={t.trust_logos_label}>
-  <div class="jx-wrap">
-    <ul class="jx-stats">
+  <div class="jx-stats-band">
+    <ul class="jx-stats jx-wrap">
       {
         stats.map((s, i) => (
           <li data-reveal style={`--i:${i}`}>
@@ -74,22 +74,30 @@ const customers: { name: string; logo?: string; h?: number }[] = [
     position: relative;
     padding-block: 8px clamp(8px, 2vw, 24px);
   }
+  /* Full-bleed band, edge to edge; the figures stay aligned to the content width */
+  .jx-stats-band {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-block: 1px solid rgba(30, 61, 126, 0.08);
+    box-shadow: 0 18px 40px rgba(30, 61, 126, 0.06);
+  }
   .jx-stats {
     list-style: none;
-    margin: 0;
-    padding: 0;
+    margin-block: 0;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    border-radius: var(--jx-r-xl);
-    background: #fff;
-    border: 1px solid rgba(30, 61, 126, 0.08);
-    box-shadow: var(--jx-shadow);
   }
   .jx-stats li {
     position: relative;
     display: grid;
     gap: 4px;
     padding: clamp(20px, 3vw, 34px) clamp(18px, 3vw, 36px);
+  }
+  .jx-stats li:first-child {
+    padding-left: 0;
   }
   .jx-stats li + li::before {
     content: '';
@@ -172,6 +180,9 @@ const customers: { name: string; logo?: string; h?: number }[] = [
   @media (max-width: 760px) {
     .jx-stats {
       grid-template-columns: 1fr 1fr;
+    }
+    .jx-stats li:nth-child(3) {
+      padding-left: 0;
     }
     .jx-stats li:nth-child(3)::before {
       display: none;
