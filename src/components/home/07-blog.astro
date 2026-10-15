@@ -1,0 +1,165 @@
+---
+/**
+ * Section "blog": Bleib auf dem aktuellsten Stand! The 4 newest posts from src/content/blog/*.md
+ * (frontmatter: title, date, category, image, excerpt). Posts keep their jenomics.de URLs (/<slug>/).
+ */
+import Icon from '../ui/Icon.astro';
+import { pick, type Lang } from '../../i18n';
+import data from '../../i18n/home.json';
+const { lang } = Astro.props as { lang: Lang };
+const t = pick(data, lang) as Record<string, any>;
+
+type Post = { title: string; date: Date | string; category: string; image: string; excerpt: string };
+const files = import.meta.glob<{ frontmatter: Post }>('../../content/blog/*.md', { eager: true });
+const posts = Object.entries(files)
+  .map(([path, mod]) => ({ slug: path.split('/').pop()!.replace(/\.md$/, ''), ...mod.frontmatter }))
+  .sort((a, b) => +new Date(b.date) - +new Date(a.date))
+  .slice(0, 4);
+const fmt = new Intl.DateTimeFormat(lang === 'de' ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<section class="jx-section jx-blog" id="blog">
+  <div class="jx-wrap">
+    <header class="jx-head">
+      <div>
+        <span class="jx-kicker" data-reveal>{t.blog_kicker}</span>
+        <h2 class="jx-h2" data-reveal style="--i:1">{t.blog_title}</h2>
+      </div>
+      <a class="jx-btn jx-btn--ghost" href={t.blog_all_href} data-reveal style="--i:2">{t.blog_all}<Icon name="arrow" /></a>
+    </header>
+    <ul class="jx-posts">
+      {
+        posts.map((p, i) => (
+          <li data-reveal style={`--i:${i}`}>
+            <a class:list={['jx-post', { 'jx-post--lead': i === 0 }]} href={`/${p.slug}/`} lang="de">
+              <span class="jx-post__img">
+                <img src={p.image} alt="" loading="lazy" decoding="async" width="768" height="495" />
+              </span>
+              <span class="jx-post__body">
+                <span class="jx-post__meta">
+                  <span class:list={['jx-tag', { 'jx-tag--green': p.category === 'Produkte' }]}>{p.category}</span>
+                  <time datetime={new Date(p.date).toISOString().slice(0, 10)}>{fmt.format(new Date(p.date))}</time>
+                </span>
+                <strong>{p.title}</strong>
+                {i === 0 && <span class="jx-post__excerpt">{p.excerpt}</span>}
+                <span class="jx-link">
+                  {t.blog_more}
+                  <Icon name="arrow" />
+                </span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style is:global>
+  .jx-blog {
+    background: linear-gradient(180deg, #fff, #f5f8fa);
+  }
+  .jx-posts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    grid-template-rows: repeat(3, auto);
+    gap: 18px;
+  }
+  .jx-posts > li:first-child {
+    grid-row: 1 / span 3;
+  }
+  .jx-post {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 20px;
+    height: 100%;
+    padding: 12px;
+    border-radius: 20px;
+    background: #fff;
+    border: 1px solid rgba(30, 61, 126, 0.07);
+    text-decoration: none;
+    transition:
+      box-shadow var(--jx-med) var(--jx-ease),
+      translate var(--jx-med) var(--jx-ease),
+      border-color var(--jx-med);
+  }
+  .jx-post:hover {
+    translate: 0 -4px;
+    box-shadow: var(--jx-shadow);
+    border-color: transparent;
+  }
+  .jx-post__img {
+    display: block;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+  .jx-post__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: scale 1.2s var(--jx-ease);
+  }
+  .jx-post:hover .jx-post__img img {
+    scale: 1.06;
+  }
+  .jx-post__body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 6px 8px 6px 0;
+  }
+  .jx-post__meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.8125rem;
+    color: var(--jx-grey);
+  }
+  .jx-post strong {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+  .jx-post .jx-link {
+    margin-top: auto;
+    font-size: 0.875rem;
+  }
+  .jx-post__excerpt {
+    color: var(--jx-grey);
+    font-size: 0.9375rem;
+  }
+  .jx-post--lead {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 16px;
+  }
+  .jx-post--lead .jx-post__img {
+    aspect-ratio: 16 / 10;
+  }
+  .jx-post--lead .jx-post__body {
+    padding: 4px 12px 14px;
+  }
+  .jx-post--lead strong {
+    font-size: var(--jx-h3);
+  }
+  @media (max-width: 960px) {
+    .jx-posts {
+      grid-template-columns: 1fr;
+    }
+    .jx-posts > li:first-child {
+      grid-row: auto;
+    }
+  }
+  @media (max-width: 520px) {
+    .jx-post {
+      grid-template-columns: 1fr;
+    }
+    .jx-post__img {
+      aspect-ratio: 16 / 9;
+    }
+  }
+</style>

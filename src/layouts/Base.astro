@@ -1,0 +1,84 @@
+---
+import '../styles/fonts.css';
+import '../styles/site.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { LANGS, langInfo, fill, dict, type Lang } from '../i18n';
+import chrome from '../i18n/chrome.json';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** Path of this page in every language that has it, e.g. { de: '/', en: '/en/' } */
+  alternates: Partial<Record<Lang, string>>;
+  ogImage?: string;
+}
+const { lang, title, description, alternates, ogImage = '/media/hero-landscape-1200.webp' } = Astro.props;
+const site = Astro.site!;
+const canonical = new URL(alternates[lang] ?? Astro.url.pathname, site).href;
+const info = langInfo(lang);
+const t = dict(chrome, lang);
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Jenomics GmbH',
+  url: 'https://www.jenomics.de/',
+  logo: 'https://www.jenomics.de/media/jenomics-logo.png',
+  foundingDate: '2001',
+  slogan: 'Make IT possible!',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Thalkirchnerstr. 55',
+    addressLocality: 'München',
+    addressCountry: 'DE',
+  },
+};
+---
+
+<!doctype html>
+<html lang={info.locale} class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      document.documentElement.classList.replace('no-js', 'js');
+    </script>
+    <title>{fill(title)}</title>
+    <meta name="description" content={fill(description)} />
+    <link rel="canonical" href={canonical} />
+    {
+      LANGS.filter((l) => alternates[l.code]).map((l) => (
+        <link rel="alternate" hreflang={l.code} href={new URL(alternates[l.code]!, site).href} />
+      ))
+    }
+    {alternates.de && <link rel="alternate" hreflang="x-default" href={new URL(alternates.de, site).href} />}
+    <meta property="og:locale" content={info.og} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fill(title)} />
+    <meta property="og:description" content={fill(description)} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Jenomics GmbH" />
+    <meta property="og:image" content={new URL(ogImage, site).href} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" href="/favicon-512.png" sizes="512x512" type="image/png" />
+    <link rel="apple-touch-icon" href="/favicon-512.png" />
+    <link rel="preload" href="/fonts/poppins-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/poppins-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <script type="application/ld+json" set:html={JSON.stringify(org)} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link screen-reader-text" href="#content">{t.skip}</a>
+    <div class="jx-progress" aria-hidden="true"></div>
+    <Header lang={lang} alternates={alternates} />
+    <main id="content">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <script>
+      import '../scripts/site.ts';
+    </script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+---
+/** The homepage sections in page order. Reorder or remove sections here. */
+import type { Lang } from '../../i18n';
+import Hero from './01-hero.astro';
+import Trust from './02-trust.astro';
+import Solutions from './03-solutions.astro';
+import Portfolio from './04-portfolio.astro';
+import Testimonials from './05-testimonials.astro';
+import Projects from './06-projects.astro';
+import Blog from './07-blog.astro';
+import Careers from './08-careers.astro';
+const { lang } = Astro.props as { lang: Lang };
+---
+
+<Hero lang={lang} />
+<Trust lang={lang} />
+<Solutions lang={lang} />
+<Portfolio lang={lang} />
+<Testimonials lang={lang} />
+<Projects lang={lang} />
+<Blog lang={lang} />
+<Careers lang={lang} />

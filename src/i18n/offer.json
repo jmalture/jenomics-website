@@ -1,0 +1,32 @@
+{
+  "de": {
+    "services": [
+      { "key": "it", "name": "IT Administration", "desc": "Wir sichern deinen Betrieb und den Ablauf deiner IT", "href": "/it-administration/" },
+      { "key": "dev", "name": "Softwareentwicklung", "desc": "Setze deine Ideen um und gehe individuelle Wege", "href": "/softwareentwicklung/" },
+      { "key": "web", "name": "Website & Branding", "desc": "Wir helfen dir zu deinem einzigartigen Onlineauftritt", "href": "/website-branding/" },
+      { "key": "linux", "name": "Betrieb Linux & Unix", "desc": "Wir automatisieren und bieten Kontrolle über Prozesse", "href": "/betrieb_linux_unix/" },
+      { "key": "net", "name": "Infrastruktur & Netzwerk", "desc": "Wir planen und bauen die Sicherung deines Betriebs", "href": "/infrastruktur_netwerk/" },
+      { "key": "host", "name": "Hosting", "desc": "Wir vermieten dir IT-Infrastruktur für eine flexible Planung", "href": "/hosting/" }
+    ],
+    "products": [
+      { "key": "ikona", "name": "IKONA", "desc": "E-Commerce mit der vielseitigsten Auslegung", "href": "/ikona/", "icon": "/media/product-ikona.webp" },
+      { "key": "sdx", "name": "Secure Data eXchange", "desc": "Dein Datenraum 100 % in Deutschland in deinem CI-Design", "href": "/sdx/", "icon": "/media/product-sdx.webp" },
+      { "key": "gm", "name": "Großmarkt", "desc": "Deine Warenwirtschaftssoftware für Obst und Gemüse", "href": "/grosmarkt/", "icon": "/media/product-grossmarkt.webp" }
+    ]
+  },
+  "en": {
+    "services": [
+      { "key": "it", "name": "IT Administration", "desc": "We keep your business and your IT running", "href": "/en/it-administration/" },
+      { "key": "dev", "name": "Software Development", "desc": "Turn your ideas into reality and go your own way", "href": "/en/software-development/" },
+      { "key": "web", "name": "Website & Branding", "desc": "We help you create a one-of-a-kind online presence", "href": "/en/website-branding/" },
+      { "key": "linux", "name": "Linux & Unix Operations", "desc": "We automate and give you control over your processes", "href": "/en/linux-unix-operations/" },
+      { "key": "net", "name": "Infrastructure & Network", "desc": "We plan and build the protection of your business", "href": "/en/infrastructure-network/" },
+      { "key": "host", "name": "Hosting", "desc": "We rent you IT infrastructure for flexible planning", "href": "/en/hosting/" }
+    ],
+    "products": [
+      { "key": "ikona", "name": "IKONA", "desc": "E-commerce with the most versatile design", "href": "/en/ikona/", "icon": "/media/product-ikona.webp" },
+      { "key": "sdx", "name": "Secure Data eXchange", "desc": "Your data room, 100% in Germany, in your corporate design", "href": "https://sdx-app.com/en/", "icon": "/media/product-sdx.webp" },
+      { "key": "gm", "name": "Großmarkt", "desc": "Your inventory management software for fruit and vegetables", "href": "/en/grossmarkt/", "icon": "/media/product-grossmarkt.webp" }
+    ]
+  }
+}

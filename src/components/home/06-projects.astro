@@ -1,0 +1,187 @@
+---
+/**
+ * Section "projects": Auszug unserer Projekte. Four panels that expand on hover/focus (desktop),
+ * stacked cards on small screens. Texts: home.json "proj_*" and the "projects" list.
+ */
+import Icon from '../ui/Icon.astro';
+import { pick, type Lang } from '../../i18n';
+import data from '../../i18n/home.json';
+const { lang } = Astro.props as { lang: Lang };
+const t = pick(data, lang) as Record<string, any>;
+const list = t.projects as { title: string; text: string; tags: [string, string][]; img: string }[];
+const green = ['IKONA', 'Großmarkt'];
+---
+
+<section class="jx-section jx-proj" id="projekte">
+  <div class="jx-wrap">
+    <header class="jx-head">
+      <div>
+        <span class="jx-kicker" data-reveal>{t.proj_kicker}</span>
+        <h2 class="jx-h2" data-reveal style="--i:1">{t.proj_title}</h2>
+      </div>
+      <a class="jx-btn jx-btn--ghost" href={t.proj_all_href} data-reveal style="--i:2">{t.proj_all}<Icon name="arrow" /></a>
+    </header>
+
+    <ul class="jx-panels" data-panels>
+      {
+        list.map((p, i) => (
+          <li class:list={['jx-pp', { 'is-open': i === 0 }]} data-reveal="clip" style={`--i:${i}`}>
+            <img src={`/media/${p.img}.webp`} alt="" loading="lazy" decoding="async" width="900" height="560" />
+            <div class="jx-pp__shade" aria-hidden="true" />
+            <span class="jx-pp__num" aria-hidden="true">
+              0{i + 1}
+            </span>
+            <div class="jx-pp__body">
+              <div class="jx-pp__tags">
+                {p.tags.map(([label, href]) => (
+                  <a class:list={['jx-tag', { 'jx-tag--green': green.includes(label) }]} href={href}>
+                    {label}
+                  </a>
+                ))}
+              </div>
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style is:global>
+  .jx-proj {
+    padding-top: clamp(40px, 5vw, 80px);
+  }
+  .jx-panels {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 14px;
+    height: clamp(440px, 42vw, 560px);
+  }
+  .jx-pp {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    border-radius: var(--jx-r-lg);
+    overflow: hidden;
+    background: var(--jx-night);
+    transition: flex-grow 900ms var(--jx-ease);
+    isolation: isolate;
+  }
+  .jx-pp.is-open {
+    flex-grow: 3.2;
+  }
+  .jx-pp > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    scale: 1.08;
+    transition: scale 1.4s var(--jx-ease);
+  }
+  .jx-pp.is-open > img {
+    scale: 1;
+  }
+  .jx-pp__shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(11, 26, 54, 0.1) 30%, rgba(11, 26, 54, 0.88) 100%);
+    transition: background-color var(--jx-med);
+  }
+  .jx-pp:not(.is-open) .jx-pp__shade {
+    background-color: rgba(11, 26, 54, 0.35);
+  }
+  .jx-pp__num {
+    position: absolute;
+    top: 18px;
+    left: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 0.08em;
+  }
+  .jx-pp__body {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: clamp(20px, 2.6vw, 34px);
+    color: #fff;
+  }
+  .jx-pp__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .jx-pp h3 {
+    font-size: clamp(1.125rem, 1rem + 0.6vw, 1.625rem);
+    line-height: 1.2;
+  }
+  .jx-pp p {
+    margin-top: 10px;
+    max-width: 44ch;
+    font-size: 0.9375rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  /* collapsed: title only, rotated feel through compact width */
+  .jx-pp:not(.is-open) .jx-pp__body {
+    width: max(100%, 220px);
+  }
+  .jx-pp:not(.is-open) p,
+  .jx-pp:not(.is-open) .jx-pp__tags {
+    opacity: 0;
+    translate: 0 10px;
+  }
+  .jx-pp p,
+  .jx-pp__tags {
+    transition:
+      opacity var(--jx-med) var(--jx-ease) 250ms,
+      translate var(--jx-med) var(--jx-ease) 250ms;
+  }
+  .jx-pp:not(.is-open) h3 {
+    font-size: 1.0625rem;
+  }
+  @media (max-width: 860px) {
+    .jx-panels {
+      flex-direction: column;
+      height: auto;
+    }
+    .jx-pp,
+    .jx-pp.is-open {
+      flex: none;
+      height: 320px;
+    }
+    .jx-pp:not(.is-open) p,
+    .jx-pp:not(.is-open) .jx-pp__tags {
+      opacity: 1;
+      translate: 0 0;
+    }
+    .jx-pp:not(.is-open) .jx-pp__body {
+      width: auto;
+    }
+    .jx-pp:not(.is-open) h3 {
+      font-size: 1.25rem;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-panels]').forEach((list) => {
+    const items = [...list.querySelectorAll<HTMLElement>('.jx-pp')];
+    const open = (el: HTMLElement) => items.forEach((i) => i.classList.toggle('is-open', i === el));
+    items.forEach((el) => {
+      el.addEventListener('pointerenter', (e) => {
+        if ((e as PointerEvent).pointerType === 'mouse') open(el);
+      });
+      el.addEventListener('focusin', () => open(el));
+      el.addEventListener('click', () => open(el));
+    });
+  });
+</script>

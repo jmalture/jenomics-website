@@ -1,0 +1,125 @@
+---
+/** Section "careers": Karriere bei Jenomics, the brand's blue band with live blobs and the team photo. */
+import Icon from '../ui/Icon.astro';
+import Blobs from '../ui/Blobs.astro';
+import { pick, type Lang } from '../../i18n';
+import data from '../../i18n/home.json';
+const { lang } = Astro.props as { lang: Lang };
+const t = pick(data, lang) as Record<string, any>;
+const chips = [
+  ['star', t.career_chip_1],
+  ['clock', t.career_chip_2],
+  ['heart', t.career_chip_3],
+] as const;
+---
+
+<section class="jx-career-wrap" id="karriere">
+  <div class="jx-wrap">
+    <div class="jx-career" data-reveal="scale">
+      <Blobs
+        blobs={[
+          { x: '58%', y: '-34%', size: 'min(50vw, 640px)', g: 'green', o: 0.9, d: 20, depth: 26 },
+          { x: '-10%', y: '58%', size: 'min(30vw, 380px)', g: 'royal', o: 0.85, d: 17, delay: 5, depth: 36 },
+          { x: '86%', y: '70%', size: 'min(16vw, 200px)', g: 'blue', o: 1, d: 13, delay: 2, depth: 50 },
+        ]}
+      />
+      <div class="jx-career__copy">
+        <span class="jx-kicker jx-kicker--light" data-reveal style="--i:1">{t.career_kicker}</span>
+        <h2 class="jx-h2" data-reveal style="--i:2">{t.career_title}</h2>
+        <p data-reveal style="--i:3">{t.career_text}</p>
+        <ul class="jx-career__chips" data-reveal style="--i:4">
+          {
+            chips.map(([icon, label]) => (
+              <li>
+                <Icon name={icon} size={16} />
+                {label}
+              </li>
+            ))
+          }
+        </ul>
+        <a class="jx-btn jx-btn--white" href={t.career_cta_href} data-reveal style="--i:5">{t.career_cta}<Icon name="arrow" /></a>
+      </div>
+      <figure class="jx-career__photo" data-reveal="right" style="--i:3">
+        <img src="/media/about-team.webp" alt={t.career_img_alt} width="1200" height="852" loading="lazy" decoding="async" />
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .jx-career-wrap {
+    padding-block: clamp(40px, 5vw, 80px) clamp(80px, 9vw, 140px);
+  }
+  .jx-career {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    align-items: center;
+    gap: clamp(32px, 5vw, 72px);
+    padding: clamp(36px, 5.6vw, 84px);
+    border-radius: 32px;
+    background: var(--jx-blue);
+    color: #fff;
+  }
+  .jx-career .jx-blobs {
+    z-index: -1;
+  }
+  .jx-career .jx-kicker::before {
+    background: #fff;
+  }
+  .jx-career .jx-kicker--light {
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .jx-career__copy p {
+    margin-top: 18px;
+    max-width: 50ch;
+    font-size: 1.0625rem;
+    color: rgba(255, 255, 255, 0.88);
+  }
+  .jx-career__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 26px 0 32px;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-career__chips li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(6px);
+    font-size: 0.8125rem;
+    font-weight: 500;
+  }
+  .jx-career__photo {
+    margin: 0;
+    padding: 8px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 30px 60px rgba(5, 30, 60, 0.3);
+    rotate: 2deg;
+    transition: rotate var(--jx-slow) var(--jx-ease);
+  }
+  .jx-career__photo:hover {
+    rotate: 0deg;
+  }
+  .jx-career__photo img {
+    width: 100%;
+    border-radius: 17px;
+  }
+  @media (max-width: 900px) {
+    .jx-career {
+      grid-template-columns: 1fr;
+    }
+    .jx-career__photo {
+      rotate: 0deg;
+    }
+  }
+</style>

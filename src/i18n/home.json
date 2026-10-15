@@ -1,0 +1,366 @@
+{
+  "de": {
+    "hero_badge": "{years} Jahre Jenomics · seit {founded}",
+    "hero_title_a": "Make",
+    "hero_title_b": "IT",
+    "hero_title_c": "possible!",
+    "hero_lead": "Weißt du eigentlich, was deine IT alles für dich leisten kann?",
+    "hero_text": "Wir sagen es dir und bringen dich mit unseren einzigartigen IT-Lösungen einen Schritt weiter in die Zukunft.",
+    "hero_text_b": "Damit du den Kopf frei hast fürs Wesentliche!",
+    "hero_cta": "Kennenlernen vereinbaren",
+    "hero_cta_href": "/kontakt/",
+    "hero_cta2": "Leistungen ansehen",
+    "hero_img_alt": "Berglandschaft mit See: Kopf frei fürs Wesentliche",
+    "hero_pill_since": "Seit {founded} am Start",
+    "hero_pill_green": "Jenomics hostet grün",
+    "hero_pill_os": "Windows · Mac · Linux",
+    "hero_ring": "Make IT possible · {years} Jahre Jenomics · ",
+    "hero_scroll": "Weiter",
+
+    "trust_years": "Jahre Erfahrung",
+    "trust_services": "Services aus einer Hand",
+    "trust_products": "eigene Produkte",
+    "trust_focus": "Fokus auf KMU",
+    "trust_focus_value": "KMU",
+    "trust_logos_label": "Unsere Kund:innen",
+
+    "sol_kicker": "Leistungen",
+    "sol_title": "Wir bieten dir individuelle Lösungen!",
+    "sol_tabs_label": "Lösungen",
+    "sol_more": "Mehr erfahren",
+
+    "port_kicker": "Alles aus einer Hand",
+    "port_services": "Services",
+    "port_products": "Produkte",
+    "port_open": "Öffnen",
+
+    "testi_kicker": "Referenzen",
+    "testi_title": "Das sagen unsere Kund:innen",
+    "testi_all": "Alle",
+    "testi_prev": "Vorherige Stimme",
+    "testi_next": "Nächste Stimme",
+    "testi_of": "von",
+
+    "proj_kicker": "Projekte",
+    "proj_title": "Auszug unserer Projekte",
+    "proj_all": "Alle Projekte",
+    "proj_all_href": "/projekte/",
+
+    "blog_kicker": "Blog",
+    "blog_title": "Bleib auf dem aktuellsten Stand!",
+    "blog_more": "Weiterlesen",
+    "blog_all": "Alle Artikel",
+    "blog_all_href": "/blog/",
+
+    "career_kicker": "Karriere bei Jenomics",
+    "career_title": "Erweitere unser Team!",
+    "career_text": "Wir wollen qualifizierte Mitarbeiter:innen gewinnen und ihnen langfristige Perspektiven bei uns bieten. Das fördern wir durch Bonusleistungen, flexible Arbeitszeitmodelle und die Vereinbarkeit von Beruf und Familie.",
+    "career_cta": "Komm ins Team",
+    "career_cta_href": "/karriere/",
+    "career_chip_1": "Bonusleistungen",
+    "career_chip_2": "Flexible Arbeitszeitmodelle",
+    "career_chip_3": "Beruf & Familie",
+    "career_img_alt": "Das Jenomics-Team",
+
+    "solutions": [
+      {
+        "key": "it",
+        "tab": "IT Administration",
+        "title": "Dein zuverlässiger Partner im Windows und Mac Umfeld!",
+        "text": "Von Windows Updates bis zur vollständigen Planung deiner IT-Infrastruktur: Wir haben {years} Jahre Erfahrung darin, kleine und mittelständische Unternehmen in allen Bereichen rund um die IT zu betreuen. Ohne unnötigen Schnickschnack, aber mit allem, was du brauchst!",
+        "href": "/it-administration/",
+        "img": "service-it-admin",
+        "alt": "Aufgeräumte Arbeitsplätze mit Monitoren und Headsets",
+        "chips": ["Windows", "Mac", "Microsoft 365", "Support"]
+      },
+      {
+        "key": "dev",
+        "tab": "Softwareentwicklung",
+        "title": "Kompetenz von der ersten Idee bis zur entwickelten Software!",
+        "text": "Wir sorgen für „Wow!“-Momente, indem wir gemeinsam mit dir individuelle und einzigartige Softwarelösungen für dein Business entwickeln. Klingt gut, aber was ist dann? Wir lassen dich nicht im Stich und übernehmen die Produktpflege und Wartung.",
+        "href": "/softwareentwicklung/",
+        "img": "service-dev",
+        "alt": "Zwei Entwickler besprechen Code an zwei Monitoren",
+        "chips": ["Idee", "Entwicklung", "Produktpflege", "Wartung"]
+      },
+      {
+        "key": "web",
+        "tab": "Website & Branding",
+        "title": "Damit der erste Eindruck nicht der letzte ist!",
+        "text": "Ohne Website geht heute gar nichts mehr. Umso wichtiger, dass der Onlineauftritt stimmt. Du wünschst dir außerdem frischen Wind in deiner Corporate Identity? Wir sorgen dafür, dass du dich wieder mit deiner Marke identifizieren kannst.",
+        "href": "/website-branding/",
+        "img": "service-web",
+        "alt": "Mann arbeitet mit Laptop auf einem Steg vor einem Bergpanorama",
+        "chips": ["Website", "Corporate Identity", "Logo", "Design"]
+      }
+    ],
+
+    "testimonials": [
+      {
+        "tag": "IT Administration",
+        "quote": "Unser Unternehmen arbeitet seit Jahren mit dem IT-Support Team von Jenomics zusammen. Uns begeistert vor allem die fachliche Expertise in dem Bereich der Bankingsoftware, so ein breites Wissen ist nicht selbstverständlich. Das Team ist immer schnell erreichbar und löst unsere technischen Probleme in kürzester Zeit. Egal, ob es sich um kleine Fragen oder komplexe Herausforderungen handelt, sie sind immer bereit, uns zu unterstützen, und das freundlich und professionell!",
+        "name": "Julien Zornig",
+        "company": "Astorius Consult GmbH",
+        "person": "person-zornig",
+        "logo": "logo-astorius"
+      },
+      {
+        "tag": "Großmarkt",
+        "quote": "Der Wechsel zur GM8 Software war denkbar einfach und unkompliziert. Und dank einer schnellen Migration unserer Daten war die neue GM8 Software direkt einsatzbereit: ohne lange Warte- oder Einrichtungszeit und ohne Datenverluste.",
+        "name": "Theo Hatzivassiliadis",
+        "company": "HANS KUFFER Fruchthandel GmbH",
+        "person": "person-hatzivassiliadis",
+        "logo": ""
+      },
+      {
+        "tag": "IT Administration",
+        "quote": "Seit Jahren unterstützt uns Jenomics bei der Strukturierung unseres Microsoft365 Portfolios und administriert unser gesamtes Backend. Wir sind froh, mit Jenomics einen Partner zu haben, der jedes Mal unkompliziert und schnelle Lösungen liefert!",
+        "name": "Robert Will",
+        "company": "disphere interactive GmbH",
+        "person": "person-will",
+        "logo": "logo-disphere"
+      },
+      {
+        "tag": "Großmarkt",
+        "quote": "Wir nutzen die GM8 Software zur Bestandsverwaltung und Abrechnung. Dank GM8 haben wir eine maßgeschneiderte Lösung für unsere speziellen Anforderungen als Obst- und Gemüsehändler gefunden und konnten unser Rechnungs- und Mahnwesen optimieren. Die Bedienung ist einfach und unkompliziert und passt so hervorragend in unseren Arbeitsalltag.",
+        "name": "Familie Kell",
+        "company": "Michael Kell Früchtegroßhandel OHG",
+        "person": "person-kell",
+        "logo": "logo-kell"
+      },
+      {
+        "tag": "Website & Branding",
+        "quote": "Jenomics hat uns dabei geholfen, unserer Website einen modernen und professionellen Auftritt zu verleihen, der unsere Werte und unser Unternehmen perfekt widerspiegelt. Vom ersten Gespräch bis zum finalen Design verlief die Zusammenarbeit reibungslos und effizient. Besonders gut gefallen hat uns der stetige Austausch, sodass wir immer auf dem aktuellsten Stand waren. Wir empfehlen Jenomics jedem, der sich eine hochwertige und maßgeschneiderte Website wünscht.",
+        "name": "Frank Maucher, Ariane Jobst und René Dentel",
+        "company": "Mügelner Maschinenbau GmbH",
+        "person": "person-mmb",
+        "logo": "logo-mmb"
+      },
+      {
+        "tag": "IT Administration",
+        "quote": "Wir werden von Jenomics hauptsächlich bei der Nutzung von Bankingsoftware unterstützt. Durch den Support in diesem Bereich können wir die Software ausgiebig nutzen, unsere Arbeitsabläufe sind effizienter geworden und mit dem Know-how von Jenomics werden Fragen und Probleme, die auftreten, schnell und unkompliziert geklärt.",
+        "name": "Rainer Simon",
+        "company": "Christian Sulser GmbH",
+        "person": "person-simon",
+        "logo": ""
+      },
+      {
+        "tag": "Website & Branding",
+        "quote": "Dank Jenomics habe ich eine maßgeschneiderte und moderne Website nach meinen Wünschen erhalten. Sämtliche Planungen und die Umsetzung wurden in enger Abstimmung mit mir durchgeführt und Wünsche kurzfristig und zuverlässig umgesetzt. Ich bin froh, in Jenomics einen Partner für meine Webaktivitäten gefunden zu haben.",
+        "name": "Eric Müssemann",
+        "company": "Steuerberater & Wirtschaftsprüfer",
+        "person": "person-muessemann",
+        "logo": "logo-muessemann"
+      }
+    ],
+
+    "projects": [
+      {
+        "title": "BLL Braun Leberfinger Ludwig Unger",
+        "text": "Umzugsplanung · Entwicklung von Investcommander",
+        "tags": [["IT Administration", "/it-administration/"], ["Softwareentwicklung", "/softwareentwicklung/"]],
+        "img": "project-bll"
+      },
+      {
+        "title": "IKONA Technologie",
+        "text": "Produktdesigner für großen deutschen Retailer",
+        "tags": [["IKONA", "/ikona/"]],
+        "img": "project-ikona"
+      },
+      {
+        "title": "Amaze Genius",
+        "text": "Design für Website und Corporate Identity",
+        "tags": [["Website & Branding", "/website-branding/"]],
+        "img": "project-amaze-genius"
+      },
+      {
+        "title": "Großmarkt",
+        "text": "Umzug der Warenwirtschaftssoftware zu Großmarkt 8 und Integration in die Cloud",
+        "tags": [["Großmarkt", "/grosmarkt/"]],
+        "img": "project-grossmarkt"
+      }
+    ]
+  },
+  "en": {
+    "hero_badge": "{years} years of Jenomics · since {founded}",
+    "hero_title_a": "Make",
+    "hero_title_b": "IT",
+    "hero_title_c": "possible!",
+    "hero_lead": "Do you actually know everything your IT can do for you?",
+    "hero_text": "We'll tell you, and our one-of-a-kind IT solutions will take you one step further into the future.",
+    "hero_text_b": "So you can keep your mind on what really matters!",
+    "hero_cta": "Arrange a meeting",
+    "hero_cta_href": "/en/contact/",
+    "hero_cta2": "See our services",
+    "hero_img_alt": "Mountain landscape with a lake: a clear head for what matters",
+    "hero_pill_since": "Up and running since {founded}",
+    "hero_pill_green": "Jenomics hosts green",
+    "hero_pill_os": "Windows · Mac · Linux",
+    "hero_ring": "Make IT possible · {years} years of Jenomics · ",
+    "hero_scroll": "Scroll",
+
+    "trust_years": "years of experience",
+    "trust_services": "services from a single source",
+    "trust_products": "products of our own",
+    "trust_focus": "focus on SMEs",
+    "trust_focus_value": "SME",
+    "trust_logos_label": "Our customers",
+
+    "sol_kicker": "Services",
+    "sol_title": "We offer you individual solutions!",
+    "sol_tabs_label": "Solutions",
+    "sol_more": "Learn more",
+
+    "port_kicker": "Everything from a single source",
+    "port_services": "Services",
+    "port_products": "Products",
+    "port_open": "Open",
+
+    "testi_kicker": "References",
+    "testi_title": "What our customers say",
+    "testi_all": "All",
+    "testi_prev": "Previous testimonial",
+    "testi_next": "Next testimonial",
+    "testi_of": "of",
+
+    "proj_kicker": "Projects",
+    "proj_title": "A selection of our projects",
+    "proj_all": "All projects",
+    "proj_all_href": "/en/projects/",
+
+    "blog_kicker": "Blog",
+    "blog_title": "Stay up to date!",
+    "blog_more": "Read more",
+    "blog_all": "All articles",
+    "blog_all_href": "/blog/",
+
+    "career_kicker": "Careers at Jenomics",
+    "career_title": "Join our team!",
+    "career_text": "We want to attract qualified people and offer them long-term prospects with us. We support this with bonuses, flexible working-time models and a good balance between work and family.",
+    "career_cta": "Join the team",
+    "career_cta_href": "/en/careers/",
+    "career_chip_1": "Bonuses",
+    "career_chip_2": "Flexible working hours",
+    "career_chip_3": "Work & family",
+    "career_img_alt": "The Jenomics team",
+
+    "solutions": [
+      {
+        "key": "it",
+        "tab": "IT Administration",
+        "title": "Your reliable partner for Windows and Mac!",
+        "text": "From Windows updates to planning your entire IT infrastructure: we have {years} years of experience supporting small and medium-sized businesses in everything around IT. No unnecessary frills, but everything you need!",
+        "href": "/en/it-administration/",
+        "img": "service-it-admin",
+        "alt": "Tidy workstations with monitors and headsets",
+        "chips": ["Windows", "Mac", "Microsoft 365", "Support"]
+      },
+      {
+        "key": "dev",
+        "tab": "Software Development",
+        "title": "Expertise from the first idea to finished software!",
+        "text": "We create “wow!” moments by developing individual, one-of-a-kind software solutions for your business together with you. Sounds good, but what happens next? We don't leave you on your own: we take care of product maintenance and support.",
+        "href": "/en/software-development/",
+        "img": "service-dev",
+        "alt": "Two developers discussing code on two monitors",
+        "chips": ["Idea", "Development", "Product care", "Maintenance"]
+      },
+      {
+        "key": "web",
+        "tab": "Website & Branding",
+        "title": "So the first impression isn't the last!",
+        "text": "Nothing works without a website today. All the more important that your online presence is right. Would you also like a breath of fresh air in your corporate identity? We make sure you can identify with your brand again.",
+        "href": "/en/website-branding/",
+        "img": "service-web",
+        "alt": "Man working on a laptop on a platform in front of a mountain panorama",
+        "chips": ["Website", "Corporate identity", "Logo", "Design"]
+      }
+    ],
+
+    "testimonials": [
+      {
+        "tag": "IT Administration",
+        "quote": "Our company has been working with the Jenomics IT support team for years. What impresses us most is their expertise in banking software; knowledge this broad is not a given. The team is always quick to reach and solves our technical problems in no time. Whether it's a small question or a complex challenge, they are always ready to support us, and in a friendly and professional way!",
+        "name": "Julien Zornig",
+        "company": "Astorius Consult GmbH",
+        "person": "person-zornig",
+        "logo": "logo-astorius"
+      },
+      {
+        "tag": "Großmarkt",
+        "quote": "Switching to the GM8 software couldn't have been easier. Thanks to a fast migration of our data, the new GM8 software was ready to use straight away: no long waiting or setup time and no data loss.",
+        "name": "Theo Hatzivassiliadis",
+        "company": "HANS KUFFER Fruchthandel GmbH",
+        "person": "person-hatzivassiliadis",
+        "logo": ""
+      },
+      {
+        "tag": "IT Administration",
+        "quote": "For years, Jenomics has been helping us structure our Microsoft 365 portfolio and administers our entire backend. We're glad to have a partner in Jenomics who delivers straightforward and fast solutions every time!",
+        "name": "Robert Will",
+        "company": "disphere interactive GmbH",
+        "person": "person-will",
+        "logo": "logo-disphere"
+      },
+      {
+        "tag": "Großmarkt",
+        "quote": "We use the GM8 software for inventory management and billing. With GM8 we found a tailor-made solution for our specific needs as a fruit and vegetable wholesaler and were able to optimise our invoicing and dunning. It is simple and easy to use and fits perfectly into our daily work.",
+        "name": "The Kell family",
+        "company": "Michael Kell Früchtegroßhandel OHG",
+        "person": "person-kell",
+        "logo": "logo-kell"
+      },
+      {
+        "tag": "Website & Branding",
+        "quote": "Jenomics helped us give our website a modern, professional look that perfectly reflects our values and our company. From the first conversation to the final design, the collaboration was smooth and efficient. We especially liked the constant exchange, so we were always up to date. We recommend Jenomics to anyone who wants a high-quality, tailor-made website.",
+        "name": "Frank Maucher, Ariane Jobst and René Dentel",
+        "company": "Mügelner Maschinenbau GmbH",
+        "person": "person-mmb",
+        "logo": "logo-mmb"
+      },
+      {
+        "tag": "IT Administration",
+        "quote": "Jenomics mainly supports us in using banking software. Thanks to their support in this area we can use the software to the full, our workflows have become more efficient, and with Jenomics' know-how any questions and problems are resolved quickly and easily.",
+        "name": "Rainer Simon",
+        "company": "Christian Sulser GmbH",
+        "person": "person-simon",
+        "logo": ""
+      },
+      {
+        "tag": "Website & Branding",
+        "quote": "Thanks to Jenomics I got a tailor-made, modern website that matches my wishes. All planning and implementation were done in close coordination with me, and requests were implemented quickly and reliably. I'm glad to have found a partner for my web activities in Jenomics.",
+        "name": "Eric Müssemann",
+        "company": "Tax advisor & auditor",
+        "person": "person-muessemann",
+        "logo": "logo-muessemann"
+      }
+    ],
+
+    "projects": [
+      {
+        "title": "BLL Braun Leberfinger Ludwig Unger",
+        "text": "Office move planning · development of Investcommander",
+        "tags": [["IT Administration", "/en/it-administration/"], ["Software Development", "/en/software-development/"]],
+        "img": "project-bll"
+      },
+      {
+        "title": "IKONA Technologie",
+        "text": "Product designer for a large German retailer",
+        "tags": [["IKONA", "/en/ikona/"]],
+        "img": "project-ikona"
+      },
+      {
+        "title": "Amaze Genius",
+        "text": "Design for website and corporate identity",
+        "tags": [["Website & Branding", "/en/website-branding/"]],
+        "img": "project-amaze-genius"
+      },
+      {
+        "title": "Großmarkt",
+        "text": "Migration of the inventory management software to Großmarkt 8 and integration into the cloud",
+        "tags": [["Großmarkt", "/en/grossmarkt/"]],
+        "img": "project-grossmarkt"
+      }
+    ]
+  }
+}

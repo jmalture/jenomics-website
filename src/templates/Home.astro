@@ -1,0 +1,20 @@
+---
+/** The homepage. One template for all languages; texts come from src/i18n/home.json. */
+import Base from '../layouts/Base.astro';
+import Sections from '../components/home/index.astro';
+import meta from '../i18n/home.meta.json';
+import type { Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const alternates = { de: '/', en: '/en/' };
+const m = (meta as Record<string, { title: string; description: string }>)[lang];
+---
+
+<Base lang={lang} title={m.title} description={m.description} alternates={alternates}>
+  <link rel="preload" slot="head" as="image" href="/media/hero-landscape-1200.webp" media="(min-width: 701px)" fetchpriority="high" />
+  <link rel="preload" slot="head" as="image" href="/media/hero-landscape-720.webp" media="(max-width: 700px)" fetchpriority="high" />
+  <Sections lang={lang} />
+</Base>

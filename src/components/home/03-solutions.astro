@@ -1,0 +1,325 @@
+---
+/**
+ * Section "solutions": Wir bieten dir individuelle Lösungen! (3 tabs)
+ * Texts: home.json "sol_*" and the "solutions" list. Tabs auto-advance with a progress bar until
+ * the visitor picks one; all panels stay in the HTML for search engines.
+ */
+import Icon from '../ui/Icon.astro';
+import Blobs from '../ui/Blobs.astro';
+import { pick, fill, type Lang } from '../../i18n';
+import data from '../../i18n/home.json';
+const { lang } = Astro.props as { lang: Lang };
+const t = pick(data, lang) as Record<string, any>;
+const items = t.solutions as {
+  key: string;
+  tab: string;
+  title: string;
+  text: string;
+  href: string;
+  img: string;
+  alt: string;
+  chips: string[];
+}[];
+const blobSets: Record<string, any[]> = {
+  it: [
+    { x: '-10%', y: '30%', size: '48%', g: 'blue', d: 17, dx: '-4%', dy: '5%' },
+    { x: '70%', y: '-14%', size: '40%', g: 'green', d: 21, delay: 4, dx: '5%', dy: '4%' },
+  ],
+  dev: [
+    { x: '-12%', y: '-16%', size: '56%', g: 'royal', d: 18, dx: '4%', dy: '5%' },
+    { x: '72%', y: '64%', size: '38%', g: 'blue', d: 15, delay: 6, dx: '-5%', dy: '-4%' },
+  ],
+  web: [
+    { x: '-12%', y: '-14%', size: '46%', g: 'green', d: 19, dx: '5%', dy: '5%' },
+    { x: '62%', y: '68%', size: '50%', g: 'green', d: 23, delay: 3, dx: '-4%', dy: '-5%' },
+  ],
+};
+---
+
+<section class="jx-section jx-sol" id="loesungen">
+  <div class="jx-wrap">
+    <header class="jx-head jx-head--center">
+      <span class="jx-kicker" data-reveal>{t.sol_kicker}</span>
+      <h2 class="jx-h2" data-reveal style="--i:1">{t.sol_title}</h2>
+    </header>
+
+    <div class="jx-tabs" data-tabs data-reveal style="--i:2">
+      <div class="jx-tabs__bar" role="tablist" aria-label={t.sol_tabs_label}>
+        <span class="jx-tabs__ink" aria-hidden="true"></span>
+        {
+          items.map((s, i) => (
+            <button
+              class="jx-tabs__tab"
+              role="tab"
+              id={`jx-tab-${s.key}`}
+              aria-controls={`jx-panel-${s.key}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+            >
+              <Icon name={s.key as any} size={20} />
+              <span>{s.tab}</span>
+              <i class="jx-tabs__prog" aria-hidden="true" />
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="jx-tabs__panels">
+        {
+          items.map((s, i) => (
+            <div
+              class:list={['jx-panel', { 'is-active': i === 0 }]}
+              role="tabpanel"
+              id={`jx-panel-${s.key}`}
+              aria-labelledby={`jx-tab-${s.key}`}
+              hidden={i !== 0}
+            >
+              <div class="jx-panel__media">
+                <Blobs blobs={blobSets[s.key]} />
+                <figure>
+                  <img
+                    src={`/media/${s.img}-1200.webp`}
+                    srcset={`/media/${s.img}-720.webp 720w, /media/${s.img}-1200.webp 1200w`}
+                    sizes="(max-width: 960px) 92vw, 600px"
+                    alt={s.alt}
+                    width="1200"
+                    height="788"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+              </div>
+              <div class="jx-panel__copy">
+                <span class="jx-tag">{s.tab}</span>
+                <h3>{s.title}</h3>
+                <p>{fill(s.text)}</p>
+                <ul class="jx-panel__chips">
+                  {s.chips.map((c) => (
+                    <li>
+                      <Icon name="check" size={14} />
+                      {c}
+                    </li>
+                  ))}
+                </ul>
+                <a class="jx-btn" href={s.href}>
+                  {t.sol_more}
+                  <Icon name="arrow" />
+                </a>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .jx-sol {
+    overflow: clip;
+    background: linear-gradient(180deg, #fff 0%, #f5f8fa 100%);
+  }
+  .jx-tabs__bar {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    max-width: 780px;
+    margin: 0 auto clamp(36px, 5vw, 64px);
+    padding: 6px;
+    border-radius: 16px;
+    background: #fff;
+    border: 1px solid rgba(30, 61, 126, 0.08);
+    box-shadow: var(--jx-shadow-sm);
+  }
+  .jx-tabs__ink {
+    position: absolute;
+    top: 6px;
+    bottom: 6px;
+    left: 6px;
+    width: calc((100% - 12px - 8px) / 3);
+    border-radius: 11px;
+    background: var(--jx-blue);
+    box-shadow: 0 8px 20px rgba(14, 120, 177, 0.3);
+    translate: calc(var(--tab, 0) * (100% + 4px)) 0;
+    transition: translate var(--jx-med) var(--jx-ease);
+  }
+  .jx-tabs__tab {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 54px;
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 11px;
+    background: none;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--jx-ink);
+    cursor: pointer;
+    overflow: hidden;
+    transition: color var(--jx-med) var(--jx-ease);
+  }
+  .jx-tabs__tab svg {
+    color: var(--jx-blue);
+    transition: color var(--jx-med) var(--jx-ease);
+  }
+  .jx-tabs__tab[aria-selected='true'],
+  .jx-tabs__tab[aria-selected='true'] svg {
+    color: #fff;
+  }
+  .jx-tabs__tab:not([aria-selected='true']):hover {
+    color: var(--jx-blue);
+  }
+  .jx-tabs__prog {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 7px;
+    height: 2px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.85);
+    transform: scaleX(0);
+    transform-origin: left;
+    opacity: 0;
+  }
+  .jx-tabs.is-auto .jx-tabs__tab[aria-selected='true'] .jx-tabs__prog {
+    opacity: 1;
+    animation: jx-prog var(--tab-time, 8s) linear forwards;
+  }
+  .jx-tabs.is-hold .jx-tabs__prog {
+    animation-play-state: paused !important;
+  }
+  @keyframes jx-prog {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  .jx-tabs__panels {
+    display: grid;
+  }
+  .jx-panel {
+    grid-area: 1 / 1;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    align-items: center;
+    gap: clamp(36px, 6vw, 88px);
+  }
+  .jx-panel[hidden] {
+    display: grid;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .jx-panel__media {
+    position: relative;
+    padding: 7%;
+  }
+  .jx-panel__media figure {
+    position: relative;
+    margin: 0;
+    padding: 8px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.75);
+    box-shadow: var(--jx-shadow-lg);
+  }
+  .jx-panel__media img {
+    width: 100%;
+    aspect-ratio: 1200 / 788;
+    object-fit: cover;
+    border-radius: 17px;
+  }
+  .jx-panel__copy h3 {
+    margin: 18px 0 16px;
+    font-size: var(--jx-h3);
+    color: var(--jx-blue);
+    line-height: 1.25;
+  }
+  .jx-panel__copy p {
+    color: var(--jx-grey);
+    font-size: 1.0625rem;
+  }
+  .jx-panel__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 24px 0 30px;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-panel__chips li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid var(--jx-line);
+    font-size: 0.8125rem;
+    font-weight: 500;
+  }
+  .jx-panel__chips svg {
+    color: var(--jx-green);
+  }
+
+  /* Panel change: image wipes in, copy staggers up */
+  .jx-panel figure,
+  .jx-panel .jx-blobs,
+  .jx-panel__copy > * {
+    transition:
+      opacity var(--jx-med) var(--jx-ease),
+      translate var(--jx-slow) var(--jx-ease),
+      clip-path var(--jx-slow) var(--jx-ease-io);
+  }
+  .jx-panel:not(.is-active) figure {
+    clip-path: inset(0 0 0 100% round 24px);
+  }
+  .jx-panel.is-active figure {
+    clip-path: inset(-20% -20% -20% -20% round 24px);
+  }
+  .jx-panel:not(.is-active) .jx-blobs {
+    opacity: 0;
+  }
+  .jx-panel:not(.is-active) .jx-panel__copy > * {
+    opacity: 0;
+    translate: 0 18px;
+  }
+  .jx-panel.is-active .jx-panel__copy > * {
+    transition-delay: calc(var(--k, 0) * 70ms + 120ms);
+  }
+  .jx-panel__copy > :nth-child(2) {
+    --k: 1;
+  }
+  .jx-panel__copy > :nth-child(3) {
+    --k: 2;
+  }
+  .jx-panel__copy > :nth-child(4) {
+    --k: 3;
+  }
+  .jx-panel__copy > :nth-child(5) {
+    --k: 4;
+  }
+
+  @media (max-width: 960px) {
+    .jx-panel {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .jx-tabs__bar {
+      grid-template-columns: 1fr;
+    }
+    .jx-tabs__ink {
+      width: calc(100% - 12px);
+      height: calc((100% - 12px - 8px) / 3);
+      bottom: auto;
+      translate: 0 calc(var(--tab, 0) * (100% + 4px));
+    }
+    .jx-tabs__tab {
+      justify-content: flex-start;
+    }
+  }
+</style>

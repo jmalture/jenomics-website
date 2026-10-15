@@ -1,0 +1,183 @@
+---
+/**
+ * Section "trust": key figures (counting up) and a marquee of customers named on the homepage.
+ * Figures come from the content itself: years since 2001, 6 services, 3 own products, SME focus.
+ */
+import { pick, YEARS, type Lang } from '../../i18n';
+import data from '../../i18n/home.json';
+import offer from '../../i18n/offer.json';
+const { lang } = Astro.props as { lang: Lang };
+const t = pick(data, lang) as Record<string, any>;
+const o = pick(offer, lang);
+const stats = [
+  { n: YEARS, suffix: '', label: t.trust_years },
+  { n: o.services.length, suffix: '', label: t.trust_services },
+  { n: o.products.length, suffix: '', label: t.trust_products },
+  { n: null, value: t.trust_focus_value, label: t.trust_focus },
+];
+const customers: { name: string; logo?: string; h?: number }[] = [
+  { name: 'Astorius Consult', logo: 'logo-astorius', h: 40 },
+  { name: 'HANS KUFFER Fruchthandel' },
+  { name: 'disphere interactive', logo: 'logo-disphere', h: 30 },
+  { name: 'Michael Kell Früchtegroßhandel', logo: 'logo-kell', h: 44 },
+  { name: 'Mügelner Maschinenbau', logo: 'logo-mmb', h: 34 },
+  { name: 'Christian Sulser GmbH' },
+  { name: 'BLL Braun Leberfinger Ludwig Unger' },
+  { name: 'Amaze Genius' },
+];
+---
+
+<section class="jx-trust" aria-label={t.trust_logos_label}>
+  <div class="jx-wrap">
+    <ul class="jx-stats">
+      {
+        stats.map((s, i) => (
+          <li data-reveal style={`--i:${i}`}>
+            <strong>
+              {s.n !== null ? (
+                <span data-count={s.n}>{s.n}</span>
+              ) : (
+                <span>{s.value}</span>
+              )}
+              {s.suffix}
+            </strong>
+            <span>{s.label}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <div class="jx-marquee" data-reveal>
+    <p class="screen-reader-text">{t.trust_logos_label}: {customers.map((c) => c.name).join(', ')}</p>
+    <div class="jx-marquee__track" aria-hidden="true">
+      {
+        [0, 1].map(() => (
+          <ul>
+            {customers.map((c) => (
+              <li>
+                {c.logo ? (
+                  <img src={`/media/${c.logo}.webp`} alt="" style={`height:${c.h}px`} loading="lazy" decoding="async" />
+                ) : (
+                  <span>{c.name}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .jx-trust {
+    position: relative;
+    padding-block: 8px clamp(8px, 2vw, 24px);
+  }
+  .jx-stats {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-radius: var(--jx-r-xl);
+    background: #fff;
+    border: 1px solid rgba(30, 61, 126, 0.08);
+    box-shadow: var(--jx-shadow);
+  }
+  .jx-stats li {
+    position: relative;
+    display: grid;
+    gap: 4px;
+    padding: clamp(20px, 3vw, 34px) clamp(18px, 3vw, 36px);
+  }
+  .jx-stats li + li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 24%;
+    bottom: 24%;
+    width: 1px;
+    background: var(--jx-line);
+  }
+  .jx-stats strong {
+    font-size: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    background: linear-gradient(120deg, var(--jx-navy), var(--jx-blue) 60%, #1ab8e8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-variant-numeric: tabular-nums;
+  }
+  .jx-stats li > span {
+    font-size: 0.875rem;
+    color: var(--jx-grey);
+  }
+  .jx-marquee {
+    margin-top: clamp(36px, 5vw, 64px);
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+  .jx-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: jx-marquee 46s linear infinite;
+  }
+  .jx-marquee:hover .jx-marquee__track {
+    animation-play-state: paused;
+  }
+  .jx-marquee ul {
+    display: flex;
+    align-items: center;
+    gap: clamp(40px, 6vw, 84px);
+    padding-right: clamp(40px, 6vw, 84px);
+    margin: 0;
+    list-style: none;
+  }
+  .jx-marquee li {
+    display: flex;
+    align-items: center;
+    height: 48px;
+  }
+  .jx-marquee img {
+    width: auto;
+    filter: grayscale(1);
+    opacity: 0.55;
+    transition:
+      filter var(--jx-med),
+      opacity var(--jx-med);
+  }
+  .jx-marquee li:hover img {
+    filter: none;
+    opacity: 1;
+  }
+  .jx-marquee li > span {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #9aa3ab;
+    white-space: nowrap;
+    transition: color var(--jx-med);
+  }
+  .jx-marquee li:hover > span {
+    color: var(--jx-navy);
+  }
+  @keyframes jx-marquee {
+    to {
+      translate: -50% 0;
+    }
+  }
+  @media (max-width: 760px) {
+    .jx-stats {
+      grid-template-columns: 1fr 1fr;
+    }
+    .jx-stats li:nth-child(3)::before {
+      display: none;
+    }
+    .jx-stats li:nth-child(n + 3) {
+      border-top: 1px solid var(--jx-line);
+    }
+  }
+</style>

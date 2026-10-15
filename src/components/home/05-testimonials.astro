@@ -1,0 +1,405 @@
+---
+/**
+ * Section "testimonials": Das sagen unsere Kund:innen (7 voices).
+ * One voice at a time on a stage: person cut-out on a live blob, quote, name, company, logo.
+ * Filter chips by service, arrows, swipe, auto-advance (pauses on hover/focus). Script below.
+ */
+import Icon from '../ui/Icon.astro';
+import { pick, type Lang } from '../../i18n';
+import data from '../../i18n/home.json';
+const { lang } = Astro.props as { lang: Lang };
+const t = pick(data, lang) as Record<string, any>;
+const list = t.testimonials as {
+  tag: string;
+  quote: string;
+  name: string;
+  company: string;
+  person: string;
+  logo: string;
+}[];
+const tags = [...new Set(list.map((x) => x.tag))];
+const tone: Record<string, string> = {
+  Großmarkt: 'green',
+  'Website & Branding': 'royal',
+};
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<section class="jx-section jx-testi" id="referenzen" data-testi>
+  <div class="jx-wrap jx-testi__grid">
+    <div class="jx-testi__side">
+      <span class="jx-kicker" data-reveal>{t.testi_kicker}</span>
+      <h2 class="jx-h2" data-reveal style="--i:1">{t.testi_title}</h2>
+      <div class="jx-chips" role="group" data-reveal style="--i:2">
+        <button class="jx-chip" aria-pressed="true" data-filter="">{t.testi_all}</button>
+        {
+          tags.map((g) => (
+            <button class="jx-chip" aria-pressed="false" data-filter={g}>
+              {g}
+            </button>
+          ))
+        }
+      </div>
+      <div class="jx-testi__nav" data-reveal style="--i:3">
+        <button class="jx-round" data-prev aria-label={t.testi_prev}><Icon name="left" size={20} /></button>
+        <button class="jx-round" data-next aria-label={t.testi_next}><Icon name="right" size={20} /></button>
+        <p class="jx-testi__count" aria-live="polite">
+          <span data-cur>01</span> <span class="jx-testi__of">/ <span data-total>{pad(list.length)}</span></span>
+        </p>
+      </div>
+      <div class="jx-testi__bar" aria-hidden="true"><i></i></div>
+    </div>
+
+    <div class="jx-testi__stage" data-reveal="scale" style="--i:2">
+      {
+        list.map((q, i) => (
+          <figure
+            class:list={['jx-quote', `jx-quote--${tone[q.tag] ?? 'blue'}`, { 'is-active': i === 0 }]}
+            data-tag={q.tag}
+            aria-hidden={i === 0 ? undefined : 'true'}
+          >
+            <div class="jx-quote__person">
+              <span class="jx-quote__blob" aria-hidden="true" />
+              <img src={`/media/${q.person}.webp`} alt={q.name} loading="lazy" decoding="async" />
+            </div>
+            <div class="jx-quote__body">
+              <span class="jx-tag">{q.tag}</span>
+              <span class="jx-quote__mark" aria-hidden="true">
+                <Icon name="quote" size={34} />
+              </span>
+              <blockquote>
+                <p>{q.quote}</p>
+              </blockquote>
+              <figcaption>
+                <span>
+                  <strong>{q.name}</strong>
+                  <small>{q.company}</small>
+                </span>
+                {q.logo && <img class="jx-quote__logo" src={`/media/${q.logo}.webp`} alt="" loading="lazy" decoding="async" />}
+              </figcaption>
+            </div>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .jx-testi {
+    overflow: hidden;
+    padding-bottom: clamp(40px, 5vw, 72px);
+  }
+  .jx-testi__grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.8fr) 2fr;
+    gap: clamp(36px, 5vw, 80px);
+    align-items: center;
+  }
+  .jx-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 28px 0 32px;
+  }
+  .jx-chip {
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--jx-line);
+    background: #fff;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+      background-color var(--jx-fast),
+      color var(--jx-fast),
+      border-color var(--jx-fast);
+  }
+  .jx-chip:hover {
+    border-color: var(--jx-blue);
+    color: var(--jx-blue);
+  }
+  .jx-chip[aria-pressed='true'] {
+    background: var(--jx-ink);
+    border-color: var(--jx-ink);
+    color: #fff;
+  }
+  .jx-testi__nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .jx-round {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid #d6dde4;
+    background: #fff;
+    cursor: pointer;
+    transition:
+      background-color var(--jx-fast),
+      color var(--jx-fast),
+      border-color var(--jx-fast),
+      translate var(--jx-fast) var(--jx-ease);
+  }
+  .jx-round:hover {
+    background: var(--jx-blue);
+    border-color: var(--jx-blue);
+    color: #fff;
+  }
+  .jx-round[data-prev]:hover {
+    translate: -2px 0;
+  }
+  .jx-round[data-next]:hover {
+    translate: 2px 0;
+  }
+  .jx-testi__count {
+    margin-left: 12px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+  .jx-testi__of {
+    font-size: 0.9375rem;
+    color: #9aa3ab;
+  }
+  .jx-testi__bar {
+    margin-top: 22px;
+    height: 2px;
+    max-width: 240px;
+    border-radius: 2px;
+    background: var(--jx-line);
+    overflow: hidden;
+  }
+  .jx-testi__bar i {
+    display: block;
+    height: 100%;
+    background: var(--jx-blue);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  .jx-testi.is-auto .jx-testi__bar i {
+    animation: jx-prog var(--testi-time, 9s) linear forwards;
+  }
+  .jx-testi.is-hold .jx-testi__bar i {
+    animation-play-state: paused;
+  }
+
+  /* Stage */
+  .jx-testi__stage {
+    display: grid;
+    touch-action: pan-y;
+  }
+  .jx-quote {
+    grid-area: 1 / 1;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 0.95fr 1.4fr;
+    align-items: end;
+    gap: clamp(20px, 3vw, 40px);
+    padding: clamp(24px, 3vw, 40px) clamp(24px, 3.4vw, 48px) 0;
+    border-radius: var(--jx-r-xl);
+    background: linear-gradient(160deg, #f4f8fb, #eef3f6);
+    border: 1px solid rgba(30, 61, 126, 0.06);
+    visibility: hidden;
+    opacity: 0;
+    translate: 40px 0;
+    transition:
+      opacity var(--jx-med) var(--jx-ease),
+      translate var(--jx-slow) var(--jx-ease),
+      visibility 0s linear var(--jx-slow);
+  }
+  .jx-quote.is-out {
+    translate: -40px 0;
+  }
+  .jx-quote.is-active {
+    visibility: visible;
+    opacity: 1;
+    translate: 0 0;
+    transition-delay: 0s;
+  }
+  .jx-quote__person {
+    position: relative;
+    align-self: end;
+    display: grid;
+    place-items: end center;
+    min-height: 100%;
+  }
+  .jx-quote__blob {
+    position: absolute;
+    left: 2%;
+    right: -2%;
+    bottom: 18%;
+    aspect-ratio: 1;
+    background: var(--jx-blob-blue);
+    border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+    animation: jx-morph 14s var(--jx-ease-io) infinite alternate;
+  }
+  .jx-quote--green .jx-quote__blob {
+    background: var(--jx-blob-green);
+  }
+  .jx-quote--royal .jx-quote__blob {
+    background: var(--jx-blob-royal);
+  }
+  .jx-quote__person img {
+    position: relative;
+    width: 100%;
+    max-height: 480px;
+    object-fit: contain;
+    object-position: bottom;
+    translate: 0 16px;
+    transition: translate var(--jx-slow) var(--jx-ease) 120ms;
+  }
+  .jx-quote.is-active .jx-quote__person img {
+    translate: 0 0;
+  }
+  .jx-quote__body {
+    position: relative;
+    align-self: center;
+    padding-bottom: clamp(24px, 3vw, 40px);
+  }
+  .jx-quote__mark {
+    display: block;
+    margin: 18px 0 6px;
+    color: var(--jx-blue);
+    opacity: 0.35;
+  }
+  .jx-quote blockquote {
+    margin: 0;
+  }
+  .jx-quote blockquote p {
+    font-size: clamp(1rem, 0.94rem + 0.3vw, 1.1875rem);
+    line-height: 1.65;
+    color: #2b2f33;
+  }
+  .jx-quote figcaption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(30, 61, 126, 0.1);
+  }
+  .jx-quote figcaption strong {
+    display: block;
+    font-weight: 600;
+  }
+  .jx-quote figcaption small {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--jx-grey);
+  }
+  .jx-quote__logo {
+    width: auto;
+    max-width: 120px;
+    max-height: 40px;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+  @media (max-width: 1024px) {
+    .jx-testi__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 680px) {
+    .jx-quote {
+      grid-template-columns: 1fr;
+      padding-top: 24px;
+    }
+    .jx-quote__person {
+      order: 2;
+      max-width: 260px;
+      justify-self: center;
+    }
+    .jx-quote__person img {
+      max-height: 280px;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-testi]').forEach((root) => {
+    const slides = [...root.querySelectorAll<HTMLElement>('.jx-quote')];
+    const chips = [...root.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+    const cur = root.querySelector('[data-cur]')!;
+    const total = root.querySelector('[data-total]')!;
+    const bar = root.querySelector<HTMLElement>('.jx-testi__bar i')!;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const TIME = 9000;
+    let pool = slides;
+    let idx = 0;
+    let timer = 0;
+    let auto = !reduce;
+    const pad = (n: number) => String(n).padStart(2, '0');
+
+    const show = (next: number, dir = 1) => {
+      const prev = pool[idx];
+      idx = (next + pool.length) % pool.length;
+      const el = pool[idx];
+      slides.forEach((s) => {
+        s.classList.remove('is-out');
+        if (s !== el) s.classList.remove('is-active');
+        s.setAttribute('aria-hidden', s === el ? 'false' : 'true');
+      });
+      if (prev && prev !== el && dir > 0) prev.classList.add('is-out');
+      el.classList.add('is-active');
+      cur.textContent = pad(idx + 1);
+      total.textContent = pad(pool.length);
+      restart();
+    };
+    const restart = () => {
+      clearTimeout(timer);
+      root.classList.remove('is-auto');
+      void bar.offsetWidth; // restart the CSS progress animation
+      if (!auto) return;
+      root.style.setProperty('--testi-time', `${TIME}ms`);
+      root.classList.add('is-auto');
+      timer = window.setTimeout(tick, TIME);
+    };
+    const tick = () => {
+      if (root.classList.contains('is-hold') || !inView) {
+        timer = window.setTimeout(tick, 600);
+        return;
+      }
+      show(idx + 1);
+    };
+
+    root.querySelector('[data-next]')!.addEventListener('click', () => show(idx + 1));
+    root.querySelector('[data-prev]')!.addEventListener('click', () => show(idx - 1, -1));
+    chips.forEach((c) =>
+      c.addEventListener('click', () => {
+        chips.forEach((x) => x.setAttribute('aria-pressed', String(x === c)));
+        const f = c.dataset.filter;
+        pool = f ? slides.filter((s) => s.dataset.tag === f) : slides;
+        idx = -1;
+        show(0);
+      }),
+    );
+    // hold while the visitor reads or interacts
+    root.addEventListener('pointerenter', () => root.classList.add('is-hold'));
+    root.addEventListener('pointerleave', () => root.classList.remove('is-hold'));
+    root.addEventListener('focusin', () => root.classList.add('is-hold'));
+    root.addEventListener('focusout', () => root.classList.remove('is-hold'));
+    // swipe
+    const stage = root.querySelector<HTMLElement>('.jx-testi__stage')!;
+    let x0: number | null = null;
+    stage.addEventListener('pointerdown', (e) => (x0 = e.clientX));
+    stage.addEventListener('pointerup', (e) => {
+      if (x0 === null) return;
+      const dx = e.clientX - x0;
+      x0 = null;
+      if (Math.abs(dx) > 50) dx < 0 ? show(idx + 1) : show(idx - 1, -1);
+    });
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') show(idx + 1);
+      if (e.key === 'ArrowLeft') show(idx - 1, -1);
+    });
+    let inView = false;
+    new IntersectionObserver(([e]) => (inView = e.isIntersecting), { threshold: 0.3 }).observe(root);
+    restart();
+  });
+</script>

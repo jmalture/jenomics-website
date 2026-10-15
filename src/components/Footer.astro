@@ -1,0 +1,218 @@
+---
+/** Site footer (dark). Texts in src/i18n/chrome.json, services/products in src/i18n/offer.json. */
+import Icon from './ui/Icon.astro';
+import Blobs from './ui/Blobs.astro';
+import { dict, pick, fill, type Lang } from '../i18n';
+import chrome from '../i18n/chrome.json';
+import offer from '../i18n/offer.json';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = dict(chrome, lang);
+const o = pick(offer, lang);
+const year = new Date().getFullYear();
+const company = [
+  [t.h_about, t.h_about_href],
+  [t.h_team, t.h_team_href],
+  [t.h_career, t.h_career_href],
+  [t.h_blog, t.h_blog_href],
+  [t.h_pricing, t.h_pricing_href],
+  [t.h_contact, t.h_contact_href],
+];
+const legal = [
+  [t.f_agb, t.f_agb_href],
+  [t.f_privacy, t.f_privacy_href],
+  [t.f_imprint, t.f_imprint_href],
+];
+---
+
+<footer class="jx-ft">
+  <Blobs
+    class="jx-ft__blobs"
+    blobs={[
+      { x: '-8%', y: '-30%', size: 'min(46vw, 560px)', g: 'royal', o: 0.35, soft: true, d: 26 },
+      { x: '72%', y: '30%', size: 'min(38vw, 460px)', g: 'green', o: 0.22, soft: true, d: 30, delay: 8 },
+    ]}
+  />
+  <div class="jx-wrap jx-ft__top">
+    <div class="jx-ft__brand">
+      <img src="/media/jenomics-logo-white.webp" alt="Jenomics" width="180" height="38" loading="lazy" />
+      <p>{fill(t.f_claim)}</p>
+      <a class="jx-ft__green" href="https://www.thegreenwebfoundation.org/green-web-check/?url=https%3A%2F%2Fwww.jenomics.de" target="_blank" rel="noopener">
+        <Icon name="leaf" size={18} />
+        <span>{t.f_green}</span>
+      </a>
+    </div>
+    <nav class="jx-ft__cols" aria-label="Footer">
+      <div>
+        <p class="jx-ft__h">{t.h_col_services}</p>
+        <ul>{o.services.map((s) => <li><a href={s.href}>{s.name}</a></li>)}</ul>
+      </div>
+      <div>
+        <p class="jx-ft__h">{t.h_col_products}</p>
+        <ul>{o.products.map((p) => <li><a href={p.href}>{p.key === 'sdx' ? 'SDX' : p.name}</a></li>)}</ul>
+        <p class="jx-ft__h jx-ft__h--gap">{t.f_customers}</p>
+        <ul>
+          <li><a href="https://get.teamviewer.com/tnedds2" target="_blank" rel="noopener">{t.f_remote}<Icon name="external" size={14} /></a></li>
+          <li><a href="https://icsde.jenomics.de/login.jsp" target="_blank" rel="noopener">{t.f_exchange}<Icon name="external" size={14} /></a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="jx-ft__h">{t.h_col_company}</p>
+        <ul>{company.map(([l, h]) => <li><a href={h}>{l}</a></li>)}</ul>
+      </div>
+      <div>
+        <p class="jx-ft__h">{t.f_legal}</p>
+        <ul>{legal.map(([l, h]) => <li><a href={h}>{l}</a></li>)}</ul>
+      </div>
+    </nav>
+  </div>
+  <div class="jx-wrap jx-ft__mark" aria-hidden="true">Make IT possible!</div>
+  <div class="jx-wrap jx-ft__bottom">
+    <p>{t.f_copy.replace('{year}', String(year))}</p>
+    <p class="jx-ft__since">{fill(t.f_since)}</p>
+    <a class="jx-ft__top-btn" href="#content" aria-label={t.f_top}><Icon name="up" size={18} /></a>
+  </div>
+</footer>
+
+<style is:global>
+  .jx-ft {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background: var(--jx-night);
+    color: rgba(255, 255, 255, 0.72);
+    padding-top: clamp(64px, 8vw, 110px);
+  }
+  .jx-ft__blobs {
+    z-index: -1;
+  }
+  .jx-ft__top {
+    display: grid;
+    grid-template-columns: minmax(240px, 1.1fr) 2.4fr;
+    gap: clamp(32px, 6vw, 96px);
+  }
+  .jx-ft__brand img {
+    width: 170px;
+    margin-bottom: 22px;
+  }
+  .jx-ft__brand p {
+    max-width: 36ch;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+  }
+  .jx-ft__green {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 24px;
+    padding: 9px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(86, 198, 87, 0.4);
+    color: #9be49c;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+      background-color var(--jx-fast),
+      color var(--jx-fast);
+  }
+  .jx-ft__green:hover {
+    background: var(--jx-green);
+    color: #fff;
+  }
+  .jx-ft__cols {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+  .jx-ft__h {
+    margin-bottom: 14px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .jx-ft__h--gap {
+    margin-top: 28px;
+  }
+  .jx-ft ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 9px;
+  }
+  .jx-ft ul a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.72);
+    transition:
+      color var(--jx-fast),
+      translate var(--jx-fast) var(--jx-ease);
+  }
+  .jx-ft ul a:hover {
+    color: #fff;
+    translate: 3px 0;
+  }
+  .jx-ft__mark {
+    margin-top: clamp(48px, 7vw, 96px);
+    font-size: clamp(2.4rem, 9.6vw, 9rem);
+    font-weight: 600;
+    letter-spacing: -0.045em;
+    line-height: 0.9;
+    white-space: nowrap;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.14), rgba(63, 198, 242, 0.32) 45%, rgba(86, 198, 87, 0.26));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    user-select: none;
+    padding-bottom: 0.12em;
+  }
+  .jx-ft__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 28px;
+    padding-block: 22px 28px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.8125rem;
+  }
+  .jx-ft__since {
+    margin-right: auto;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .jx-ft__top-btn {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transition:
+      background-color var(--jx-fast),
+      translate var(--jx-fast) var(--jx-ease);
+  }
+  .jx-ft__top-btn:hover {
+    background: var(--jx-blue);
+    border-color: var(--jx-blue);
+    translate: 0 -3px;
+  }
+  @media (max-width: 960px) {
+    .jx-ft__top {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 600px) {
+    .jx-ft__cols {
+      grid-template-columns: 1fr 1fr;
+    }
+    .jx-ft__since {
+      margin-right: 0;
+    }
+  }
+</style>
