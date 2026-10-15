@@ -31,6 +31,9 @@ const green = ['IKONA', 'Großmarkt'];
             <span class="jx-pp__num" aria-hidden="true">
               0{i + 1}
             </span>
+            <span class="jx-pp__label" aria-hidden="true">
+              {p.title}
+            </span>
             <div class="jx-pp__body">
               <div class="jx-pp__tags">
                 {p.tags.map(([label, href]) => (
@@ -106,13 +109,51 @@ const green = ['IKONA', 'Großmarkt'];
     color: rgba(255, 255, 255, 0.85);
     letter-spacing: 0.08em;
   }
+  /*
+   * No reflow while a panel opens or closes: the text never re-wraps.
+   * - .jx-pp__body has the fixed width of an OPEN panel (from the list width via container units),
+   *   so its lines stay put while the panel grows; it only fades in once the panel is open.
+   * - .jx-pp__label (title only) has the fixed width of a CLOSED panel and shows while collapsed.
+   * The two cross-fade; the panel's overflow:hidden clips whatever is wider than the panel.
+   * 4 panels, 3 gaps of 14px, open = flex 3.2 vs 1 → open width = (W - 42px) * 3.2 / 6.2.
+   */
+  .jx-panels {
+    container-type: inline-size;
+  }
   .jx-pp__body {
     position: absolute;
     left: 0;
-    right: 0;
     bottom: 0;
+    width: calc((100cqw - 42px) * 3.2 / 6.2);
     padding: clamp(20px, 2.6vw, 34px);
     color: #fff;
+    transition:
+      opacity 300ms var(--jx-ease),
+      translate 300ms var(--jx-ease);
+  }
+  .jx-pp:not(.is-open) .jx-pp__body {
+    opacity: 0;
+    translate: 0 8px;
+    pointer-events: none;
+  }
+  .jx-pp.is-open .jx-pp__body {
+    transition-duration: 700ms;
+    transition-delay: 450ms;
+  }
+  .jx-pp__label {
+    position: absolute;
+    left: 20px;
+    bottom: 26px;
+    width: calc((100cqw - 42px) / 6.2 - 40px);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #fff;
+    transition: opacity 600ms var(--jx-ease) 500ms;
+  }
+  .jx-pp.is-open .jx-pp__label {
+    opacity: 0;
+    transition: opacity 200ms var(--jx-ease);
   }
   .jx-pp__tags {
     display: flex;
@@ -130,33 +171,6 @@ const green = ['IKONA', 'Großmarkt'];
     font-size: 0.9375rem;
     color: rgba(255, 255, 255, 0.8);
   }
-  /* collapsed: title only, rotated feel through compact width */
-  .jx-pp:not(.is-open) .jx-pp__body {
-    width: max(100%, 220px);
-  }
-  .jx-pp:not(.is-open) p,
-  .jx-pp:not(.is-open) .jx-pp__tags {
-    opacity: 0;
-    translate: 0 10px;
-  }
-  .jx-pp p,
-  .jx-pp__tags {
-    transition:
-      opacity 360ms var(--jx-ease),
-      translate 360ms var(--jx-ease);
-  }
-  .jx-pp.is-open p,
-  .jx-pp.is-open .jx-pp__tags {
-    transition-duration: 700ms;
-    transition-delay: 420ms;
-  }
-  .jx-pp h3 {
-    transform-origin: 0 100%;
-    transition: scale 1s var(--jx-ease-io);
-  }
-  .jx-pp:not(.is-open) h3 {
-    scale: 0.72;
-  }
   @media (max-width: 860px) {
     .jx-panels {
       flex-direction: column;
@@ -167,16 +181,15 @@ const green = ['IKONA', 'Großmarkt'];
       flex: none;
       height: 320px;
     }
-    .jx-pp:not(.is-open) p,
-    .jx-pp:not(.is-open) .jx-pp__tags {
+    .jx-pp__body,
+    .jx-pp:not(.is-open) .jx-pp__body {
+      width: 100%;
       opacity: 1;
       translate: 0 0;
+      pointer-events: auto;
     }
-    .jx-pp:not(.is-open) .jx-pp__body {
-      width: auto;
-    }
-    .jx-pp:not(.is-open) h3 {
-      scale: 1;
+    .jx-pp__label {
+      display: none;
     }
   }
 </style>
