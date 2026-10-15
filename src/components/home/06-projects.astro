@@ -68,7 +68,7 @@ const green = ['IKONA', 'Großmarkt'];
     border-radius: var(--jx-r-lg);
     overflow: hidden;
     background: var(--jx-night);
-    transition: flex-grow 900ms var(--jx-ease);
+    transition: flex-grow 1s var(--jx-ease-io);
     isolation: isolate;
   }
   .jx-pp.is-open {
@@ -142,11 +142,20 @@ const green = ['IKONA', 'Großmarkt'];
   .jx-pp p,
   .jx-pp__tags {
     transition:
-      opacity var(--jx-med) var(--jx-ease) 250ms,
-      translate var(--jx-med) var(--jx-ease) 250ms;
+      opacity 360ms var(--jx-ease),
+      translate 360ms var(--jx-ease);
+  }
+  .jx-pp.is-open p,
+  .jx-pp.is-open .jx-pp__tags {
+    transition-duration: 700ms;
+    transition-delay: 420ms;
+  }
+  .jx-pp h3 {
+    transform-origin: 0 100%;
+    transition: scale 1s var(--jx-ease-io);
   }
   .jx-pp:not(.is-open) h3 {
-    font-size: 1.0625rem;
+    scale: 0.72;
   }
   @media (max-width: 860px) {
     .jx-panels {
@@ -167,7 +176,7 @@ const green = ['IKONA', 'Großmarkt'];
       width: auto;
     }
     .jx-pp:not(.is-open) h3 {
-      font-size: 1.25rem;
+      scale: 1;
     }
   }
 </style>
@@ -176,10 +185,16 @@ const green = ['IKONA', 'Großmarkt'];
   document.querySelectorAll<HTMLElement>('[data-panels]').forEach((list) => {
     const items = [...list.querySelectorAll<HTMLElement>('.jx-pp')];
     const open = (el: HTMLElement) => items.forEach((i) => i.classList.toggle('is-open', i === el));
+    // Hover intent: only open a panel the cursor rests on, so sweeping across the row (or passing
+    // through on the way to the next section) does not flip panels open and shut.
+    let timer = 0;
     items.forEach((el) => {
       el.addEventListener('pointerenter', (e) => {
-        if ((e as PointerEvent).pointerType === 'mouse') open(el);
+        if ((e as PointerEvent).pointerType !== 'mouse') return;
+        clearTimeout(timer);
+        timer = window.setTimeout(() => open(el), 160);
       });
+      el.addEventListener('pointerleave', () => clearTimeout(timer));
       el.addEventListener('focusin', () => open(el));
       el.addEventListener('click', () => open(el));
     });

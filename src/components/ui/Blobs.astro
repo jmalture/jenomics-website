@@ -2,7 +2,7 @@
 /**
  * A field of live blobs (see .jx-blob in site.css). Put it inside a position:relative parent.
  * Each blob: x/y position (any CSS length), size, gradient (green | blue | royal | css), duration,
- * drift (dx/dy), depth (pointer parallax in px), opacity, soft (blurred glow).
+ * drift (dx/dy), opacity, soft (blurred glow, ignores the cursor). Crisp blobs react to touch (site.ts).
  */
 interface BlobSpec {
   x: string;
@@ -13,6 +13,7 @@ interface BlobSpec {
   delay?: number;
   dx?: string;
   dy?: string;
+  /** @deprecated no longer used (blobs react to touch instead of following the cursor) */
   depth?: number;
   o?: number;
   soft?: boolean;
@@ -37,7 +38,7 @@ const grad = (g?: string) =>
     blobs.map((b) => (
       <div
         class:list={['jx-blob', { 'jx-blob--soft': b.soft }]}
-        style={`--x:${b.x};--y:${b.y};--size:${b.size};--g:${grad(b.g)};--d:${b.d ?? 18}s;--delay:${-(b.delay ?? 0)}s;--dx:${b.dx ?? '6%'};--dy:${b.dy ?? '-5%'};--depth:${b.depth ?? 20}px;--o:${b.o ?? 1}`}
+        style={`--x:${b.x};--y:${b.y};--size:${b.size};--g:${grad(b.g)};--d:${b.d ?? 18}s;--delay:${-(b.delay ?? 0)}s;--dx:${b.dx ?? '6%'};--dy:${b.dy ?? '-5%'};--o:${b.o ?? 1}`}
       >
         <span />
       </div>

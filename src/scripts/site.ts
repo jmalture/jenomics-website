@@ -8,18 +8,27 @@ const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 // 1. Scroll reveal: [data-reveal] gets .is-in once it enters the viewport.
+//    When the reveal has played, the attribute is removed again, so the reveal transition no longer
+//    overrides the element's own transitions (panel width, hover tilt, ...).
 function initReveal() {
   const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+  const done = (el: HTMLElement) => {
+    el.removeAttribute('data-reveal');
+    el.classList.remove('is-in');
+  };
   if (!('IntersectionObserver' in window) || reduceMotion) {
-    els.forEach((el) => el.classList.add('is-in'));
+    els.forEach(done);
     return;
   }
   const io = new IntersectionObserver(
     (entries) =>
       entries.forEach((e) => {
         if (e.isIntersecting) {
-          e.target.classList.add('is-in');
-          io.unobserve(e.target);
+          const el = e.target as HTMLElement;
+          el.classList.add('is-in');
+          io.unobserve(el);
+          const i = Number(getComputedStyle(el).getPropertyValue('--i')) || 0;
+          window.setTimeout(() => done(el), i * 90 + 1100);
         }
       }),
     { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
@@ -105,7 +114,9 @@ function initHeader() {
   }
 }
 
-// 3. Live blobs: pause off screen, follow the pointer a little (parallax via --px/--py).
+// 3. Live blobs: pause off screen. "Lava lamp" touch: a crisp blob the cursor touches is pushed and
+//    squished away from it, then wobbles back on a spring when the cursor leaves. Blobs ignore the
+//    cursor everywhere else (no global parallax). Only runs the animation loop while a blob is moving.
 function initBlobs() {
   const fields = [...document.querySelectorAll<HTMLElement>('[data-blobs]')];
   if (!fields.length || reduceMotion) return;
@@ -114,24 +125,82 @@ function initBlobs() {
   );
   fields.forEach((f) => io.observe(f));
   if (!finePointer) return;
+
+  type B = { el: HTMLElement; x: number; y: number; vx: number; vy: number; s: number; vs: number; tx: number; ty: number; ts: number; a: number };
+  const blobs: B[] = [...document.querySelectorAll<HTMLElement>('.jx-blob:not(.jx-blob--soft)')].map((el) => ({
+    el, x: 0, y: 0, vx: 0, vy: 0, s: 0, vs: 0, tx: 0, ty: 0, ts: 0, a: 0,
+  }));
+  // Pointer over these means the cursor is on content, not on the blob behind it.
+  const SOLID = 'figure, img, a, button, p, h1, h2, h3, li, .jx-pill, .jx-card, .jx-quote, .jx-stats, .jx-hero__ring';
   let raf = 0;
+  let px = -9999;
+  let py = -9999;
+
+  const aim = () => {
+    const over = document.elementFromPoint(px, py);
+    const onContent = !!over?.closest(SOLID);
+    blobs.forEach((b) => {
+      b.tx = b.ty = b.ts = 0;
+      if (onContent || b.el.parentElement!.classList.contains('is-paused')) return;
+      const r = b.el.getBoundingClientRect();
+      const rad = r.width / 2;
+      // the drawn shape sits inside the box; use the box centre minus our own offset
+      const cx = r.left + rad - b.x;
+      const cy = r.top + rad - b.y;
+      const dx = px - cx;
+      const dy = py - cy;
+      const d = Math.hypot(dx, dy);
+      if (d > rad * 0.92 || d < 1) return;
+      const f = 1 - d / (rad * 0.92); // 0 at the edge, 1 at the centre
+      const push = Math.min(rad * 0.16, 46) * (0.35 + f);
+      b.tx = (-dx / d) * push;
+      b.ty = (-dy / d) * push;
+      b.ts = 0.05 + 0.09 * f; // squish
+      b.a = (Math.atan2(dy, dx) * 180) / Math.PI;
+    });
+  };
+
+  const step = () => {
+    let moving = false;
+    blobs.forEach((b) => {
+      // soft spring: low stiffness + light damping = slow, liquid wobble
+      const k = 0.045;
+      const damp = 0.86;
+      b.vx = (b.vx + (b.tx - b.x) * k) * damp;
+      b.vy = (b.vy + (b.ty - b.y) * k) * damp;
+      b.vs = (b.vs + (b.ts - b.s) * k) * damp;
+      b.x += b.vx;
+      b.y += b.vy;
+      b.s += b.vs;
+      const active = Math.abs(b.vx) + Math.abs(b.vy) > 0.02 || Math.abs(b.x - b.tx) > 0.1 || Math.abs(b.s - b.ts) > 0.001;
+      if (active) moving = true;
+      b.el.style.setProperty('--bx', `${b.x.toFixed(2)}px`);
+      b.el.style.setProperty('--by', `${b.y.toFixed(2)}px`);
+      b.el.style.setProperty('--bs', b.s.toFixed(4));
+      b.el.style.setProperty('--ba', `${b.a.toFixed(1)}deg`);
+    });
+    raf = moving ? requestAnimationFrame(step) : 0;
+  };
+  const kick = () => {
+    aim();
+    if (!raf) raf = requestAnimationFrame(step);
+  };
+
+  let pending = 0;
   addEventListener(
     'pointermove',
     (e) => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        raf = 0;
-        const px = (e.clientX / innerWidth - 0.5) * 2;
-        const py = (e.clientY / innerHeight - 0.5) * 2;
-        fields.forEach((f) => {
-          if (f.classList.contains('is-paused')) return;
-          f.style.setProperty('--px', px.toFixed(3));
-          f.style.setProperty('--py', py.toFixed(3));
-        });
-      });
+      px = e.clientX;
+      py = e.clientY;
+      if (!pending) pending = requestAnimationFrame(() => ((pending = 0), kick()));
     },
     { passive: true },
   );
+  document.documentElement.addEventListener('pointerleave', () => {
+    px = py = -9999;
+    kick();
+  });
+  addEventListener('scroll', () => px > -9999 && kick(), { passive: true });
 }
 
 // 4. Subtle 3D tilt for [data-tilt] visuals (sets --rx/--ry from -1..1).

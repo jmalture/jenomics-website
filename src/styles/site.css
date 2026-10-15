@@ -378,26 +378,29 @@ a.jx-tag--green:hover {
 }
 
 /* ---------- Live blobs ----------
- * Organic gradient shapes that morph (border-radius), drift and rotate.
- * <Blob> sets --size, --x, --y, --g (gradient), --d (duration), --delay.
- * The pointer adds a little parallax through --px/--py (set by site.ts on the [data-blobs] field).
+ * Organic gradient shapes that morph (border-radius), drift and rotate on their own.
+ * <Blobs> sets --size, --x, --y, --g (gradient), --d (duration), --delay.
+ * Touch reaction (site.ts, "lava lamp"): when the cursor touches a crisp blob it gets pushed and squished
+ * away from the cursor and wobbles back on a spring. site.ts writes --bx/--by (px), --ba (deg), --bs (squish).
  * Animations pause while the field is off screen (.is-paused) and stop for reduced motion. */
 .jx-blobs {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  --px: 0;
-  --py: 0;
 }
 .jx-blob {
+  --bx: 0px;
+  --by: 0px;
+  --ba: 0deg;
+  --bs: 0;
   position: absolute;
   left: var(--x);
   top: var(--y);
   width: var(--size);
   aspect-ratio: 1;
-  translate: calc(var(--px) * var(--depth, 20px)) calc(var(--py) * var(--depth, 20px));
-  transition: translate 1.2s var(--jx-ease);
+  transform: translate(var(--bx), var(--by)) rotate(var(--ba)) scale(calc(1 + var(--bs)), calc(1 - var(--bs) * 0.8))
+    rotate(calc(var(--ba) * -1));
   will-change: transform;
 }
 .jx-blob > span {
