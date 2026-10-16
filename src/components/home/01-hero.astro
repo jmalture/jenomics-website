@@ -6,6 +6,7 @@
  */
 import Icon from '../ui/Icon.astro';
 import Blobs from '../ui/Blobs.astro';
+import HeroSlider from './hero-slider.astro';
 import { pick, fill, type Lang } from '../../i18n';
 import data from '../../i18n/home.json';
 const { lang } = Astro.props as { lang: Lang };
@@ -48,27 +49,11 @@ const ring = fill(t.hero_ring);
           { x: '64%', y: '64%', size: '30%', g: 'royal', d: 14, delay: 3, dx: '6%', dy: '-6%', depth: 54 },
         ]}
       />
-      <figure class="jx-hero__frame">
-        <picture>
-          <source media="(max-width: 700px)" srcset="/media/hero-landscape-720.webp" />
-          <img
-            src="/media/hero-landscape-1200.webp"
-            alt={t.hero_img_alt}
-            width="1200"
-            height="777"
-            fetchpriority="high"
-            decoding="async"
-          />
-        </picture>
-      </figure>
+      <div class="jx-hero__frame">
+        <HeroSlider lang={lang} />
+      </div>
       <div class="jx-hero__pill jx-hero__pill--a" data-reveal="right" style="--i:5">
         <span class="jx-pill"><i><Icon name="calendar" /></i>{fill(t.hero_pill_since)}</span>
-      </div>
-      <div class="jx-hero__pill jx-hero__pill--b" data-reveal="left" style="--i:6">
-        <span class="jx-pill"><i style="background:var(--jx-green)"><Icon name="leaf" /></i>{t.hero_pill_green}</span>
-      </div>
-      <div class="jx-hero__pill jx-hero__pill--c" data-reveal="right" style="--i:7">
-        <span class="jx-pill"><i style="background:var(--jx-navy)"><Icon name="monitor" /></i>{t.hero_pill_os}</span>
       </div>
       <div class="jx-hero__ring" data-reveal="scale" style="--i:8" aria-hidden="true">
         <svg viewBox="0 0 200 200">
@@ -245,12 +230,6 @@ const ring = fill(t.hero_ring);
       scale: 1;
     }
   }
-  .jx-hero__frame img {
-    width: 100%;
-    aspect-ratio: 1144 / 740;
-    object-fit: cover;
-    border-radius: 18px;
-  }
   .jx-hero__pill {
     position: absolute;
     z-index: 2;
@@ -261,20 +240,6 @@ const ring = fill(t.hero_ring);
   .jx-hero__pill--a {
     top: 2%;
     left: -2%;
-  }
-  .jx-hero__pill--b {
-    bottom: 0;
-    left: 14%;
-  }
-  .jx-hero__pill--b .jx-pill {
-    animation-delay: -2.4s;
-  }
-  .jx-hero__pill--c {
-    top: 34%;
-    right: -6%;
-  }
-  .jx-hero__pill--c .jx-pill {
-    animation-delay: -4.6s;
   }
   @keyframes jx-float {
     0%,
@@ -290,7 +255,7 @@ const ring = fill(t.hero_ring);
     z-index: 2;
     right: 2%;
     bottom: -2%;
-    width: clamp(96px, 10vw, 132px);
+    width: clamp(104px, 10.5vw, 140px);
     aspect-ratio: 1;
     display: grid;
     place-items: center;
@@ -311,7 +276,8 @@ const ring = fill(t.hero_ring);
     fill: var(--jx-navy);
   }
   .jx-hero__ring img {
-    width: 38%;
+    position: relative;
+    width: 56%;
   }
   @keyframes jx-spin {
     to {
@@ -367,18 +333,9 @@ const ring = fill(t.hero_ring);
     }
   }
   @media (max-width: 560px) {
-    .jx-hero__pill--c {
-      right: 0;
-      top: auto;
-      bottom: 22%;
-    }
     .jx-hero__pill--a {
       left: 0;
       top: -2%;
-    }
-    .jx-hero__pill--b {
-      left: 2%;
-      bottom: -1%;
     }
     .jx-hero__ring {
       right: 0;

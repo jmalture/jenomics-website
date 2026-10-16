@@ -1,0 +1,795 @@
+---
+/**
+ * Hero slider: cycles through what Jenomics does (6 services + own products), "Revolution Slider" style.
+ * Each slide wipes in (direction varies), its visual zooms slowly (Ken Burns), the caption layers
+ * slide in one after another. Three slides are designed visuals instead of photos (terminal for Linux,
+ * network map for Infrastruktur, product cards). Texts: offer.json (services/products) + home.json "hero_slider_*".
+ * Behaviour: autoplay 6.5s with segment progress, pauses on hover/focus and off screen, swipe, keyboard,
+ * no autoplay for reduced motion. The first slide image is the page's LCP image (preloaded in Home.astro).
+ */
+import Icon from '../ui/Icon.astro';
+import { pick, type Lang } from '../../i18n';
+import data from '../../i18n/home.json';
+import offer from '../../i18n/offer.json';
+const { lang } = Astro.props as { lang: Lang };
+const t = pick(data, lang) as Record<string, any>;
+const o = pick(offer, lang);
+
+type Slide = {
+  key: string;
+  kicker: string;
+  title: string;
+  desc: string;
+  href: string;
+  visual: 'img' | 'terminal' | 'network' | 'products';
+  img?: string;
+  wipe: 'right' | 'circle' | 'bottom';
+};
+const svc = (k: string) => o.services.find((s) => s.key === k)!;
+const order: [string, Slide['visual'], string | undefined][] = [
+  ['it', 'img', 'service-it-admin'],
+  ['dev', 'img', 'service-dev'],
+  ['web', 'img', 'service-web'],
+  ['linux', 'terminal', undefined],
+  ['net', 'network', undefined],
+  ['host', 'img', 'hero-landscape'],
+];
+const wipes: Slide['wipe'][] = ['right', 'circle', 'bottom'];
+const slides: Slide[] = order.map(([k, visual, img], i) => ({
+  key: k,
+  kicker: `${t.hero_slider_service} ${String(i + 1).padStart(2, '0')}`,
+  title: svc(k).name,
+  desc: svc(k).desc,
+  href: svc(k).href,
+  visual,
+  img,
+  wipe: wipes[i % 3],
+}));
+slides.push({
+  key: 'products',
+  kicker: t.hero_slider_products,
+  title: t.hero_slider_products_title,
+  desc: o.products.map((p) => p.name).join(' · '),
+  href: t.hero_slider_products_href,
+  visual: 'products',
+  wipe: wipes[slides.length % 3],
+});
+const total = slides.length;
+const pad = (n: number) => String(n).padStart(2, '0');
+const terminal = [
+  ['$', 'ssh admin@srv-01'],
+  ['$', 'sudo apt update && sudo apt upgrade -y'],
+  ['✓', t.hero_slider_term_ok],
+  ['$', 'ansible-playbook rollout.yml'],
+  ['✓', 'ok=18  changed=4  failed=0'],
+];
+const nodes = [
+  { x: 92, y: 80, label: 'Server' },
+  { x: 508, y: 72, label: 'Cloud' },
+  { x: 548, y: 236, label: t.hero_slider_net_office },
+  { x: 404, y: 330, label: 'Backup' },
+  { x: 150, y: 318, label: 'VPN' },
+  { x: 52, y: 206, label: 'Firewall' },
+];
+---
+
+<div class="jx-slider" data-slider aria-roledescription="carousel" aria-label={t.hero_slider_label}>
+  <div class="jx-slider__stage">
+    {
+      slides.map((s, i) => (
+        <a
+          class:list={['jx-slide', `jx-slide--${s.visual}`, `jx-wipe--${s.wipe}`, { 'is-active': i === 0 }]}
+          href={s.href}
+          role="group"
+          aria-roledescription="slide"
+          aria-label={`${i + 1} / ${total}: ${s.title}`}
+          aria-hidden={i === 0 ? undefined : 'true'}
+          tabindex={i === 0 ? undefined : -1}
+        >
+          <div class="jx-slide__media" aria-hidden="true">
+            {s.visual === 'img' && (
+              <picture>
+                <source media="(max-width: 700px)" srcset={`/media/${s.img}-720.webp`} />
+                <img
+                  src={`/media/${s.img}-1200.webp`}
+                  alt=""
+                  width="1200"
+                  height="776"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  fetchpriority={i === 0 ? 'high' : undefined}
+                  decoding="async"
+                />
+              </picture>
+            )}
+            {s.key === 'host' && (
+              <span class="jx-slide__badge">
+                <Icon name="leaf" size={16} />
+                {t.hero_pill_green}
+              </span>
+            )}
+            {s.visual === 'terminal' && (
+              <div class="jx-term">
+                <div class="jx-term__win">
+                  <div class="jx-term__bar">
+                    <i />
+                    <i />
+                    <i />
+                    <span>ops@jenomics: ~</span>
+                  </div>
+                  <ol>
+                    {terminal.map(([p, line], k) => (
+                      <li style={`--k:${k}`} class:list={{ 'is-ok': p !== '$' }}>
+                        <b>{p}</b> {line}
+                      </li>
+                    ))}
+                    <li style={`--k:${terminal.length}`}>
+                      <b>$</b> <span class="jx-term__cursor" />
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            )}
+            {s.visual === 'network' && (
+              <div class="jx-net">
+                <svg viewBox="0 0 600 388" preserveAspectRatio="xMidYMid meet">
+                  {nodes.map((n, k) => (
+                    <g style={`--k:${k}`}>
+                      <line class="jx-net__base" x1="300" y1="194" x2={n.x} y2={n.y} />
+                      <line class="jx-net__pulse" x1="300" y1="194" x2={n.x} y2={n.y} />
+                    </g>
+                  ))}
+                  {nodes.map((n, k) => (
+                    <g class="jx-net__node" style={`--k:${k}`}>
+                      <circle cx={n.x} cy={n.y} r="20" />
+                      <text x={n.x} y={n.y + 40}>
+                        {n.label}
+                      </text>
+                    </g>
+                  ))}
+                  <circle class="jx-net__hub" cx="300" cy="194" r="46" />
+                  <image href="/media/jenomics-signet.png" x="270" y="164" width="60" height="60" />
+                </svg>
+              </div>
+            )}
+            {s.visual === 'products' && (
+              <div class="jx-prods">
+                {o.products.map((p, k) => (
+                  <span class="jx-prods__card" style={`--k:${k}`}>
+                    <img src={p.icon} alt="" width="64" height="64" loading="lazy" decoding="async" />
+                    <strong>{p.name}</strong>
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+          <div class="jx-slide__shade" aria-hidden="true" />
+          <div class="jx-slide__cap">
+            <span class="jx-slide__kicker">{s.kicker}</span>
+            <strong>{s.title}</strong>
+            <span class="jx-slide__desc">{s.desc}</span>
+            <span class="jx-slide__more">
+              {t.hero_slider_more}
+              <Icon name="arrow" size={16} />
+            </span>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+  <div class="jx-slider__nav">
+    <span class="jx-slider__count" aria-hidden="true"><b data-cur>01</b> / {pad(total)}</span>
+    <div class="jx-slider__segs" role="group" aria-label={t.hero_slider_label}>
+      {
+        slides.map((s, i) => (
+          <button
+            class="jx-slider__seg"
+            aria-label={`${t.hero_slider_goto} ${i + 1}: ${s.title}`}
+            aria-current={i === 0 ? 'true' : undefined}
+          >
+            <i />
+          </button>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  .jx-slider__stage {
+    position: relative;
+    aspect-ratio: 1144 / 740;
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--jx-night);
+    isolation: isolate;
+  }
+  .jx-slide {
+    position: absolute;
+    inset: 0;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    visibility: hidden;
+    z-index: 0;
+  }
+  .jx-slide.is-active,
+  .jx-slide.is-prev {
+    visibility: visible;
+  }
+  .jx-slide.is-prev {
+    z-index: 1;
+  }
+  .jx-slide.is-active {
+    z-index: 2;
+  }
+
+  /* Wipe in (3 directions, cycling). The shape type stays the same per variant so it interpolates. */
+  .jx-slide {
+    transition: clip-path 1.15s var(--jx-ease-io);
+  }
+  .jx-wipe--right {
+    clip-path: inset(0 0 0 100%);
+  }
+  .jx-wipe--bottom {
+    clip-path: inset(100% 0 0 0);
+  }
+  .jx-wipe--circle {
+    clip-path: circle(0% at 82% 18%);
+  }
+  .jx-wipe--right.is-active,
+  .jx-wipe--bottom.is-active,
+  .jx-wipe--right.is-prev,
+  .jx-wipe--bottom.is-prev {
+    clip-path: inset(0 0 0 0);
+  }
+  .jx-wipe--circle.is-active,
+  .jx-wipe--circle.is-prev {
+    clip-path: circle(150% at 82% 18%);
+  }
+  .jx-slide.is-prev {
+    transition: none;
+  }
+  /* first paint: no wipe for the first slide */
+  .jx-slider:not(.is-ready) .jx-slide {
+    transition: none;
+  }
+
+  /* Media: slow Ken Burns zoom while active; outgoing slide dims and drifts */
+  .jx-slide__media {
+    position: absolute;
+    inset: 0;
+    scale: 1.14;
+    transition:
+      scale 7.5s cubic-bezier(0.25, 0.4, 0.3, 1),
+      filter 1.1s var(--jx-ease);
+  }
+  .jx-slide.is-active .jx-slide__media {
+    scale: 1;
+  }
+  .jx-slide.is-prev .jx-slide__media {
+    scale: 1.04;
+    filter: brightness(0.6);
+    transition: filter 1.1s var(--jx-ease);
+  }
+  .jx-slide__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .jx-slide__shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(200deg, transparent 40%, rgba(11, 26, 54, 0.72) 100%);
+  }
+  .jx-slide__badge {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--jx-green);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    box-shadow: 0 10px 24px rgba(30, 120, 40, 0.3);
+  }
+
+  /* Caption layers: stagger in after the wipe */
+  .jx-slide__cap {
+    position: absolute;
+    left: clamp(16px, 3vw, 28px);
+    bottom: clamp(16px, 3vw, 26px);
+    max-width: min(68%, 400px);
+    display: grid;
+    gap: 4px;
+    padding: 16px 20px 16px;
+    border-radius: 16px;
+    background: rgba(11, 26, 54, 0.5);
+    backdrop-filter: blur(14px) saturate(1.3);
+    -webkit-backdrop-filter: blur(14px) saturate(1.3);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+  }
+  .jx-slide__cap > * {
+    opacity: 0;
+    translate: 0 18px;
+    filter: blur(6px);
+    transition:
+      opacity 0.7s var(--jx-ease),
+      translate 0.9s var(--jx-ease),
+      filter 0.7s var(--jx-ease);
+  }
+  .jx-slide.is-active .jx-slide__cap > * {
+    opacity: 1;
+    translate: 0 0;
+    filter: none;
+  }
+  .jx-slide.is-active .jx-slide__cap > :nth-child(1) {
+    transition-delay: 0.45s;
+  }
+  .jx-slide.is-active .jx-slide__cap > :nth-child(2) {
+    transition-delay: 0.58s;
+  }
+  .jx-slide.is-active .jx-slide__cap > :nth-child(3) {
+    transition-delay: 0.71s;
+  }
+  .jx-slide.is-active .jx-slide__cap > :nth-child(4) {
+    transition-delay: 0.84s;
+  }
+  .jx-slide__kicker {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8fe3b0;
+  }
+  .jx-slide__cap strong {
+    font-size: clamp(1.0625rem, 0.9rem + 0.7vw, 1.4rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .jx-slide__desc {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.82);
+  }
+  .jx-slide__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #9fd6f5;
+  }
+  .jx-slide__more svg {
+    transition: translate var(--jx-fast) var(--jx-ease);
+  }
+  .jx-slide:hover .jx-slide__more svg {
+    translate: 4px 0;
+  }
+
+  /* Designed slide: terminal (Betrieb Linux & Unix) */
+  .jx-term {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    align-items: start;
+    justify-items: end;
+    padding: 5% 5% 0;
+    background:
+      radial-gradient(circle at 80% 20%, rgba(26, 143, 224, 0.35), transparent 50%),
+      linear-gradient(160deg, #0b1a36, #10264d);
+  }
+  .jx-term__win {
+    width: min(78%, 430px);
+    border-radius: 12px;
+    background: rgba(5, 14, 30, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    font-size: clamp(0.5625rem, 0.45rem + 0.35vw, 0.75rem);
+  }
+  .jx-term__bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .jx-term__bar i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #ff5f57;
+  }
+  .jx-term__bar i:nth-child(2) {
+    background: #febc2e;
+  }
+  .jx-term__bar i:nth-child(3) {
+    background: #28c840;
+  }
+  .jx-term__bar span {
+    margin-left: 8px;
+    color: rgba(255, 255, 255, 0.45);
+  }
+  .jx-term ol {
+    margin: 0;
+    padding: 10px 14px 12px;
+    list-style: none;
+    display: grid;
+    gap: 3px;
+    color: #d9e6f2;
+  }
+  .jx-term li {
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  .jx-term b {
+    color: #3fc6f2;
+    font-weight: 600;
+  }
+  .jx-term li.is-ok,
+  .jx-term li.is-ok b {
+    color: #7be495;
+  }
+  .jx-slide.is-active .jx-term li {
+    animation: jx-type 0.55s steps(24, end) forwards;
+    animation-delay: calc(0.6s + var(--k) * 0.55s);
+  }
+  @keyframes jx-type {
+    from {
+      opacity: 1;
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  .jx-term__cursor {
+    display: inline-block;
+    width: 0.6em;
+    height: 1em;
+    vertical-align: -2px;
+    background: #3fc6f2;
+    animation: jx-blink 1s steps(2) infinite;
+  }
+  @keyframes jx-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  /* Designed slide: network map (Infrastruktur & Netzwerk) */
+  .jx-net {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(46, 229, 157, 0.18), transparent 55%),
+      linear-gradient(150deg, #0b1a36, #13306a);
+  }
+  /* the map sits in the upper part so the caption below never covers a node */
+  .jx-net svg {
+    position: absolute;
+    top: 3%;
+    right: 2%;
+    width: 80%;
+    height: 58%;
+  }
+  .jx-net__base {
+    stroke: rgba(255, 255, 255, 0.16);
+    stroke-width: 2;
+  }
+  .jx-net__pulse {
+    stroke: #2ee59d;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 14 300;
+    stroke-dashoffset: 314;
+    opacity: 0;
+  }
+  .jx-slide.is-active .jx-net__pulse {
+    opacity: 1;
+    animation: jx-pulse 2.4s linear infinite;
+    animation-delay: calc(var(--k) * 0.4s);
+  }
+  @keyframes jx-pulse {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  .jx-net__node circle {
+    fill: #10264d;
+    stroke: #3fc6f2;
+    stroke-width: 2;
+  }
+  .jx-net__node text {
+    fill: rgba(255, 255, 255, 0.8);
+    font-size: 15px;
+    font-weight: 500;
+    text-anchor: middle;
+  }
+  .jx-net__node {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    scale: 0.6;
+    transition:
+      opacity 0.6s var(--jx-ease),
+      scale 0.8s var(--jx-ease);
+  }
+  .jx-slide.is-active .jx-net__node {
+    opacity: 1;
+    scale: 1;
+    transition-delay: calc(0.4s + var(--k) * 0.12s);
+  }
+  .jx-net__hub {
+    fill: #fff;
+    filter: drop-shadow(0 0 22px rgba(46, 229, 157, 0.6));
+  }
+
+  /* Designed slide: own products */
+  .jx-prods {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(10px, 2.4vw, 22px);
+    padding: 9% 6% 38%;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(46, 229, 157, 0.35), transparent 45%),
+      var(--jx-blob-royal);
+  }
+  .jx-prods__card {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    width: clamp(92px, 12vw, 150px);
+    padding: clamp(14px, 2vw, 22px) 10px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 20px 40px rgba(5, 20, 60, 0.25);
+    opacity: 0;
+    translate: 0 40px;
+    transition:
+      opacity 0.7s var(--jx-ease),
+      translate 0.9s var(--jx-ease);
+  }
+  .jx-prods__card img {
+    width: 58%;
+    padding: 10px;
+    border-radius: 16px;
+    background: #fff;
+  }
+  .jx-prods__card strong {
+    font-size: clamp(0.6875rem, 0.6rem + 0.3vw, 0.875rem);
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.25;
+  }
+  .jx-slide.is-active .jx-prods__card {
+    opacity: 1;
+    translate: 0 calc((var(--k) - 1) * -8px);
+    transition-delay: calc(0.4s + var(--k) * 0.14s);
+    animation: jx-float 6s ease-in-out infinite;
+    animation-delay: calc(var(--k) * -2s);
+  }
+
+  /* Navigation: counter + segment progress */
+  .jx-slider__nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 14px;
+    padding-right: clamp(110px, 12vw, 160px);
+  }
+  .jx-slider__count {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--jx-grey);
+    font-variant-numeric: tabular-nums;
+  }
+  .jx-slider__count b {
+    color: var(--jx-ink);
+    font-weight: 600;
+  }
+  .jx-slider__segs {
+    flex: 1;
+    display: flex;
+    gap: 6px;
+  }
+  .jx-slider__seg {
+    flex: 1;
+    height: 18px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+  .jx-slider__seg i {
+    position: relative;
+    display: block;
+    height: 3px;
+    border-radius: 3px;
+    background: rgba(30, 61, 126, 0.14);
+    overflow: hidden;
+  }
+  .jx-slider__seg i::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--jx-blue), var(--jx-green));
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  .jx-slider__seg.is-done i::after {
+    transform: scaleX(1);
+  }
+  .jx-slider__seg[aria-current] i::after {
+    transform: scaleX(1);
+  }
+  .jx-slider.is-auto .jx-slider__seg[aria-current] i::after {
+    transform: scaleX(0);
+    animation: jx-prog var(--slide-time, 6.5s) linear forwards;
+  }
+  .jx-slider.is-hold .jx-slider__seg i::after {
+    animation-play-state: paused !important;
+  }
+  .jx-slider__seg:hover i {
+    background: rgba(30, 61, 126, 0.28);
+  }
+
+  /* Designed slides keep their visual in the upper ~60%: compact caption (no claim line) below it */
+  .jx-slide--terminal .jx-slide__desc,
+  .jx-slide--network .jx-slide__desc,
+  .jx-slide--products .jx-slide__desc {
+    display: none;
+  }
+  .jx-slide--terminal .jx-slide__cap,
+  .jx-slide--network .jx-slide__cap,
+  .jx-slide--products .jx-slide__cap {
+    padding-block: 12px;
+  }
+  @media (max-width: 560px) {
+    /* small stage: kicker + title only (the whole slide is the link) */
+    .jx-slide__cap,
+    .jx-slide--terminal .jx-slide__cap,
+    .jx-slide--network .jx-slide__cap,
+    .jx-slide--products .jx-slide__cap {
+      left: 10px;
+      bottom: 10px;
+      max-width: calc(100% - 20px);
+      padding: 8px 12px;
+      border-radius: 12px;
+      gap: 0;
+    }
+    .jx-slide__desc,
+    .jx-slide__more {
+      display: none;
+    }
+    .jx-slide__kicker {
+      font-size: 0.625rem;
+    }
+    .jx-slide__cap strong {
+      font-size: 0.9375rem;
+    }
+    .jx-term {
+      padding: 4% 4% 0;
+    }
+    .jx-term__win {
+      width: 92%;
+    }
+    .jx-term li:nth-child(n + 4) {
+      display: none;
+    }
+    .jx-prods {
+      padding: 6% 4% 30%;
+    }
+    .jx-prods__card {
+      width: 84px;
+      padding: 10px 6px;
+      border-radius: 14px;
+    }
+    .jx-slider__nav {
+      padding-right: 96px;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-slider]').forEach((root) => {
+    const slides = [...root.querySelectorAll<HTMLElement>('.jx-slide')];
+    const segs = [...root.querySelectorAll<HTMLButtonElement>('.jx-slider__seg')];
+    const cur = root.querySelector('[data-cur]')!;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const TIME = 6500;
+    let idx = 0;
+    let timer = 0;
+    let inView = true;
+    const pad = (n: number) => String(n).padStart(2, '0');
+
+    const go = (n: number) => {
+      const next = (n + slides.length) % slides.length;
+      if (next === idx) return schedule();
+      const prev = slides[idx];
+      slides.forEach((s) => s.classList.remove('is-prev'));
+      prev.classList.remove('is-active');
+      prev.classList.add('is-prev');
+      idx = next;
+      const el = slides[idx];
+      // restart the slide's own animations (Ken Burns, terminal, network) from their start state
+      el.classList.remove('is-active');
+      void el.offsetWidth;
+      el.classList.add('is-active');
+      slides.forEach((s, k) => {
+        const on = k === idx;
+        s.setAttribute('aria-hidden', on ? 'false' : 'true');
+        s.tabIndex = on ? 0 : -1;
+      });
+      segs.forEach((b, k) => {
+        b.toggleAttribute('aria-current', k === idx);
+        b.classList.toggle('is-done', k < idx);
+      });
+      cur.textContent = pad(idx + 1);
+      // the outgoing slide leaves the stack once the wipe has covered it
+      window.setTimeout(() => prev !== slides[idx] && prev.classList.remove('is-prev'), 1200);
+      schedule();
+    };
+    const schedule = () => {
+      clearTimeout(timer);
+      root.classList.remove('is-auto');
+      if (reduce) return;
+      void root.offsetWidth;
+      root.style.setProperty('--slide-time', `${TIME}ms`);
+      root.classList.add('is-auto');
+      timer = window.setTimeout(tick, TIME);
+    };
+    const tick = () => {
+      if (root.classList.contains('is-hold') || !inView || document.hidden) {
+        timer = window.setTimeout(tick, 500);
+        return;
+      }
+      go(idx + 1);
+    };
+
+    segs.forEach((b, k) => b.addEventListener('click', () => go(k)));
+    root.addEventListener('pointerenter', () => root.classList.add('is-hold'));
+    root.addEventListener('pointerleave', () => root.classList.remove('is-hold'));
+    root.addEventListener('focusin', () => root.classList.add('is-hold'));
+    root.addEventListener('focusout', () => root.classList.remove('is-hold'));
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') go(idx + 1);
+      if (e.key === 'ArrowLeft') go(idx - 1);
+    });
+    let x0: number | null = null;
+    root.addEventListener('pointerdown', (e) => (x0 = e.clientX));
+    root.addEventListener('pointerup', (e) => {
+      if (x0 === null) return;
+      const dx = e.clientX - x0;
+      x0 = null;
+      if (Math.abs(dx) > 50) {
+        root.dataset.swiped = '1';
+        go(idx + (dx < 0 ? 1 : -1));
+      }
+    });
+    // a swipe must not also follow the slide link
+    root.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('.jx-slide') && root.dataset.swiped) {
+        e.preventDefault();
+        delete root.dataset.swiped;
+      }
+    });
+    new IntersectionObserver(([e]) => (inView = e.isIntersecting), { threshold: 0.3 }).observe(root);
+    requestAnimationFrame(() => root.classList.add('is-ready'));
+    schedule();
+  });
+</script>

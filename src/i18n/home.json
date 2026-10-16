@@ -16,42 +16,35 @@
     "hero_pill_os": "Windows · Mac · Linux",
     "hero_ring": "Make IT possible · {years} Jahre Jenomics · ",
     "hero_scroll": "Weiter",
-
     "trust_years": "Jahre Erfahrung",
     "trust_services": "Services aus einer Hand",
     "trust_products": "eigene Produkte",
     "trust_focus": "Fokus auf KMU",
     "trust_focus_value": "KMU",
     "trust_logos_label": "Unsere Kund:innen",
-
     "sol_kicker": "Leistungen",
     "sol_title": "Wir bieten dir individuelle Lösungen!",
     "sol_tabs_label": "Lösungen",
     "sol_more": "Mehr erfahren",
-
     "port_kicker": "Alles aus einer Hand",
     "port_services": "Services",
     "port_products": "Produkte",
     "port_open": "Öffnen",
-
     "testi_kicker": "Referenzen",
     "testi_title": "Das sagen unsere Kund:innen",
     "testi_all": "Alle",
     "testi_prev": "Vorherige Stimme",
     "testi_next": "Nächste Stimme",
     "testi_of": "von",
-
     "proj_kicker": "Projekte",
     "proj_title": "Auszug unserer Projekte",
     "proj_all": "Alle Projekte",
     "proj_all_href": "/projekte/",
-
     "blog_kicker": "Blog",
     "blog_title": "Bleib auf dem aktuellsten Stand!",
     "blog_more": "Weiterlesen",
     "blog_all": "Alle Artikel",
     "blog_all_href": "/blog/",
-
     "career_kicker": "Karriere bei Jenomics",
     "career_title": "Erweitere unser Team!",
     "career_text": "Wir wollen qualifizierte Mitarbeiter:innen gewinnen und ihnen langfristige Perspektiven bei uns bieten. Das fördern wir durch Bonusleistungen, flexible Arbeitszeitmodelle und die Vereinbarkeit von Beruf und Familie.",
@@ -61,7 +54,6 @@
     "career_chip_2": "Flexible Arbeitszeitmodelle",
     "career_chip_3": "Beruf & Familie",
     "career_img_alt": "Das Jenomics-Team",
-
     "solutions": [
       {
         "key": "it",
@@ -71,7 +63,12 @@
         "href": "/it-administration/",
         "img": "service-it-admin",
         "alt": "Aufgeräumte Arbeitsplätze mit Monitoren und Headsets",
-        "chips": ["Windows", "Mac", "Microsoft 365", "Support"]
+        "chips": [
+          "Windows",
+          "Mac",
+          "Microsoft 365",
+          "Support"
+        ]
       },
       {
         "key": "dev",
@@ -81,7 +78,12 @@
         "href": "/softwareentwicklung/",
         "img": "service-dev",
         "alt": "Zwei Entwickler besprechen Code an zwei Monitoren",
-        "chips": ["Idee", "Entwicklung", "Produktpflege", "Wartung"]
+        "chips": [
+          "Idee",
+          "Entwicklung",
+          "Produktpflege",
+          "Wartung"
+        ]
       },
       {
         "key": "web",
@@ -91,10 +93,14 @@
         "href": "/website-branding/",
         "img": "service-web",
         "alt": "Mann arbeitet mit Laptop auf einem Steg vor einem Bergpanorama",
-        "chips": ["Website", "Corporate Identity", "Logo", "Design"]
+        "chips": [
+          "Website",
+          "Corporate Identity",
+          "Logo",
+          "Design"
+        ]
       }
     ],
-
     "testimonials": [
       {
         "tag": "IT Administration",
@@ -153,33 +159,65 @@
         "logo": "logo-muessemann"
       }
     ],
-
     "projects": [
       {
         "title": "BLL Braun Leberfinger Ludwig Unger",
         "text": "Umzugsplanung · Entwicklung von Investcommander",
-        "tags": [["IT Administration", "/it-administration/"], ["Softwareentwicklung", "/softwareentwicklung/"]],
+        "tags": [
+          [
+            "IT Administration",
+            "/it-administration/"
+          ],
+          [
+            "Softwareentwicklung",
+            "/softwareentwicklung/"
+          ]
+        ],
         "img": "project-bll"
       },
       {
         "title": "IKONA Technologie",
         "text": "Produktdesigner für großen deutschen Retailer",
-        "tags": [["IKONA", "/ikona/"]],
+        "tags": [
+          [
+            "IKONA",
+            "/ikona/"
+          ]
+        ],
         "img": "project-ikona"
       },
       {
         "title": "Amaze Genius",
         "text": "Design für Website und Corporate Identity",
-        "tags": [["Website & Branding", "/website-branding/"]],
+        "tags": [
+          [
+            "Website & Branding",
+            "/website-branding/"
+          ]
+        ],
         "img": "project-amaze-genius"
       },
       {
         "title": "Großmarkt",
         "text": "Umzug der Warenwirtschaftssoftware zu Großmarkt 8 und Integration in die Cloud",
-        "tags": [["Großmarkt", "/grosmarkt/"]],
+        "tags": [
+          [
+            "Großmarkt",
+            "/grosmarkt/"
+          ]
+        ],
         "img": "project-grossmarkt"
       }
-    ]
+    ],
+    "hero_slider_label": "Was Jenomics macht",
+    "hero_slider_service": "Service",
+    "hero_slider_products": "Produkte",
+    "hero_slider_products_title": "Eigene Produkte",
+    "hero_slider_products_href": "/leistungen/#produkte",
+    "hero_slider_more": "Mehr erfahren",
+    "hero_slider_goto": "Zu Folie",
+    "hero_slider_term_ok": "System ist auf dem neuesten Stand",
+    "hero_slider_net_office": "Büro"
   },
   "en": {
     "hero_badge": "{years} years of Jenomics · since {founded}",
@@ -198,42 +236,35 @@
     "hero_pill_os": "Windows · Mac · Linux",
     "hero_ring": "Make IT possible · {years} years of Jenomics · ",
     "hero_scroll": "Scroll",
-
     "trust_years": "years of experience",
     "trust_services": "services from a single source",
     "trust_products": "products of our own",
     "trust_focus": "focus on SMEs",
     "trust_focus_value": "SME",
     "trust_logos_label": "Our customers",
-
     "sol_kicker": "Services",
     "sol_title": "We offer you individual solutions!",
     "sol_tabs_label": "Solutions",
     "sol_more": "Learn more",
-
     "port_kicker": "Everything from a single source",
     "port_services": "Services",
     "port_products": "Products",
     "port_open": "Open",
-
     "testi_kicker": "References",
     "testi_title": "What our customers say",
     "testi_all": "All",
     "testi_prev": "Previous testimonial",
     "testi_next": "Next testimonial",
     "testi_of": "of",
-
     "proj_kicker": "Projects",
     "proj_title": "A selection of our projects",
     "proj_all": "All projects",
     "proj_all_href": "/en/projects/",
-
     "blog_kicker": "Blog",
     "blog_title": "Stay up to date!",
     "blog_more": "Read more",
     "blog_all": "All articles",
     "blog_all_href": "/blog/",
-
     "career_kicker": "Careers at Jenomics",
     "career_title": "Join our team!",
     "career_text": "We want to attract qualified people and offer them long-term prospects with us. We support this with bonuses, flexible working-time models and a good balance between work and family.",
@@ -243,7 +274,6 @@
     "career_chip_2": "Flexible working hours",
     "career_chip_3": "Work & family",
     "career_img_alt": "The Jenomics team",
-
     "solutions": [
       {
         "key": "it",
@@ -253,7 +283,12 @@
         "href": "/en/it-administration/",
         "img": "service-it-admin",
         "alt": "Tidy workstations with monitors and headsets",
-        "chips": ["Windows", "Mac", "Microsoft 365", "Support"]
+        "chips": [
+          "Windows",
+          "Mac",
+          "Microsoft 365",
+          "Support"
+        ]
       },
       {
         "key": "dev",
@@ -263,7 +298,12 @@
         "href": "/en/software-development/",
         "img": "service-dev",
         "alt": "Two developers discussing code on two monitors",
-        "chips": ["Idea", "Development", "Product care", "Maintenance"]
+        "chips": [
+          "Idea",
+          "Development",
+          "Product care",
+          "Maintenance"
+        ]
       },
       {
         "key": "web",
@@ -273,10 +313,14 @@
         "href": "/en/website-branding/",
         "img": "service-web",
         "alt": "Man working on a laptop on a platform in front of a mountain panorama",
-        "chips": ["Website", "Corporate identity", "Logo", "Design"]
+        "chips": [
+          "Website",
+          "Corporate identity",
+          "Logo",
+          "Design"
+        ]
       }
     ],
-
     "testimonials": [
       {
         "tag": "IT Administration",
@@ -335,32 +379,64 @@
         "logo": "logo-muessemann"
       }
     ],
-
     "projects": [
       {
         "title": "BLL Braun Leberfinger Ludwig Unger",
         "text": "Office move planning · development of Investcommander",
-        "tags": [["IT Administration", "/en/it-administration/"], ["Software Development", "/en/software-development/"]],
+        "tags": [
+          [
+            "IT Administration",
+            "/en/it-administration/"
+          ],
+          [
+            "Software Development",
+            "/en/software-development/"
+          ]
+        ],
         "img": "project-bll"
       },
       {
         "title": "IKONA Technologie",
         "text": "Product designer for a large German retailer",
-        "tags": [["IKONA", "/en/ikona/"]],
+        "tags": [
+          [
+            "IKONA",
+            "/en/ikona/"
+          ]
+        ],
         "img": "project-ikona"
       },
       {
         "title": "Amaze Genius",
         "text": "Design for website and corporate identity",
-        "tags": [["Website & Branding", "/en/website-branding/"]],
+        "tags": [
+          [
+            "Website & Branding",
+            "/en/website-branding/"
+          ]
+        ],
         "img": "project-amaze-genius"
       },
       {
         "title": "Großmarkt",
         "text": "Migration of the inventory management software to Großmarkt 8 and integration into the cloud",
-        "tags": [["Großmarkt", "/en/grossmarkt/"]],
+        "tags": [
+          [
+            "Großmarkt",
+            "/en/grossmarkt/"
+          ]
+        ],
         "img": "project-grossmarkt"
       }
-    ]
+    ],
+    "hero_slider_label": "What Jenomics does",
+    "hero_slider_service": "Service",
+    "hero_slider_products": "Products",
+    "hero_slider_products_title": "Our own products",
+    "hero_slider_products_href": "/en/services/#products",
+    "hero_slider_more": "Learn more",
+    "hero_slider_goto": "Go to slide",
+    "hero_slider_term_ok": "System is up to date",
+    "hero_slider_net_office": "Office"
   }
 }
