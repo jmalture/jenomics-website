@@ -215,9 +215,16 @@
     "hero_slider_products_title": "Eigene Produkte",
     "hero_slider_products_href": "/leistungen/#produkte",
     "hero_slider_more": "Mehr erfahren",
-    "hero_slider_goto": "Zu Folie",
     "hero_slider_term_ok": "System ist auf dem neuesten Stand",
-    "hero_slider_net_office": "Büro"
+    "hero_slider_prev": "Vorheriger Bereich",
+    "hero_slider_next": "Nächster Bereich",
+    "hero_ghost_it": "Support",
+    "hero_ghost_dev": "Code",
+    "hero_ghost_web": "Design",
+    "hero_ghost_linux": "Linux",
+    "hero_ghost_net": "Netzwerk",
+    "hero_ghost_host": "Hosting",
+    "hero_ghost_products": "Produkte"
   },
   "en": {
     "hero_badge": "{years} years of Jenomics · since {founded}",
@@ -435,8 +442,15 @@
     "hero_slider_products_title": "Our own products",
     "hero_slider_products_href": "/en/services/#products",
     "hero_slider_more": "Learn more",
-    "hero_slider_goto": "Go to slide",
     "hero_slider_term_ok": "System is up to date",
-    "hero_slider_net_office": "Office"
+    "hero_slider_prev": "Previous",
+    "hero_slider_next": "Next",
+    "hero_ghost_it": "Support",
+    "hero_ghost_dev": "Code",
+    "hero_ghost_web": "Design",
+    "hero_ghost_linux": "Linux",
+    "hero_ghost_net": "Network",
+    "hero_ghost_host": "Hosting",
+    "hero_ghost_products": "Products"
   }
 }

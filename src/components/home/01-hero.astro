@@ -18,8 +18,8 @@ const ring = fill(t.hero_ring);
   <Blobs
     class="jx-hero__bg"
     blobs={[
-      { x: '62%', y: '-18%', size: 'min(52vw, 720px)', g: 'blue', o: 0.16, soft: true, d: 24, depth: 30 },
-      { x: '-12%', y: '22%', size: 'min(40vw, 520px)', g: 'green', o: 0.12, soft: true, d: 28, delay: 6, depth: 24 },
+      { x: '58%', y: '-18%', size: 'min(56vw, 760px)', g: 'linear-gradient(140deg, var(--hA), var(--hB))', o: 0.2, soft: true, d: 24 },
+      { x: '-12%', y: '22%', size: 'min(40vw, 520px)', g: 'linear-gradient(140deg, var(--hC), var(--hB))', o: 0.12, soft: true, d: 28, delay: 6 },
     ]}
   />
   <div class="jx-wrap jx-hero__grid">
@@ -44,14 +44,12 @@ const ring = fill(t.hero_ring);
       <Blobs
         class="jx-hero__blobs"
         blobs={[
-          { x: '38%', y: '-14%', size: '74%', g: 'green', d: 16, dx: '4%', dy: '6%', depth: 26 },
-          { x: '-12%', y: '30%', size: '46%', g: 'blue', d: 19, delay: 5, dx: '-5%', dy: '4%', depth: 40 },
-          { x: '64%', y: '64%', size: '30%', g: 'royal', d: 14, delay: 3, dx: '6%', dy: '-6%', depth: 54 },
+          { x: '30%', y: '-10%', size: '62%', g: 'linear-gradient(135deg, var(--hA) 0%, var(--hB) 100%)', d: 16, dx: '4%', dy: '6%' },
+          { x: '-8%', y: '18%', size: '36%', g: 'linear-gradient(140deg, var(--hB), var(--hC))', d: 19, delay: 5, dx: '-5%', dy: '4%' },
+          { x: '72%', y: '34%', size: '26%', g: 'linear-gradient(150deg, var(--hC), var(--hA))', d: 14, delay: 3, dx: '6%', dy: '-6%' },
         ]}
       />
-      <div class="jx-hero__frame">
-        <HeroSlider lang={lang} />
-      </div>
+      <HeroSlider lang={lang} />
       <div class="jx-hero__pill jx-hero__pill--a" data-reveal="right" style="--i:5">
         <span class="jx-pill"><i><Icon name="calendar" /></i>{fill(t.hero_pill_since)}</span>
       </div>
@@ -199,36 +197,12 @@ const ring = fill(t.hero_ring);
   /* Visual */
   .jx-hero__visual {
     position: relative;
-    padding: 6% 4% 8% 6%;
+    padding: 64px 0 0;
     --rx: 0;
     --ry: 0;
   }
   .jx-hero__blobs {
     inset: 0;
-  }
-  .jx-hero__frame {
-    position: relative;
-    margin: 0;
-    padding: 10px;
-    border-radius: 26px;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(6px);
-    box-shadow:
-      var(--jx-shadow-lg),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.9);
-    transform: perspective(1200px) rotateX(calc(var(--ry) * -3deg)) rotateY(calc(var(--rx) * 4deg));
-    transition: transform 1s var(--jx-ease);
-    animation: jx-frame-in 1.3s var(--jx-ease) both 0.2s;
-  }
-  @keyframes jx-frame-in {
-    from {
-      clip-path: inset(8% 8% 8% 8% round 26px);
-      scale: 0.94;
-    }
-    to {
-      clip-path: inset(-30% -30% -30% -30% round 26px);
-      scale: 1;
-    }
   }
   .jx-hero__pill {
     position: absolute;
@@ -238,8 +212,8 @@ const ring = fill(t.hero_ring);
     animation: jx-float 7s ease-in-out infinite;
   }
   .jx-hero__pill--a {
-    top: 2%;
-    left: -2%;
+    top: 0;
+    left: 0;
   }
   @keyframes jx-float {
     0%,
@@ -253,9 +227,9 @@ const ring = fill(t.hero_ring);
   .jx-hero__ring {
     position: absolute;
     z-index: 2;
-    right: 2%;
-    bottom: -2%;
-    width: clamp(104px, 10.5vw, 140px);
+    right: 0;
+    top: -12px;
+    width: clamp(96px, 9vw, 124px);
     aspect-ratio: 1;
     display: grid;
     place-items: center;
@@ -335,13 +309,12 @@ const ring = fill(t.hero_ring);
   @media (max-width: 560px) {
     .jx-hero__pill--a {
       left: 0;
-      top: -2%;
+      top: 6px;
     }
     .jx-hero__ring {
       right: 0;
-      bottom: auto;
-      top: -6%;
-      width: 84px;
+      top: -8px;
+      width: 78px;
     }
     .jx-hero__ring text {
       font-size: 16px;
