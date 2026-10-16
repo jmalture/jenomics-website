@@ -10,10 +10,8 @@
     "hero_cta": "Kennenlernen vereinbaren",
     "hero_cta_href": "/kontakt/",
     "hero_cta2": "Leistungen ansehen",
-    "hero_img_alt": "Berglandschaft mit See: Kopf frei fürs Wesentliche",
     "hero_pill_since": "Seit {founded} am Start",
     "hero_pill_green": "Jenomics hostet grün",
-    "hero_pill_os": "Windows · Mac · Linux",
     "hero_ring": "Make IT possible · {years} Jahre Jenomics · ",
     "hero_scroll": "Weiter",
     "trust_years": "Jahre Erfahrung",
@@ -214,17 +212,9 @@
     "hero_slider_products": "Produkte",
     "hero_slider_products_title": "Eigene Produkte",
     "hero_slider_products_href": "/leistungen/#produkte",
-    "hero_slider_more": "Mehr erfahren",
     "hero_slider_term_ok": "System ist auf dem neuesten Stand",
     "hero_slider_prev": "Vorheriger Bereich",
-    "hero_slider_next": "Nächster Bereich",
-    "hero_ghost_it": "Support",
-    "hero_ghost_dev": "Code",
-    "hero_ghost_web": "Design",
-    "hero_ghost_linux": "Linux",
-    "hero_ghost_net": "Netzwerk",
-    "hero_ghost_host": "Hosting",
-    "hero_ghost_products": "Produkte"
+    "hero_slider_next": "Nächster Bereich"
   },
   "en": {
     "hero_badge": "{years} years of Jenomics · since {founded}",
@@ -237,10 +227,8 @@
     "hero_cta": "Arrange a meeting",
     "hero_cta_href": "/en/contact/",
     "hero_cta2": "See our services",
-    "hero_img_alt": "Mountain landscape with a lake: a clear head for what matters",
     "hero_pill_since": "Up and running since {founded}",
     "hero_pill_green": "Jenomics hosts green",
-    "hero_pill_os": "Windows · Mac · Linux",
     "hero_ring": "Make IT possible · {years} years of Jenomics · ",
     "hero_scroll": "Scroll",
     "trust_years": "years of experience",
@@ -441,16 +429,8 @@
     "hero_slider_products": "Products",
     "hero_slider_products_title": "Our own products",
     "hero_slider_products_href": "/en/services/#products",
-    "hero_slider_more": "Learn more",
     "hero_slider_term_ok": "System is up to date",
     "hero_slider_prev": "Previous",
-    "hero_slider_next": "Next",
-    "hero_ghost_it": "Support",
-    "hero_ghost_dev": "Code",
-    "hero_ghost_web": "Design",
-    "hero_ghost_linux": "Linux",
-    "hero_ghost_net": "Network",
-    "hero_ghost_host": "Hosting",
-    "hero_ghost_products": "Products"
+    "hero_slider_next": "Next"
   }
 }
