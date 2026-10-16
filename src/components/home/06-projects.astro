@@ -22,10 +22,10 @@ const green = ['IKONA', 'Großmarkt'];
       <a class="jx-btn jx-btn--ghost" href={t.proj_all_href} data-reveal style="--i:2">{t.proj_all}<Icon name="arrow" /></a>
     </header>
 
-    <ul class="jx-panels" data-panels>
+    <ul class="jx-panels" data-panels data-reveal>
       {
         list.map((p, i) => (
-          <li class:list={['jx-pp', { 'is-open': i === 0 }]} data-reveal="clip" style={`--i:${i}`}>
+          <li class:list={['jx-pp', { 'is-open': i === 0 }]}>
             <img src={`/media/${p.img}.webp`} alt="" loading="lazy" decoding="async" width="900" height="560" />
             <div class="jx-pp__shade" aria-hidden="true" />
             <span class="jx-pp__num" aria-hidden="true">
@@ -53,6 +53,8 @@ const green = ['IKONA', 'Großmarkt'];
 </section>
 
 <style is:global>
+  /* The reveal animation sits on the list, never on a panel: a panel's own flex-grow transition must
+     not be overridden while the reveal is running, or the first hover snaps open. */
   .jx-proj {
     padding-top: clamp(40px, 5vw, 80px);
   }
