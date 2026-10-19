@@ -47,12 +47,19 @@
 - Header (2026-10-19): language switch stays (flag `SHOW_LANG` in Header.astro). Mobile drawer polished: current page marked, staggered entrance,
   quick call / mail buttons, Fernzugriff label.
 
+- Legal pages (2026-10-19): Impressum, Datenschutz, AGB at /impressum/, /datenschutz/, /agb/ (German only),
+  text 1:1 from jenomics.de (`src/content/legal/*.md`, template `Legal.astro`, sticky TOC on long pages),
+  AGB PDF in `public/files/`. For Jenomics (not legal advice, needs their review): the Datenschutz text is
+  "Stand Mai 2018" and covers only server logs and cookies; it does not mention the contact form, the
+  click-to-load Google Map or the hosting provider. The Impressum still cites the old MDStV/TDG (now DDG).
+- Two old /news/<slug>/ links inside blog posts now point to /<slug>/.
+
 ## Next
 - Jenomics EMCP: OAuth discovery fails because Mittwald answers every `/.well-known/*` URL with 403, so Claude
   Code can't find the authorization server. Needs `/.well-known/oauth-authorization-server` and
   `/.well-known/oauth-protected-resource` passed through to WordPress on the server. Until then scrape via
   `https://www.jenomics.de/wp-json/wp/v2/pages?slug=<slug>` (public).
-- Remaining pages: Projekte, Web-Deluxe-Kit, legal pages (AGB, Datenschutz, Impressum).
+- Remaining pages: Projekte (/projekte/, EN /en/projects/), Web-Deluxe-Kit (/web-deluxe-kit/).
 - Links in header/footer already use the jenomics.de slugs, so they work once those pages exist.
   EN slugs (`/en/...`) are placeholders until the EN pages are built.
 - Switch the jenomics.de domain to the Hostinger app once the subpages exist.

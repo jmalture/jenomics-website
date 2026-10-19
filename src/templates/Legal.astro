@@ -1,0 +1,167 @@
+---
+/**
+ * Legal pages (Impressum, Datenschutz, AGB) from src/content/legal/*.md, German only, text 1:1 from jenomics.de.
+ * Long texts get a sticky table of contents built from the ## headings.
+ */
+import Base from '../layouts/Base.astro';
+import Icon from '../components/ui/Icon.astro';
+import Blobs from '../components/ui/Blobs.astro';
+
+type Front = { title: string; description: string; subtitle?: string; updated: string | Date; source?: string };
+type Mod = { frontmatter: Front; Content: any; getHeadings: () => { depth: number; slug: string; text: string }[] };
+
+const { page } = Astro.props as { page: 'impressum' | 'datenschutz' | 'agb' };
+const files = import.meta.glob<Mod>('../content/legal/*.md', { eager: true });
+const mod = files[`../content/legal/${page}.md`];
+const f = mod.frontmatter;
+const Content = mod.Content;
+const toc = mod.getHeadings().filter((h) => h.depth === 2);
+const showToc = toc.length > 5;
+const others = [
+  ['impressum', 'Impressum'],
+  ['datenschutz', 'Datenschutz'],
+  ['agb', 'AGB'],
+].filter(([k]) => k !== page);
+---
+
+<Base lang="de" title={`${f.title} - Jenomics GmbH`} description={f.description} alternates={{ de: `/${page}/` }}>
+  <article class="jx-legal">
+    <header class="jx-article__head">
+      <Blobs
+        class="jx-article__blobs"
+        blobs={[
+          { x: '62%', y: '-40%', size: 'min(52vw, 680px)', g: 'linear-gradient(140deg, #0e78b1, #3fc6f2)', o: 0.14, soft: true, d: 24 },
+          { x: '-12%', y: '30%', size: 'min(34vw, 440px)', g: 'linear-gradient(140deg, #56c657, #20d3c2)', o: 0.08, soft: true, d: 28, delay: 6 },
+        ]}
+      />
+      <div class="jx-wrap jx-legal__wrap">
+        <nav class="jx-crumbs" aria-label="Breadcrumb" data-reveal>
+          <ol>
+            <li><a href="/">Start</a></li>
+            <li><Icon name="right" size={14} /><span>Rechtliches</span></li>
+            <li><Icon name="right" size={14} /><span aria-current="page">{f.title}</span></li>
+          </ol>
+        </nav>
+        <h1 class="jx-article__title" data-reveal style="--i:1">{f.title}</h1>
+        {f.subtitle && <p class="jx-article__lead" data-reveal style="--i:2">{f.subtitle}</p>}
+        <p class="jx-legal__meta" data-reveal style="--i:3">
+          {others.map(([k, l]) => <a href={`/${k}/`}>{l}</a>)}
+        </p>
+      </div>
+    </header>
+
+    <div class:list={['jx-wrap jx-legal__wrap', { 'jx-legal__grid': showToc }]}>
+      {
+        showToc && (
+          <aside class="jx-legal__toc">
+            <strong>Inhalt</strong>
+            <ol>
+              {toc.map((h) => (
+                <li>
+                  <a href={`#${h.slug}`}>{h.text}</a>
+                </li>
+              ))}
+            </ol>
+          </aside>
+        )
+      }
+      <div class="jx-prose jx-legal__prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style is:global>
+  .jx-legal__wrap {
+    max-width: 1080px;
+  }
+  .jx-legal__grid {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 64px);
+    align-items: start;
+  }
+  .jx-legal__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    font-size: 0.875rem;
+    color: var(--jx-grey);
+  }
+  .jx-legal__meta a {
+    color: var(--jx-blue);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .jx-legal__meta a:hover {
+    text-decoration: underline;
+  }
+  .jx-legal__toc {
+    position: sticky;
+    top: calc(var(--jx-header-h) + 24px);
+    max-height: calc(100vh - var(--jx-header-h) - 48px);
+    overflow-y: auto;
+    padding: 20px;
+    border-radius: var(--jx-r-lg);
+    background: #f5f8fa;
+    font-size: 0.875rem;
+  }
+  .jx-legal__toc strong {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--jx-blue-k);
+  }
+  .jx-legal__toc ol {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-legal__toc a {
+    color: var(--jx-ink);
+    text-decoration: none;
+    line-height: 1.35;
+  }
+  .jx-legal__toc a:hover {
+    color: var(--jx-blue);
+  }
+  .jx-legal__prose {
+    padding-bottom: clamp(56px, 7vw, 110px);
+    font-size: 1rem;
+  }
+  .jx-legal__prose h2 {
+    scroll-margin-top: calc(var(--jx-header-h) + 20px);
+    font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  }
+  .jx-legal__prose h3 {
+    font-size: 1.0625rem;
+  }
+  .jx-legal__prose ol li::marker {
+    color: var(--jx-blue);
+    font-weight: 600;
+  }
+  .jx-legal__prose a[href$='.pdf'] {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 18px;
+    border-radius: 10px;
+    background: var(--jx-blue);
+    color: #fff;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  @media (max-width: 900px) {
+    .jx-legal__grid {
+      grid-template-columns: 1fr;
+    }
+    .jx-legal__toc {
+      position: static;
+      max-height: none;
+    }
+  }
+</style>

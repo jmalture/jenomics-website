@@ -45,6 +45,7 @@ src/templates/Service.astro, Services.astro       6 service pages / overview (/l
 src/templates/{About,Team,Career,Pricing,Contact,Product,Blog,Post}.astro   menu pages (texts: i18n/pages.json)
 src/components/page/                              Bento (scene cards), Split (copy + scene), data.ts (URLs, palettes), posts.ts
 src/pages/[slug].astro                            blog posts at /<slug>/ like jenomics.de (German only)
+src/templates/Legal.astro + src/content/legal/    Impressum, Datenschutz, AGB (German only, text 1:1 from jenomics.de)
 src/components/service/                           page hero, feature bento, blocks (columns/logos/cases/tabs/refs/kit/process/faq), CTA
   Scene.astro                                     animated UI scenes for the feature bento (SERVICE_SCENES in data.ts, all 6 services):
                                                   IT scenes + shared helpers (.sc-s, .sc-c3, .sc-fill, .sc-term); dev/web scenes in
@@ -118,8 +119,8 @@ frame. Signature: organic gradient blobs (green→teal→cyan, blue→cyan, roya
 5. Commit with a clear message, push to `main`, Hostinger deploys; check the preview URL.
 
 ## Next tasks
-1. Scrape the rest of jenomics.de: Projekte, Web-Deluxe-Kit, AGB, Datenschutz, Impressum (menu pages and blog
-   done 2026-10-19; the container cannot reach jenomics.de, so fetch through Honza's PC with PowerShell
+1. Scrape the rest of jenomics.de: Projekte, Web-Deluxe-Kit (menu pages, blog and legal pages done
+   2026-10-19; the container cannot reach jenomics.de, so fetch through Honza's PC with PowerShell
    Invoke-WebRequest into Documents\Jenomics\jenomics-scrape and stage the files). The EMCP (`emcp-jenomics-de`, local scope) fails
    OAuth because Mittwald 403s `/.well-known/*`; the public REST API works:
    `/wp-json/wp/v2/pages?slug=<slug>` (old-site photos have baked blobs; crop them like `public/media/svc-*`).

@@ -10,7 +10,7 @@ source: https://www.jenomics.de/gm8-wenn-frische-zaehlt/
 
 GM8 bedeutet mehr als nur “Großmarkt Version 8.0”. In unserer GM8 Warenwirtschaftssoftware stecken nämlich 8 Software-Generationen und mehr als 40 Jahre Entwicklung. Gemeinsam mit Firmen von Großmärkten in Deutschland haben wir eine Oberfläche geschaffen, die euch die Arbeit einfacher macht.
 
-Auch wenn es die [Jenomics GmbH „erst“ 20 Jahre lang gibt](/news/jenomics20/), ist die Geschichte der Großmarkt Software beinahe doppelt so alt.
+Auch wenn es die [Jenomics GmbH „erst“ 20 Jahre lang gibt](/jenomics20/), ist die Geschichte der Großmarkt Software beinahe doppelt so alt.
 
 Damals entwickelte der EDV-Service Schmitz gemeinsam mit Großmarkthändlern aus der Umgebung die erste Version, damals noch unter dem Betriebssystem DOS. Im Jahr 2007 hat Jenomics die Software übernommen und über einige Jahre hinweg in eine moderne Variante des alten Großmarkt Programms verwandelt.
 
