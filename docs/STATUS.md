@@ -54,6 +54,14 @@
   click-to-load Google Map or the hosting provider. The Impressum still cites the old MDStV/TDG (now DDG).
 - Two old /news/<slug>/ links inside blog posts now point to /<slug>/.
 
+- Contact form (2026-10-19): form action fixed to /api/contact/ (with trailingSlash 'always' the old URL
+  301-redirected and browsers dropped the POST). Mail settings mirror the old WP Mail SMTP setup; set these
+  in Hostinger → Node.js app → Environment variables: SMTP_HOST=mx01.jenomics.de, SMTP_PORT=25,
+  SMTP_AUTO_TLS=false, MAIL_FROM=anfrage@jenomics.de, MAIL_FROM_NAME=Anfrage - Jenomics GmbH,
+  MAIL_TO=anfrage@jenomics.de (SMTP_USER/SMTP_PASS optional). mx01 must accept mail from the Hostinger
+  server (old WP host relayed without auth); if not, Jenomics provides an SMTP login. Enquiries are also
+  stored in data/submissions/*.jsonl, so nothing is lost if mail fails. No reCAPTCHA (honeypot + rate limit).
+
 ## Next
 - Jenomics EMCP: OAuth discovery fails because Mittwald answers every `/.well-known/*` URL with 403, so Claude
   Code can't find the authorization server. Needs `/.well-known/oauth-authorization-server` and

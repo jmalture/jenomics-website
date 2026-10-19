@@ -1,12 +1,17 @@
 /**
- * Contact form endpoint for the upcoming Kontakt page (same as sdx-website). Not used by the homepage yet.
- * Contact form endpoint (the only server route; every page is static).
+ * Contact form endpoint for the Kontakt page (the only server route; every page is static).
  * Rules carried over from our PHP themes: no CAPTCHA, honeypot + rate limit + strict validation,
  * store the enquiry before sending mail so a failed mail never loses a lead.
  *
- * Environment (Hostinger Node.js app settings):
- *   SMTP_HOST, SMTP_PORT (465 = TLS), SMTP_USER, SMTP_PASS, MAIL_FROM, MAIL_TO (comma separated)
- *   SUBMISSIONS_DIR (default ./data/submissions, outside the public folder)
+ * Environment (Hostinger Node.js app settings), mirroring the WP Mail SMTP setup of the old site:
+ *   SMTP_HOST        mx01.jenomics.de
+ *   SMTP_PORT        25 (465 = implicit TLS, 587 = STARTTLS)
+ *   SMTP_USER/PASS   optional; without them the mail is sent unauthenticated (old site: auth off)
+ *   SMTP_AUTO_TLS    "false" = never upgrade to TLS (old site: Auto TLS off); default: use TLS if offered
+ *   MAIL_FROM        anfrage@jenomics.de
+ *   MAIL_FROM_NAME   Anfrage - Jenomics GmbH
+ *   MAIL_TO          recipients, comma separated (default MAIL_FROM)
+ *   SUBMISSIONS_DIR  default ./data/submissions, outside the public folder
  */
 import type { APIRoute } from 'astro';
 import { mkdir, appendFile } from 'node:fs/promises';
@@ -81,15 +86,19 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   }
 
   try {
+    const port = Number(env('SMTP_PORT') || 465);
+    const user = env('SMTP_USER');
+    const fromAddr = env('MAIL_FROM') || user;
     const transport = nodemailer.createTransport({
       host: env('SMTP_HOST'),
-      port: Number(env('SMTP_PORT') || 465),
-      secure: Number(env('SMTP_PORT') || 465) === 465,
-      auth: { user: env('SMTP_USER'), pass: env('SMTP_PASS') },
+      port,
+      secure: port === 465,
+      ignoreTLS: String(env('SMTP_AUTO_TLS')).toLowerCase() === 'false',
+      ...(user ? { auth: { user, pass: env('SMTP_PASS') } } : {}),
     });
     await transport.sendMail({
-      from: env('MAIL_FROM') || env('SMTP_USER'),
-      to: env('MAIL_TO'),
+      from: env('MAIL_FROM_NAME') ? { name: env('MAIL_FROM_NAME'), address: fromAddr } : fromAddr,
+      to: env('MAIL_TO') || fromAddr,
       replyTo: email,
       subject: `Neue Anfrage über jenomics.de (${lang.toUpperCase()})`,
       text: `E-Mail: ${email}\nTelefon: ${phone || '-'}\nSprache: ${lang}\nSeite: ${entry.page}\n\n${message || '(keine Nachricht)'}\n`,

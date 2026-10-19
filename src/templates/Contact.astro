@@ -81,7 +81,7 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${mapQ}`;
         <span class="jx-kicker" data-reveal>{t.form_kicker}</span>
         <h2 class="jx-h2" data-reveal style="--i:1">{t.form_title}</h2>
         <p data-reveal style="--i:2">{t.form_text}</p>
-        <form class="jx-form" action="/api/contact" method="post" data-contact-form data-reveal style="--i:3" novalidate>
+        <form class="jx-form" action="/api/contact/" method="post" data-contact-form data-reveal style="--i:3" novalidate>
           <input type="hidden" name="lang" value={lang} />
           <div class="jx-form__hp" aria-hidden="true">
             <label>Website <input type="text" name="form_fields[website_hp]" tabindex="-1" autocomplete="off" /></label>
