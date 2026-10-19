@@ -12,9 +12,9 @@ interface Props {
   lang: Lang;
   title: string;
   lead: string[];
-  /** /media/<img>-1200.webp and -720.webp */
-  img: string;
-  alt: string;
+  /** /media/<img>-1200.webp and -720.webp; leave out when the page passes a live scene in slot "visual" */
+  img?: string;
+  alt?: string;
   pal: [string, string, string];
   kicker: string;
   icon?: string;
@@ -22,8 +22,17 @@ interface Props {
   crumbs: { label: string; href?: string }[];
   /** Second button; defaults to "Alle Leistungen" */
   cta2?: { label: string; href: string } | null;
+  /** Replaces both buttons (company and product pages) */
+  ctas?: { label: string; href: string; ghost?: boolean; ext?: boolean; icon?: string }[];
+  /** Product logo shown above the title (/media/logo-*.webp) */
+  logo?: { src: string; alt: string; w: number; h: number };
+  /** Floating pill on the visual; null hides it */
+  pill?: string | null;
+  /** Slot "visual" brings its own window (homepage live pane): no glass frame around it */
+  bare?: boolean;
 }
-const { lang, title, lead, img, alt, pal, kicker, icon, crumbs, cta2 } = Astro.props;
+const { lang, title, lead, img, alt = '', pal, kicker, icon, crumbs, cta2, ctas, logo, pill, bare = false } = Astro.props;
+const hasScene = Astro.slots.has('visual');
 const u = serviceUi(lang);
 const home = lang === 'de' ? '/' : '/en/';
 const second = cta2 === undefined ? { label: u.hero_cta2, href: u.crumb_services_href } : cta2;
@@ -56,7 +65,8 @@ const second = cta2 === undefined ? { label: u.hero_cta2, href: u.crumb_services
         {icon && <span class="jx-phero__ico"><Icon name={icon as any} size={18} /></span>}
         <span class="jx-kicker">{kicker}</span>
       </p>
-      <h1 class="jx-phero__title" data-reveal style="--i:2">{title}</h1>
+      {logo && <img class="jx-phero__logo" src={logo.src} alt={logo.alt} width={logo.w} height={logo.h} data-reveal style="--i:2" />}
+      <h1 class:list={['jx-phero__title', { 'jx-phero__title--sm': !!logo }]} data-reveal style="--i:2">{title}</h1>
       {
         lead.map((l, i) => (
           <p class:list={['jx-phero__lead', { 'jx-phero__lead--sub': i > 0 }]} data-reveal style={`--i:${3 + i}`}>
@@ -65,8 +75,21 @@ const second = cta2 === undefined ? { label: u.hero_cta2, href: u.crumb_services
         ))
       }
       <div class="jx-phero__ctas" data-reveal style={`--i:${3 + lead.length}`}>
-        <a class="jx-btn" href={u.hero_cta_href}>{u.hero_cta}<Icon name="arrow" /></a>
-        {second && <a class="jx-btn jx-btn--ghost" href={second.href}>{second.label}</a>}
+        {
+          ctas ? (
+            ctas.map((c) => (
+              <a class:list={['jx-btn', { 'jx-btn--ghost': c.ghost }]} href={c.href} {...(c.ext ? { target: '_blank', rel: 'noopener' } : {})}>
+                {c.label}
+                {(c.icon ?? (c.ext ? 'external' : c.ghost ? '' : 'arrow')) && <Icon name={(c.icon ?? (c.ext ? 'external' : 'arrow')) as any} />}
+              </a>
+            ))
+          ) : (
+            <>
+              <a class="jx-btn" href={u.hero_cta_href}>{u.hero_cta}<Icon name="arrow" /></a>
+              {second && <a class="jx-btn jx-btn--ghost" href={second.href}>{second.label}</a>}
+            </>
+          )
+        }
       </div>
     </div>
 
@@ -78,15 +101,34 @@ const second = cta2 === undefined ? { label: u.hero_cta2, href: u.crumb_services
           { x: '-10%', y: '44%', size: '40%', g: 'linear-gradient(140deg, var(--hB), var(--hC))', d: 19, delay: 5, dx: '-5%', dy: '4%' },
         ]}
       />
-      <figure class="jx-phero__frame" data-reveal="clip" style="--i:2">
-        <picture>
-          <source media="(max-width: 700px)" srcset={`/media/${img}-720.webp`} />
-          <img src={`/media/${img}-1200.webp`} alt={alt} width="1200" height="788" fetchpriority="high" decoding="async" />
-        </picture>
-      </figure>
-      <div class="jx-phero__pill" data-reveal="right" style="--i:5">
-        <span class="jx-pill"><i><Icon name="calendar" /></i>{fill(u.hero_pill)}</span>
-      </div>
+      {
+        bare && hasScene && (
+          <div class="jx-phero__bare" data-reveal="scale" style="--i:2">
+            <slot name="visual" />
+          </div>
+        )
+      }
+      {!bare && <figure class:list={['jx-phero__frame', { 'jx-phero__frame--scene': hasScene }]} data-reveal="clip" style="--i:2">
+        {
+          hasScene ? (
+            <div class="jx-phero__scene">
+              <slot name="visual" />
+            </div>
+          ) : (
+            <picture>
+              <source media="(max-width: 700px)" srcset={`/media/${img}-720.webp`} />
+              <img src={`/media/${img}-1200.webp`} alt={alt} width="1200" height="788" fetchpriority="high" decoding="async" />
+            </picture>
+          )
+        }
+      </figure>}
+      {
+        pill !== null && (
+          <div class="jx-phero__pill" data-reveal="right" style="--i:5">
+            <span class="jx-pill"><i><Icon name="calendar" /></i>{fill(pill ?? u.hero_pill)}</span>
+          </div>
+        )
+      }
     </div>
   </div>
 </section>
@@ -163,6 +205,27 @@ const second = cta2 === undefined ? { label: u.hero_cta2, href: u.crumb_services
     line-height: 1.04;
     letter-spacing: -0.035em;
     color: var(--jx-blue);
+  }
+  .jx-phero__logo {
+    display: block;
+    width: auto;
+    height: clamp(40px, 4vw, 56px);
+    margin: 22px 0 0;
+  }
+  .jx-phero__title--sm {
+    font-size: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
+  }
+  .jx-phero__frame--scene .jx-phero__scene {
+    aspect-ratio: 1200 / 788;
+    border-radius: 17px;
+    overflow: hidden;
+  }
+  .jx-phero__scene .jx-scene {
+    min-height: 100%;
+    font-size: 13px;
+  }
+  .jx-phero__bare {
+    position: relative;
   }
   .jx-phero__lead {
     max-width: 48ch;

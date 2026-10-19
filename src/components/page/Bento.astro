@@ -1,0 +1,152 @@
+---
+/**
+ * Bento of animated UI scenes (Scene.astro): one card per item with scene, number, title, text and an optional
+ * check list. Widths in sixths of the row (span 2, 3 or 4; each row must add up to 6). Used by the service
+ * feature section and the company and product pages.
+ */
+import Icon from '../ui/Icon.astro';
+import Scene from '../service/Scene.astro';
+import { fill, type Lang } from '../../i18n';
+import type { SceneName } from '../service/data';
+
+interface Props {
+  lang: Lang;
+  items: { title: string; text?: string; list?: string[]; scene: SceneName; span: 2 | 3 | 4 }[];
+  /** Hide the 01, 02 … numbers */
+  plain?: boolean;
+}
+const { lang, items, plain = false } = Astro.props;
+---
+
+<ol class="jx-bento">
+  {
+    items.map((f, i) => (
+      <li class="jx-bcard" data-reveal style={`--i:${i % 3};--span:${f.span}`}>
+        <div class="jx-bcard__scene">
+          <Scene name={f.scene} lang={lang} />
+        </div>
+        <div class="jx-bcard__body">
+          {!plain && (
+            <span class="jx-fcard__num" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+          )}
+          <h3>{fill(f.title)}</h3>
+          {f.text && <p>{fill(f.text)}</p>}
+          {f.list && (
+            <ul class="jx-bcard__list">
+              {f.list.map((l) => (
+                <li>
+                  <Icon name="check" size={15} />
+                  <span>{l}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style is:global>
+  /* Bento with scenes: 6-column grid, cards span 2, 3 or 4 */
+  .jx-bento {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: clamp(16px, 2vw, 24px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-bcard {
+    grid-column: span var(--span, 2);
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--jx-r-xl);
+    background: #fff;
+    border: 1px solid rgba(30, 61, 126, 0.08);
+    box-shadow: var(--jx-shadow-sm);
+    overflow: hidden;
+    transition:
+      translate var(--jx-med) var(--jx-ease),
+      box-shadow var(--jx-med) var(--jx-ease),
+      border-color var(--jx-med) var(--jx-ease);
+  }
+  .jx-bcard:hover {
+    translate: 0 -4px;
+    box-shadow: var(--jx-shadow);
+    border-color: rgba(14, 120, 177, 0.22);
+  }
+  .jx-bcard__scene {
+    height: 260px;
+    border-bottom: 1px solid rgba(30, 61, 126, 0.06);
+  }
+  .jx-bcard__body {
+    padding: 24px 28px 30px;
+  }
+  .jx-bcard h3 {
+    font-size: 1.1875rem;
+    line-height: 1.3;
+    color: var(--jx-ink);
+  }
+  .jx-bcard p {
+    margin-top: 10px;
+    max-width: 52ch;
+    color: var(--jx-grey);
+    font-size: 0.9688rem;
+  }
+
+  .jx-bcard .jx-fcard__num {
+    display: inline-block;
+    margin-bottom: 12px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    background: linear-gradient(90deg, var(--jx-blue-k), var(--jx-green));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .jx-bcard__list {
+    display: grid;
+    gap: 7px;
+    margin: 16px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.9063rem;
+    color: var(--jx-ink);
+  }
+  .jx-bcard__list li {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: 8px;
+    align-items: start;
+  }
+  .jx-bcard__list svg {
+    margin-top: 4px;
+    color: var(--jx-green);
+  }
+
+  @media (max-width: 1000px) {
+    .jx-bento {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .jx-bcard {
+      grid-column: span 1;
+    }
+    /* odd count: the last card closes the row */
+    .jx-bcard:last-child:nth-child(odd) {
+      grid-column: span 2;
+    }
+  }
+  @media (max-width: 640px) {
+    .jx-bento {
+      grid-template-columns: 1fr;
+    }
+    .jx-bcard,
+    .jx-bcard:last-child:nth-child(odd) {
+      grid-column: auto;
+    }
+  }
+</style>

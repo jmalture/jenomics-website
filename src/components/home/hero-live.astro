@@ -17,7 +17,8 @@ import Icon from '../ui/Icon.astro';
 import { pick, type Lang } from '../../i18n';
 import data from '../../i18n/home.json';
 import offer from '../../i18n/offer.json';
-const { lang } = Astro.props as { lang: Lang };
+/** only: show a single service pane (service page heroes): no rail, no cursor, the story replays in a loop */
+const { lang, only } = Astro.props as { lang: Lang; only?: string };
 const t = pick(data, lang) as Record<string, any>;
 const o = pick(offer, lang);
 const ui = t.hero_ui as Record<string, any>;
@@ -40,6 +41,7 @@ const items = [
     pal: ['#2a3bc8', '#29a8ef', '#2ee59d'],
   },
 ].map(({ key, icon, name, href, pal }) => ({ key, icon, name, href, pal: pal as Pal }));
+const show = (k: string) => !only || only === k;
 
 const terminal = [
   ['$', 'ssh admin@srv-01'],
@@ -103,8 +105,9 @@ const check =
 ---
 
 <div
-  class="jx-live"
-  data-live-hero
+  class:list={['jx-live', { 'jx-live--single': only }]}
+  data-live-hero={only ? undefined : ''}
+  data-live-single={only ? '' : undefined}
   data-live
   data-palettes={JSON.stringify(items.map((it) => it.pal))}
   role="group"
@@ -113,7 +116,7 @@ const check =
   <div class="jx-app">
     <div class="jx-app__top" aria-hidden="true"><i></i><i></i><i></i></div>
     <div class="jx-app__body">
-      <nav class="jx-app__rail">
+      {!only && <nav class="jx-app__rail">
         <span class="jx-app__ink" aria-hidden="true"></span>
         {
           items.map((it, i) => (
@@ -131,18 +134,20 @@ const check =
             </a>
           ))
         }
-      </nav>
+      </nav>}
 
       <div class="jx-app__main">
-        <a class="jx-app__head" href={items[0].href} data-head>
+        {!only && <a class="jx-app__head" href={items[0].href} data-head>
           <span class="jx-app__num" data-head-num>01</span>
           <span class="jx-app__title" data-head-name>{items[0].name}</span>
           <span class="jx-app__go"><Icon name="arrow" size={16} /></span>
-        </a>
+        </a>}
 
         <div class="jx-app__panes" aria-hidden="true">
-          <!-- IT Administration: systems dashboard -->
-          <div class="jx-pane jx-pane--it is-on">
+          {show('it') && (
+<Fragment>
+<!-- IT Administration: systems dashboard -->
+          <div class:list={['jx-pane jx-pane--it', { 'is-on': !only || only === 'it' }]}>
             <div class="jx-hcard">
               <div class="jx-hcard__bar"><span class="jx-dot-live"></span>{ui.systems}<em>{ui.live}</em></div>
               <div class="jx-mon">
@@ -167,9 +172,12 @@ const check =
             </div>
             <span class="jx-toast"><i set:html={check} />{ui.fixed}</span>
           </div>
-
-          <!-- Software development: code editor -->
-          <div class="jx-pane jx-pane--dev">
+</Fragment>
+)}
+          {show('dev') && (
+<Fragment>
+<!-- Software development: code editor -->
+          <div class:list={['jx-pane jx-pane--dev', { 'is-on': only === 'dev' }]}>
             <div class="jx-hcard jx-hcard--dark">
               <div class="jx-hcard__bar"><i></i><i></i><i></i><em>app.ts</em></div>
               <div class="jx-code">
@@ -188,9 +196,12 @@ const check =
             </div>
             <span class="jx-toast jx-toast--late"><i set:html={check} />{ui.build}</span>
           </div>
-
-          <!-- Website & Branding: a page assembling itself -->
-          <div class="jx-pane jx-pane--web">
+</Fragment>
+)}
+          {show('web') && (
+<Fragment>
+<!-- Website & Branding: a page assembling itself -->
+          <div class:list={['jx-pane jx-pane--web', { 'is-on': only === 'web' }]}>
             <div class="jx-hcard">
               <div class="jx-hcard__bar"><i></i><i></i><i></i><span class="jx-site__url"></span></div>
               <div class="jx-site">
@@ -200,9 +211,12 @@ const check =
               </div>
             </div>
           </div>
-
-          <!-- Linux & Unix: terminal -->
-          <div class="jx-pane jx-pane--linux">
+</Fragment>
+)}
+          {show('linux') && (
+<Fragment>
+<!-- Linux & Unix: terminal -->
+          <div class:list={['jx-pane jx-pane--linux', { 'is-on': only === 'linux' }]}>
             <div class="jx-hcard jx-hcard--dark">
               <div class="jx-hcard__bar"><i></i><i></i><i></i><em>bash</em></div>
               <div class="jx-term">
@@ -224,9 +238,12 @@ const check =
               </div>
             </div>
           </div>
-
-          <!-- Infrastructure & network -->
-          <div class="jx-pane jx-pane--net">
+</Fragment>
+)}
+          {show('net') && (
+<Fragment>
+<!-- Infrastructure & network -->
+          <div class:list={['jx-pane jx-pane--net', { 'is-on': only === 'net' }]}>
             <div class="jx-hcard jx-hcard--net">
               <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
                 {
@@ -244,9 +261,12 @@ const check =
               <span class="jx-net__poi" data-poi></span>
             </div>
           </div>
-
-          <!-- Hosting -->
-          <div class="jx-pane jx-pane--host">
+</Fragment>
+)}
+          {show('host') && (
+<Fragment>
+<!-- Hosting -->
+          <div class:list={['jx-pane jx-pane--host', { 'is-on': only === 'host' }]}>
             <div class="jx-rack">
               {
                 [0, 1, 2, 3].map((k) => (
@@ -260,9 +280,12 @@ const check =
             </div>
             <span class="jx-green" data-poi><Icon name="leaf" size={16} />{t.hero_pill_green}</span>
           </div>
-
-          <!-- Own products -->
-          <div class="jx-pane jx-pane--products">
+</Fragment>
+)}
+          {show('products') && (
+<Fragment>
+<!-- Own products -->
+          <div class:list={['jx-pane jx-pane--products', { 'is-on': only === 'products' }]}>
             {
               o.products.map((p, k) => (
                 <div class="jx-prod" style={`--k:${k}`} data-poi={k === 1 ? '' : undefined}>
@@ -272,14 +295,16 @@ const check =
               ))
             }
           </div>
-        </div>
+</Fragment>
+)}
+                  </div>
       </div>
     </div>
   </div>
 
-  <span class="jx-live__cursor" aria-hidden="true">
+  {!only && <span class="jx-live__cursor" aria-hidden="true">
     <svg viewBox="0 0 24 24"><path d="M4 2.5 20 11l-7 1.8L9.2 20z"></path></svg>
-  </span>
+  </span>}
 </div>
 
 <style is:global>
@@ -313,6 +338,17 @@ const check =
     position: relative;
     container-type: inline-size;
     user-select: none;
+  }
+  /* Single pane on service pages: no rail, the pane fills the window */
+  .jx-live--single .jx-app {
+    font-size: 3cqw;
+  }
+  .jx-live--single .jx-app__body {
+    grid-template-columns: minmax(0, 1fr);
+    padding-left: 1.2em;
+  }
+  .jx-live--single .jx-app__panes {
+    grid-template: 17em / minmax(0, 1fr);
   }
   .jx-app {
     position: relative;
@@ -1135,6 +1171,20 @@ const check =
 </style>
 
 <script>
+  // Single pane (service page hero): replay the pane's story every few seconds while it is on screen.
+  document.querySelectorAll<HTMLElement>('[data-live-single]').forEach((root) => {
+    const pane = root.querySelector<HTMLElement>('.jx-pane');
+    if (!pane || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let inView = true;
+    new IntersectionObserver(([e]) => (inView = e.isIntersecting), { threshold: 0.2 }).observe(root);
+    window.setInterval(() => {
+      if (!inView || document.hidden) return;
+      pane.classList.remove('is-on');
+      void pane.offsetWidth;
+      pane.classList.add('is-on');
+    }, 7500);
+  });
+
   document.querySelectorAll<HTMLElement>('[data-live-hero]').forEach((root) => {
     const tabs = [...root.querySelectorAll<HTMLAnchorElement>('[data-tab]')];
     const panes = [...root.querySelectorAll<HTMLElement>('.jx-pane')];
