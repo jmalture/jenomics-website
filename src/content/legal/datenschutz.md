@@ -38,9 +38,19 @@ Die Verarbeitung der vorgenannten personenbezogenen Daten erfolgt zu folgenden Z
 - Auswertung der Systemsicherheit und -stabilität sowie
 - zu weiteren administrativen Zwecken.
 
-Die Rechtsgrundlage für die Datenverarbeitung ist Art. 6 Abs. 1 S. 1 lit. f DSGVO. Unser berechtigtes Interesse folgt aus oben aufgelisteten Zwecken zur Datenerhebung. In keinem Fall verwenden wir die erhobenen Daten zu dem Zweck, Rückschlüsse auf Ihre Person zu ziehen. Darüber hinaus setzen wir beim Besuch unserer Website Cookies ein. Nähere Erläuterungen dazu erhalten Sie unter den Ziff. 4 dieser Datenschutzerklärung.
+Die Rechtsgrundlage für die Datenverarbeitung ist Art. 6 Abs. 1 S. 1 lit. f DSGVO. Unser berechtigtes Interesse folgt aus oben aufgelisteten Zwecken zur Datenerhebung. In keinem Fall verwenden wir die erhobenen Daten zu dem Zweck, Rückschlüsse auf Ihre Person zu ziehen. Cookies sowie Analyse- oder Tracking-Werkzeuge setzen wir nicht ein (siehe Ziff. 5). Schriftarten und alle übrigen Inhalte unserer Website werden von unserem eigenen Webserver ausgeliefert; beim Aufruf der Website werden keine Daten an Dritte wie Google übertragen.
 
-## 3. Weitergabe von Daten
+### 2.2. Bei Nutzung unseres Kontaktformulars und bei Kontakt per E-Mail oder Telefon
+
+Wenn Sie uns über das Kontaktformular eine Anfrage senden, verarbeiten wir die von Ihnen eingegebenen Daten (E-Mail-Adresse, optional Telefonnummer und Ihre Nachricht) sowie den Zeitpunkt der Anfrage, die gewählte Sprache und die Seite, von der aus Sie das Formular abgesendet haben. Wir verwenden diese Daten ausschließlich, um Ihre Anfrage zu bearbeiten und mit Ihnen in Kontakt zu treten. Die Anfrage wird auf unserem Webserver gespeichert und per E-Mail über unseren eigenen Mailserver an unser Team weitergeleitet. Ihre IP-Adresse wird zum Schutz vor Missbrauch (Begrenzung der Anzahl von Anfragen) nur kurzzeitig im Arbeitsspeicher verarbeitet und nicht gespeichert.
+
+Rechtsgrundlage ist Art. 6 Abs. 1 S. 1 lit. b DSGVO, sofern Ihre Anfrage mit dem Abschluss oder der Durchführung eines Vertrags zusammenhängt, und im Übrigen Art. 6 Abs. 1 S. 1 lit. f DSGVO; unser berechtigtes Interesse liegt in der Beantwortung Ihrer Anfrage. Wir löschen die Daten, sobald sie für die Bearbeitung Ihrer Anfrage nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten entgegenstehen. Gleiches gilt, wenn Sie uns per E-Mail oder telefonisch kontaktieren.
+
+## 3. Hosting
+
+Unsere Website wird bei einem externen Dienstleister gehostet: Hostinger (HOSTINGER, UAB, Švitrigailos g. 34, LT-03230 Vilnius, Litauen). Der Hoster verarbeitet in unserem Auftrag die unter Ziff. 2.1 genannten Daten (insbesondere IP-Adressen und Server-Logfiles) sowie die über das Kontaktformular übermittelten Anfragen. Rechtsgrundlage ist Art. 6 Abs. 1 S. 1 lit. f DSGVO; unser berechtigtes Interesse liegt in einer sicheren, schnellen und zuverlässigen Bereitstellung unserer Website. Mit dem Hoster besteht ein Vertrag über die Auftragsverarbeitung nach Art. 28 DSGVO.
+
+## 4. Weitergabe von Daten
 
 Eine Übermittlung Ihrer persönlichen Daten an Dritte zu anderen als den im Folgenden aufgeführten Zwecken findet nicht statt. Wir geben Ihre persönlichen Daten nur an Dritte weiter, wenn:
 
@@ -49,13 +59,19 @@ Eine Übermittlung Ihrer persönlichen Daten an Dritte zu anderen als den im Fol
 - für den Fall, dass für die Weitergabe nach Art. 6 Abs. 1 S. 1 lit. c DSGVO eine gesetzliche Verpflichtung besteht, sowie
 - dies gesetzlich zulässig und nach Art. 6 Abs. 1 S. 1 lit. b DSGVO für die Abwicklung von Vertragsverhältnissen mit Ihnen erforderlich ist.
 
-## 4. Cookies
+## 5. Cookies
 
-Wir setzen auf unserer Seite Cookies ein. Hierbei handelt es sich um kleine Dateien, die Ihr Browser automatisch erstellt und die auf Ihrem Endgerät (Laptop, Tablet, Smartphone o.ä.) gespeichert werden, wenn Sie unsere Seite besuchen. Cookies richten auf Ihrem Endgerät keinen Schaden an, enthalten keine Viren, Trojaner oder sonstige Schadsoftware. In dem Cookie werden Informationen abgelegt, die sich jeweils im Zusammenhang mit dem spezifisch eingesetzten Endgerät ergeben. Dies bedeutet jedoch nicht, dass wir dadurch unmittelbar Kenntnis von Ihrer Identität erhalten. Der Einsatz von Cookies dient einerseits dazu, die Nutzung unseres Angebots für Sie angenehmer zu gestalten. So setzen wir sogenannte Session-Cookies ein, um zu erkennen, dass Sie einzelne Seiten unserer Website bereits besucht haben. Diese werden nach Verlassen unserer Seite automatisch gelöscht. Darüber hinaus setzen wir ebenfalls zur Optimierung der Benutzerfreundlichkeit temporäre Cookies ein, die für einen bestimmten festgelegten Zeitraum auf Ihrem Endgerät gespeichert werden. Besuchen Sie unsere Seite erneut, um unsere Dienste in Anspruch zu nehmen, wird automatisch erkannt, dass Sie bereits bei uns waren und welche Eingaben und Einstellungen sie getätigt haben, um diese nicht noch einmal eingeben zu müssen. Zum anderen setzten wir Cookies ein, um die Nutzung unserer Website statistisch zu erfassen und zum Zwecke der Optimierung unseres Angebotes für Sie. Diese Cookies ermöglichen es uns, bei einem erneuten Besuch unserer Seite automatisch zu erkennen, dass Sie bereits bei uns waren. Diese Cookies werden nach einer jeweils definierten Zeit automatisch gelöscht. Die durch Cookies verarbeiteten Daten sind für die genannten Zwecke zur Wahrung unserer berechtigten Interessen sowie der Dritter nach Art. 6 Abs. 1 S. 1 lit. f DSGVO erforderlich. Die meisten Browser akzeptieren Cookies automatisch. Sie können Ihren Browser jedoch so konfigurieren, dass keine Cookies auf Ihrem Computer gespeichert werden oder stets ein Hinweis erscheint, bevor ein neuer Cookie angelegt wird. Die vollständige Deaktivierung von Cookies kann jedoch dazu führen, dass Sie nicht alle Funktionen unserer Webseite nutzen können.
+Unsere Website setzt keine Cookies und keine vergleichbaren Technologien zur Speicherung von Informationen auf Ihrem Endgerät ein und verwendet keine Analyse- oder Tracking-Dienste. Erst wenn Sie auf unserer Kontaktseite die Karte von Google Maps aktiv laden (siehe Ziff. 6), kann Google Cookies setzen.
 
-## 5. Betroffenenrechte
+## 6. Google Maps
 
-### 5.1. Auskunft: Art. 15 DSGVO
+Auf unserer Kontaktseite können Sie eine Karte des Kartendienstes Google Maps einblenden. Anbieter ist die Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Die Karte wird erst geladen, wenn Sie auf „Karte laden“ klicken; vorher werden keine Daten an Google übertragen. Mit dem Laden der Karte werden Ihre IP-Adresse sowie technische Informationen zu Ihrem Browser an Google übermittelt, und Google kann Cookies auf Ihrem Endgerät setzen. Dabei kann eine Übermittlung von Daten an die Google LLC in den USA stattfinden; die Google LLC ist unter dem EU-US Data Privacy Framework zertifiziert.
+
+Rechtsgrundlage ist Ihre Einwilligung nach Art. 6 Abs. 1 S. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG, die Sie mit dem Klick auf „Karte laden“ erteilen. Sie können die Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen, indem Sie die Seite neu laden; die Karte wird dann erst nach einem erneuten Klick geladen. Weitere Informationen finden Sie in der Datenschutzerklärung von Google: [policies.google.com/privacy](https://policies.google.com/privacy).
+
+## 7. Betroffenenrechte
+
+### 7.1. Auskunft: Art. 15 DSGVO
 
 Sie können von uns Auskunft über Ihre von uns verarbeiteten personenbezogenen Daten verlangen. Kein Auskunftsrecht besteht, wenn die Erteilung der begehrten Informationen gegen die Verschwiegenheitspflicht gem. § 83 StBerG bzw. § 43a BRAO verstoßen würde oder die Informationen aus sonstigen Gründen, insbesondere wegen eines überwiegenden berechtigt den Interesses eines Dritten, geheim gehalten werden müssen. Hiervon abweichend kann eine Pflicht zur Erteilung der Auskunft bestehen, wenn insbesondere unter Berücksichtigung drohender Schäden Ihre Interessen gegenüber dem Geheimhaltungsinteresse überwiegen. Das Auskunftsrecht ist ferner ausgeschlossen, wenn die Daten nur deshalb gespeichert sind, weil sie aufgrund gesetzlicher oder satzungsmäßiger Aufbewahrungsfristen nicht gelöscht werden dürfen oder ausschließlich Zwecken der Datensicherung oder der Datenschutzkontrolle dienen, sofern die Auskunftserteilung einen unverhältnismäßig hohen Aufwand erfordern würde und die Verarbeitung zu anderen Zwecken durch geeignete technische und organisatorische Maßnahmen ausgeschlossen ist. Sofern in Ihrem Fall das Auskunftsrecht nicht ausgeschlossen ist und Ihre personenbezogenen Daten von uns verarbeitet werden, können Sie von uns Auskunft über folgende Informationen verlangen:
 
@@ -69,11 +85,11 @@ Sie können von uns Auskunft über Ihre von uns verarbeiteten personenbezogenen 
 - ggf. das Bestehen einer automatisierten Entscheidungsfindung einschließlich Profiling und aussagekräftige Informationen über die involvierte Logik sowie die Tragweite und angestrebten Auswirkungen automatisierter Entscheidungsfindungen,
 - ggf. im Fall der Übermittlung an Empfänger in Drittländern, sofern kein Beschluss der EU-Kommission über die Angemessenheit des Schutzniveaus nach Art. 45 Abs. 3 DSGVO vorliegt, Informationen darüber, welche geeigneten Garantien gem. Art. 46 Abs. 2 DSGVO zum Schutze der personenbezogenen Daten vorgesehen sind.
 
-### 5.2. Berichtigung: Art. 16 DSGVO
+### 7.2. Berichtigung: Art. 16 DSGVO
 
 Sofern Sie feststellen, dass uns unrichtige personenbezogene Daten von Ihnen vorliegen, können Sie von uns die unverzügliche Berichtigung dieser unrichtigen Daten verlangen. Bei unvollständigen Sie betreffenden personenbezogenen Daten können Sie die Vervollständigung verlangen.
 
-### 5.3. Löschung: Art. 17 DSGVO
+### 7.3. Löschung: Art. 17 DSGVO
 
 Sie haben ein Recht auf Löschung („ Recht auf Vergessenwerden“), sofern die Verarbeitung nicht zur Ausübung des Rechts auf freie Meinungsäußerung, des Rechts auf Information oder zur Erfüllung einer rechtlichen Verpflichtung oder zur Wahrnehmung einer Aufgabe, die im öffentlichen Interesse liegt, erforderlich ist und einer der nachstehenden Gründe zutrifft:
 
@@ -84,7 +100,7 @@ Sie haben ein Recht auf Löschung („ Recht auf Vergessenwerden“), sofern die
 - Ihre personenbezogenen Daten wurden unrechtmäßig verarbeitet;
 - Die Löschung der personenbezogenen Daten ist zur Erfüllung einer gesetzlichen Verpflichtung, der wir unterliegen, erforderlich.
 
-### 5.4. Einschränkung der Verarbeitung: Art. 18 DSGVO
+### 7.4. Einschränkung der Verarbeitung: Art. 18 DSGVO
 
 Sie können von uns die Einschränkung der Verarbeitung verlangen, wenn einer der nachstehenden Gründe zutrifft:
 
@@ -95,7 +111,7 @@ Sie können von uns die Einschränkung der Verarbeitung verlangen, wenn einer de
 
 Einschränkung der Verarbeitung bedeutet, dass die personenbezogenen Daten nur mit Ihrer Einwilligung oder zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen oder zum Schutz der Rechte einer anderen natürlichen oder juristischen Person oder aus Gründen eines wichtigen öffentlichen Interesses verarbeitet werden. Bevor wir die Einschränkung aufheben, haben wir die Pflicht, sie darüber zu unterrichten.
 
-### 5.5. Übertragbarkeit von Daten: Art. 20 DSGVO
+### 7.5. Übertragbarkeit von Daten: Art. 20 DSGVO
 
 Sie haben ein Recht auf Übertragbarkeit von personenbezogenen Daten, sofern die Verarbeitung auf Ihrer Einwilligung (Art. 6 Abs. 1, lit. a. oder Art. 9 Absatz 2. lit. a. DSGVO) oder auf einem Vertrag beruht, dessen Vertragspartei sie sind und die Verarbeitung mithilfe automatisierter Verfahren erfolgt. Das Recht auf Datenübertragbarkeit beinhaltet in diesem Fall folgende Rechte, sofern hierdurch nicht die Rechte und Freiheiten anderer Personen beeinträchtigt werden:
 
@@ -103,24 +119,24 @@ Sie haben ein Recht auf Übertragbarkeit von personenbezogenen Daten, sofern die
 - Sie haben das Recht, diese Daten einem anderen Verantwortlichen ohne Behinderung unsererseits zu übermitteln.
 - Soweit technisch machbar, können Sie von uns verlangen, dass wir Ihre personenbezogenen Daten direkt an einen anderen Verantwortlichen übermitteln.
 
-### 5.6. Widerruf einer Einwilligung: Art. 7 Abs. 3 DSGVO
+### 7.6. Widerruf einer Einwilligung: Art. 7 Abs. 3 DSGVO
 
 Sie haben das Recht, eine erteilte Einwilligung jederzeit mit Wirkung für die Zukunft zu widerrufen. Der Widerruf der Einwilligung kann telefonisch, per E-Mail, per Telefax oder an unsere Postadresse formlos mitgeteilt werden. Durch den Widerruf über die Rechtmäßigkeit der Datenverarbeitung, die aufgrund der Einwilligung bis zum Eingang des Widerrufs erfolgt ist, nicht berührt. Nach Eingang des Widerrufs wird die Datenverarbeitung, die ausschließlich auf ihrer Einwilligung beruhte, eingestellt.
 
-### 5.7. Beschwerde: Art. 77 DSGVO
+### 7.7. Beschwerde: Art. 77 DSGVO
 
 Wenn Sie der Ansicht sind, dass die Verarbeitung der Sie betreffenden personenbezogenen Daten rechtswidrig ist, können Sie Beschwerde bei einer Aufsichtsbehörde für den Datenschutz einlegen, die für den Ort Ihres Aufenthalts oder Arbeitsplatzes oder für den Ort des mutmaßlichen Verstoßes zuständig ist.
 
-### 5.8. Widerspruchsrecht: Art. 21 DSGVO
+### 7.8. Widerspruchsrecht: Art. 21 DSGVO
 
 Sofern die Verarbeitung auf Art. 6 Abs. 1, lit. e. DSGVO (Wahrnehmung einer Aufgabe im öffentlichen Interesse oder in Ausübung öffentlicher Gewalt) oder auf Art. 6 Abs. 1, lit. f. DSGVO (berechtigtes Interesse des Verantwortlichen oder eines Dritten) beruht, haben Sie das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit gegen die Verarbeitung der Sie betreffenden personenbezogenen Daten Widerspruch einzulegen. Dies gilt auch für ein auf Art. 6 Abs. 1 lit. e. oder lit. f GSGVO gestütztes Profiling. Nach Ausübung des Widerspruchsrechts verarbeiten wir Ihre personenbezogenen Daten nicht mehr, es sei denn, wir können zwingende schutzwürdige Gründe für die Verarbeitung nachweisen, die Ihre Interessen, Rechte und Freiheiten überwiegen, oder die Verarbeitung dient der Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen. Sie können jederzeit Widerspruch gegen die Verarbeitung der Sie betreffenden personenbezogenen Daten zu Zwecken der Direktwerbung einlegen. Das gilt auch für ein Profiling, das mit einer solchen Direktwerbung in Verbindung steht. Nach Ausübung dieses Widerspruchsrechts werden wir die betreffenden personenbezogenen Daten nicht mehr für Zwecke der Direktwerbung verwenden. Sie haben die Möglichkeit, den Widerspruch telefonisch, per E-Mail, per Telefax oder an unsere zu Beginn dieser Datenschutzerklärung aufgeführte Postadresse unserer Kanzlei formlos mitzuteilen.
 
-## 6. Datensicherheit
+## 8. Datensicherheit
 
 Wir verwenden innerhalb des Website-Besuchs das verbreitete SSL-Verfahren (Secure Socket Layer) in Verbindung mit der jeweils höchsten Verschlüsselungsstufe, die von Ihrem Browser unterstützt wird. In der Regel handelt es sich dabei um eine 256 Bit Verschlüsselung. Falls Ihr Browser keine 256-Bit Verschlüsselung unterstützt, greifen wir stattdessen auf 128-Bit v3 Technologie zurück. Ob eine einzelne Seite unseres Internetauftrittes verschlüsselt übertragen wird, erkennen Sie an der geschlossenen Darstellung des Schüssel- beziehungsweise Schloss-Symbols in der unteren Statusleiste Ihres Browsers. Wir bedienen uns im Übrigen geeigneter technischer und organisatorischer Sicherheitsmaßnahmen, um Ihre Daten gegen zufällige oder vorsätzliche Manipulationen, teilweisen oder vollständigen Verlust, Zerstörung oder gegen den unbefugten Zugriff Dritter zu schützen. Unsere Sicherheitsmaßnahmen werden entsprechend der technologischen Entwicklung fortlaufend verbessert.
 
-## 7. Aktualität und Änderung dieser Datenschutzerklärung
+## 9. Aktualität und Änderung dieser Datenschutzerklärung
 
-Diese Datenschutzerklärung ist aktuell gültig und hat den Stand Mai 2018. Durch die Weiterentwicklung unserer Website und Angebote darüber oder aufgrund geänderter gesetzlicher beziehungsweise behördlicher Vorgaben kann es notwendig werden, diese Datenschutzerklärung zu ändern. Die jeweils aktuelle Datenschutzerklärung kann jederzeit auf der Website unter [Datenschutz](/datenschutz/) von Ihnen abgerufen und ausgedruckt werden.
+Diese Datenschutzerklärung ist aktuell gültig und hat den Stand Oktober 2026. Durch die Weiterentwicklung unserer Website und Angebote darüber oder aufgrund geänderter gesetzlicher beziehungsweise behördlicher Vorgaben kann es notwendig werden, diese Datenschutzerklärung zu ändern. Die jeweils aktuelle Datenschutzerklärung kann jederzeit auf der Website unter [Datenschutz](/datenschutz/) von Ihnen abgerufen und ausgedruckt werden.
 
-Datenschutzerklärung Stand Mai 2018
+Datenschutzerklärung Stand Oktober 2026

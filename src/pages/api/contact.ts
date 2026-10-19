@@ -73,8 +73,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     phone,
     message,
     page: request.headers.get('referer') ?? '',
-    ip,
-    userAgent: request.headers.get('user-agent') ?? '',
+    // IP and user agent are deliberately not stored (data minimisation); the IP is only kept in memory for the rate limit
     mail: 'pending',
   };
   const dir = env('SUBMISSIONS_DIR') || path.join(process.cwd(), 'data', 'submissions');

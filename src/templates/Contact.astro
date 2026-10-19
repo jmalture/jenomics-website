@@ -17,6 +17,7 @@ const tel = (p: string) => `tel:${p.replace(/\s/g, '')}`;
 const mapQ = encodeURIComponent('Jenomics GmbH Thalkirchnerstr. 55 80337 München');
 const mapSrc = `https://maps.google.com/maps?q=${mapQ}&t=m&z=16&output=embed&iwloc=near`;
 const mapLink = `https://www.google.com/maps/search/?api=1&query=${mapQ}`;
+const routeLink = `https://www.google.com/maps/dir/?api=1&destination=${mapQ}`;
 ---
 
 <Base lang={lang} title={t.meta_title} description={t.meta_desc} alternates={PAGE_URLS.contact}>
@@ -118,7 +119,10 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${mapQ}`;
             <span>{t.address.slice(1).join(', ')}</span>
             <button class="jx-btn jx-btn--sm" type="button" data-map-load>{t.map_btn}</button>
             <small>{t.map_note}</small>
-            <a class="jx-link" href={mapLink} target="_blank" rel="noopener">{t.map_open}<Icon name="external" size={14} /></a>
+            <span class="jx-cmap__links">
+              <a class="jx-link" href={routeLink} target="_blank" rel="noopener">{t.map_route}<Icon name="external" size={14} /></a>
+              <a class="jx-link" href={mapLink} target="_blank" rel="noopener">{t.map_open}<Icon name="external" size={14} /></a>
+            </span>
           </div>
         </div>
       </div>
@@ -365,6 +369,11 @@ const mapLink = `https://www.google.com/maps/search/?api=1&query=${mapQ}`;
   }
   .jx-cmap__overlay .jx-btn {
     margin-top: 8px;
+  }
+  .jx-cmap__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
   }
   .jx-cmap__overlay small {
     color: var(--jx-grey);

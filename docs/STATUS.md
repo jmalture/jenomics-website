@@ -50,8 +50,14 @@
 - Legal pages (2026-10-19): Impressum, Datenschutz, AGB at /impressum/, /datenschutz/, /agb/ (German only),
   text 1:1 from jenomics.de (`src/content/legal/*.md`, template `Legal.astro`, sticky TOC on long pages),
   AGB PDF in `public/files/`. For Jenomics (not legal advice, needs their review): the Datenschutz text is
-  "Stand Mai 2018" and covers only server logs and cookies; it does not mention the contact form, the
-  click-to-load Google Map or the hosting provider. The Impressum still cites the old MDStV/TDG (now DDG).
+  now "Stand Oktober 2026": added sections for the contact form (2.2), hosting at Hostinger (3, AVV per
+  Art. 28 DSGVO), no cookies (5) and the click-to-load Google Map (6, consent per Art. 6 (1) a DSGVO +
+  § 25 TDDDG); the Impressum cites the DDG instead of MDStV/TDG. Jenomics must confirm: the Hostinger entity
+  on their contract, that the AVV is signed, and whether a Verbraucherstreitbeilegung note is needed.
+- Kontakt map (2026-10-19): Google Map loads only after a click (no Google request before), plus a
+  "Route planen" link. Contact submissions are stored without IP or user agent.
+- Team "Jenomics goes International" (2026-10-19): dotted world map scene (`globe` in ScenesCompany.astro,
+  land dots from the global-land-mask package), arcs from Munich to remote pins with travelling sparks.
 - Two old /news/<slug>/ links inside blog posts now point to /<slug>/.
 
 - Contact form (2026-10-19): form action fixed to /api/contact/ (with trailingSlash 'always' the old URL

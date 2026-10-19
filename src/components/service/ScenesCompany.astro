@@ -140,6 +140,22 @@ const ico = {
 // Growth curve for the story scene (0..100 viewBox, y down)
 const curve = 'M4 88 C 20 86, 30 80, 42 70 S 64 46, 74 36 S 90 16, 96 10';
 const avatars = Array.from({ length: 9 }, (_, i) => i);
+// Dotted world map (96 × 44 grid, land from global-land-mask, equirectangular 78°N..56°S): one path of dots
+const worldDots = 'M24 0h0M25 0h0M26 0h0M28 0h0M29 0h0M30 0h0M31 0h0M32 0h0M33 0h0M34 0h0M35 0h0M36 0h0M37 0h0M38 0h0M39 0h0M40 0h0M41 0h0M52 0h0M54 0h0M16 1h0M21 1h0M22 1h0M23 1h0M24 1h0M25 1h0M32 1h0M33 1h0M34 1h0M35 1h0M36 1h0M37 1h0M38 1h0M39 1h0M40 1h0M41 1h0M64 1h0M72 1h0M73 1h0M74 1h0M75 1h0M76 1h0M77 1h0M78 1h0M89 1h0M13 2h0M15 2h0M16 2h0M17 2h0M18 2h0M21 2h0M23 2h0M24 2h0M25 2h0M26 2h0M32 2h0M33 2h0M34 2h0M35 2h0M36 2h0M37 2h0M38 2h0M39 2h0M40 2h0M41 2h0M62 2h0M63 2h0M67 2h0M69 2h0M70 2h0M71 2h0M72 2h0M73 2h0M74 2h0M75 2h0M76 2h0M77 2h0M78 2h0M79 2h0M80 2h0M81 2h0M82 2h0M83 2h0M87 2h0M88 2h0M89 2h0M2 3h0M3 3h0M4 3h0M5 3h0M6 3h0M7 3h0M8 3h0M9 3h0M10 3h0M11 3h0M12 3h0M13 3h0M14 3h0M15 3h0M16 3h0M18 3h0M19 3h0M22 3h0M24 3h0M27 3h0M28 3h0M34 3h0M35 3h0M36 3h0M37 3h0M38 3h0M39 3h0M52 3h0M53 3h0M54 3h0M55 3h0M56 3h0M57 3h0M58 3h0M64 3h0M65 3h0M66 3h0M67 3h0M70 3h0M71 3h0M72 3h0M73 3h0M74 3h0M75 3h0M76 3h0M77 3h0M78 3h0M79 3h0M80 3h0M81 3h0M82 3h0M83 3h0M84 3h0M85 3h0M86 3h0M87 3h0M88 3h0M89 3h0M90 3h0M91 3h0M92 3h0M93 3h0M94 3h0M95 3h0M1 4h0M2 4h0M3 4h0M4 4h0M5 4h0M6 4h0M7 4h0M8 4h0M9 4h0M10 4h0M11 4h0M12 4h0M13 4h0M14 4h0M15 4h0M16 4h0M17 4h0M18 4h0M19 4h0M20 4h0M21 4h0M22 4h0M23 4h0M27 4h0M28 4h0M34 4h0M35 4h0M36 4h0M41 4h0M42 4h0M43 4h0M51 4h0M52 4h0M53 4h0M55 4h0M56 4h0M57 4h0M59 4h0M60 4h0M61 4h0M62 4h0M63 4h0M64 4h0M65 4h0M66 4h0M67 4h0M68 4h0M69 4h0M70 4h0M71 4h0M72 4h0M73 4h0M74 4h0M75 4h0M76 4h0M77 4h0M78 4h0M79 4h0M80 4h0M81 4h0M82 4h0M83 4h0M84 4h0M85 4h0M86 4h0M87 4h0M88 4h0M89 4h0M90 4h0M91 4h0M92 4h0M93 4h0M94 4h0M95 4h0M2 5h0M3 5h0M4 5h0M5 5h0M6 5h0M7 5h0M8 5h0M9 5h0M10 5h0M11 5h0M12 5h0M13 5h0M14 5h0M15 5h0M16 5h0M17 5h0M18 5h0M19 5h0M20 5h0M21 5h0M26 5h0M34 5h0M35 5h0M50 5h0M51 5h0M52 5h0M54 5h0M55 5h0M56 5h0M57 5h0M58 5h0M59 5h0M60 5h0M61 5h0M62 5h0M63 5h0M64 5h0M65 5h0M66 5h0M67 5h0M68 5h0M69 5h0M70 5h0M71 5h0M72 5h0M73 5h0M74 5h0M75 5h0M76 5h0M77 5h0M78 5h0M79 5h0M80 5h0M81 5h0M82 5h0M83 5h0M84 5h0M85 5h0M86 5h0M87 5h0M88 5h0M89 5h0M90 5h0M91 5h0M92 5h0M93 5h0M94 5h0M95 5h0M3 6h0M4 6h0M9 6h0M10 6h0M11 6h0M12 6h0M13 6h0M14 6h0M15 6h0M16 6h0M17 6h0M18 6h0M19 6h0M20 6h0M21 6h0M26 6h0M27 6h0M28 6h0M49 6h0M50 6h0M51 6h0M52 6h0M55 6h0M56 6h0M57 6h0M58 6h0M59 6h0M60 6h0M61 6h0M62 6h0M63 6h0M64 6h0M65 6h0M66 6h0M67 6h0M68 6h0M69 6h0M70 6h0M71 6h0M72 6h0M73 6h0M74 6h0M75 6h0M76 6h0M77 6h0M78 6h0M79 6h0M80 6h0M81 6h0M82 6h0M83 6h0M84 6h0M85 6h0M86 6h0M87 6h0M89 6h0M90 6h0M93 6h0M3 7h0M10 7h0M11 7h0M12 7h0M13 7h0M14 7h0M15 7h0M16 7h0M17 7h0M18 7h0M19 7h0M20 7h0M21 7h0M22 7h0M27 7h0M28 7h0M29 7h0M30 7h0M46 7h0M50 7h0M54 7h0M55 7h0M56 7h0M57 7h0M58 7h0M59 7h0M60 7h0M61 7h0M62 7h0M63 7h0M64 7h0M65 7h0M66 7h0M67 7h0M68 7h0M69 7h0M70 7h0M71 7h0M72 7h0M73 7h0M74 7h0M75 7h0M76 7h0M77 7h0M78 7h0M79 7h0M80 7h0M81 7h0M82 7h0M83 7h0M84 7h0M85 7h0M92 7h0M93 7h0M12 8h0M13 8h0M14 8h0M15 8h0M16 8h0M17 8h0M18 8h0M19 8h0M20 8h0M21 8h0M22 8h0M23 8h0M24 8h0M26 8h0M27 8h0M28 8h0M29 8h0M30 8h0M31 8h0M45 8h0M47 8h0M49 8h0M50 8h0M51 8h0M52 8h0M53 8h0M54 8h0M55 8h0M56 8h0M57 8h0M58 8h0M59 8h0M60 8h0M61 8h0M62 8h0M63 8h0M64 8h0M65 8h0M66 8h0M67 8h0M68 8h0M69 8h0M70 8h0M71 8h0M72 8h0M73 8h0M74 8h0M75 8h0M76 8h0M77 8h0M78 8h0M79 8h0M80 8h0M81 8h0M82 8h0M83 8h0M84 8h0M85 8h0M86 8h0M12 9h0M13 9h0M14 9h0M15 9h0M16 9h0M17 9h0M18 9h0M19 9h0M20 9h0M21 9h0M22 9h0M23 9h0M24 9h0M25 9h0M26 9h0M27 9h0M28 9h0M48 9h0M49 9h0M50 9h0M51 9h0M52 9h0M53 9h0M54 9h0M55 9h0M56 9h0M57 9h0M58 9h0M59 9h0M60 9h0M61 9h0M62 9h0M63 9h0M64 9h0M65 9h0M66 9h0M67 9h0M68 9h0M69 9h0M70 9h0M71 9h0M72 9h0M73 9h0M74 9h0M75 9h0M76 9h0M77 9h0M78 9h0M79 9h0M80 9h0M81 9h0M82 9h0M83 9h0M84 9h0M85 9h0M86 9h0M13 10h0M14 10h0M15 10h0M16 10h0M17 10h0M18 10h0M19 10h0M20 10h0M21 10h0M22 10h0M23 10h0M24 10h0M25 10h0M26 10h0M27 10h0M28 10h0M29 10h0M47 10h0M48 10h0M49 10h0M50 10h0M51 10h0M52 10h0M53 10h0M54 10h0M55 10h0M56 10h0M57 10h0M59 10h0M60 10h0M61 10h0M62 10h0M63 10h0M64 10h0M65 10h0M66 10h0M67 10h0M68 10h0M69 10h0M70 10h0M71 10h0M72 10h0M73 10h0M74 10h0M75 10h0M76 10h0M77 10h0M78 10h0M79 10h0M80 10h0M81 10h0M82 10h0M83 10h0M84 10h0M85 10h0M86 10h0M13 11h0M14 11h0M15 11h0M16 11h0M17 11h0M18 11h0M19 11h0M20 11h0M21 11h0M22 11h0M23 11h0M24 11h0M25 11h0M26 11h0M27 11h0M48 11h0M49 11h0M51 11h0M52 11h0M53 11h0M54 11h0M55 11h0M59 11h0M60 11h0M61 11h0M62 11h0M63 11h0M64 11h0M65 11h0M66 11h0M67 11h0M68 11h0M69 11h0M70 11h0M71 11h0M72 11h0M73 11h0M74 11h0M75 11h0M76 11h0M77 11h0M78 11h0M79 11h0M80 11h0M81 11h0M82 11h0M83 11h0M84 11h0M85 11h0M87 11h0M88 11h0M13 12h0M14 12h0M15 12h0M16 12h0M17 12h0M18 12h0M19 12h0M20 12h0M21 12h0M22 12h0M23 12h0M24 12h0M25 12h0M26 12h0M46 12h0M47 12h0M50 12h0M52 12h0M53 12h0M54 12h0M55 12h0M56 12h0M57 12h0M58 12h0M59 12h0M60 12h0M61 12h0M62 12h0M63 12h0M64 12h0M65 12h0M66 12h0M67 12h0M68 12h0M69 12h0M70 12h0M71 12h0M72 12h0M73 12h0M74 12h0M75 12h0M76 12h0M77 12h0M78 12h0M79 12h0M80 12h0M81 12h0M82 12h0M83 12h0M87 12h0M14 13h0M15 13h0M16 13h0M17 13h0M18 13h0M19 13h0M20 13h0M21 13h0M22 13h0M23 13h0M24 13h0M25 13h0M26 13h0M46 13h0M47 13h0M54 13h0M56 13h0M57 13h0M58 13h0M59 13h0M60 13h0M61 13h0M62 13h0M63 13h0M64 13h0M65 13h0M66 13h0M67 13h0M68 13h0M69 13h0M70 13h0M71 13h0M72 13h0M73 13h0M74 13h0M75 13h0M76 13h0M77 13h0M78 13h0M79 13h0M80 13h0M83 13h0M15 14h0M16 14h0M17 14h0M18 14h0M19 14h0M20 14h0M21 14h0M22 14h0M23 14h0M24 14h0M25 14h0M46 14h0M47 14h0M48 14h0M49 14h0M50 14h0M58 14h0M59 14h0M60 14h0M61 14h0M62 14h0M63 14h0M64 14h0M65 14h0M66 14h0M67 14h0M68 14h0M69 14h0M70 14h0M71 14h0M72 14h0M73 14h0M74 14h0M75 14h0M76 14h0M77 14h0M78 14h0M79 14h0M80 14h0M81 14h0M15 15h0M16 15h0M17 15h0M18 15h0M19 15h0M20 15h0M21 15h0M22 15h0M23 15h0M24 15h0M45 15h0M46 15h0M47 15h0M48 15h0M49 15h0M50 15h0M51 15h0M52 15h0M54 15h0M55 15h0M56 15h0M58 15h0M59 15h0M60 15h0M61 15h0M62 15h0M63 15h0M64 15h0M65 15h0M66 15h0M67 15h0M68 15h0M69 15h0M70 15h0M71 15h0M72 15h0M73 15h0M74 15h0M75 15h0M76 15h0M77 15h0M78 15h0M79 15h0M80 15h0M81 15h0M84 15h0M17 16h0M18 16h0M19 16h0M20 16h0M45 16h0M46 16h0M47 16h0M48 16h0M49 16h0M50 16h0M51 16h0M52 16h0M53 16h0M54 16h0M55 16h0M56 16h0M57 16h0M58 16h0M59 16h0M60 16h0M61 16h0M62 16h0M63 16h0M64 16h0M65 16h0M66 16h0M67 16h0M68 16h0M69 16h0M70 16h0M71 16h0M72 16h0M73 16h0M74 16h0M75 16h0M76 16h0M77 16h0M78 16h0M79 16h0M80 16h0M81 16h0M18 17h0M19 17h0M20 17h0M44 17h0M45 17h0M46 17h0M47 17h0M48 17h0M49 17h0M50 17h0M51 17h0M52 17h0M53 17h0M54 17h0M55 17h0M56 17h0M57 17h0M58 17h0M59 17h0M60 17h0M61 17h0M63 17h0M67 17h0M68 17h0M69 17h0M70 17h0M71 17h0M72 17h0M73 17h0M74 17h0M75 17h0M76 17h0M77 17h0M78 17h0M79 17h0M80 17h0M18 18h0M19 18h0M20 18h0M43 18h0M44 18h0M45 18h0M46 18h0M47 18h0M48 18h0M49 18h0M50 18h0M51 18h0M52 18h0M53 18h0M54 18h0M55 18h0M56 18h0M57 18h0M59 18h0M60 18h0M61 18h0M62 18h0M63 18h0M64 18h0M67 18h0M68 18h0M69 18h0M70 18h0M71 18h0M72 18h0M74 18h0M75 18h0M76 18h0M77 18h0M78 18h0M79 18h0M19 19h0M20 19h0M22 19h0M23 19h0M28 19h0M43 19h0M44 19h0M45 19h0M46 19h0M47 19h0M48 19h0M49 19h0M50 19h0M51 19h0M52 19h0M53 19h0M54 19h0M55 19h0M56 19h0M57 19h0M60 19h0M61 19h0M62 19h0M63 19h0M68 19h0M69 19h0M70 19h0M71 19h0M74 19h0M75 19h0M76 19h0M77 19h0M78 19h0M22 20h0M23 20h0M43 20h0M44 20h0M45 20h0M46 20h0M47 20h0M48 20h0M49 20h0M50 20h0M51 20h0M52 20h0M53 20h0M54 20h0M55 20h0M56 20h0M57 20h0M58 20h0M60 20h0M61 20h0M62 20h0M69 20h0M75 20h0M76 20h0M77 20h0M24 21h0M43 21h0M44 21h0M45 21h0M46 21h0M47 21h0M48 21h0M49 21h0M50 21h0M51 21h0M52 21h0M53 21h0M54 21h0M55 21h0M56 21h0M57 21h0M58 21h0M59 21h0M69 21h0M76 21h0M77 21h0M78 21h0M24 22h0M27 22h0M28 22h0M29 22h0M30 22h0M44 22h0M45 22h0M46 22h0M47 22h0M48 22h0M49 22h0M50 22h0M51 22h0M52 22h0M53 22h0M54 22h0M55 22h0M56 22h0M57 22h0M58 22h0M59 22h0M60 22h0M61 22h0M69 22h0M70 22h0M77 22h0M26 23h0M27 23h0M28 23h0M29 23h0M30 23h0M31 23h0M45 23h0M46 23h0M47 23h0M48 23h0M49 23h0M50 23h0M51 23h0M52 23h0M53 23h0M54 23h0M55 23h0M56 23h0M57 23h0M58 23h0M59 23h0M60 23h0M61 23h0M70 23h0M80 23h0M26 24h0M27 24h0M28 24h0M29 24h0M30 24h0M31 24h0M32 24h0M33 24h0M51 24h0M52 24h0M53 24h0M54 24h0M55 24h0M56 24h0M57 24h0M58 24h0M59 24h0M60 24h0M75 24h0M76 24h0M80 24h0M26 25h0M27 25h0M28 25h0M29 25h0M30 25h0M31 25h0M32 25h0M33 25h0M51 25h0M52 25h0M53 25h0M54 25h0M55 25h0M56 25h0M57 25h0M58 25h0M59 25h0M76 25h0M78 25h0M79 25h0M80 25h0M81 25h0M26 26h0M27 26h0M28 26h0M29 26h0M30 26h0M31 26h0M32 26h0M33 26h0M34 26h0M35 26h0M36 26h0M51 26h0M52 26h0M53 26h0M54 26h0M55 26h0M56 26h0M57 26h0M58 26h0M76 26h0M77 26h0M79 26h0M81 26h0M85 26h0M86 26h0M87 26h0M25 27h0M26 27h0M27 27h0M28 27h0M29 27h0M30 27h0M31 27h0M32 27h0M33 27h0M34 27h0M35 27h0M36 27h0M37 27h0M51 27h0M52 27h0M53 27h0M54 27h0M55 27h0M56 27h0M57 27h0M58 27h0M85 27h0M87 27h0M88 27h0M26 28h0M27 28h0M28 28h0M29 28h0M30 28h0M31 28h0M32 28h0M33 28h0M34 28h0M35 28h0M36 28h0M37 28h0M52 28h0M53 28h0M54 28h0M55 28h0M56 28h0M57 28h0M58 28h0M89 28h0M27 29h0M28 29h0M29 29h0M30 29h0M31 29h0M32 29h0M33 29h0M34 29h0M35 29h0M36 29h0M52 29h0M53 29h0M54 29h0M55 29h0M56 29h0M57 29h0M58 29h0M85 29h0M27 30h0M28 30h0M29 30h0M30 30h0M31 30h0M32 30h0M33 30h0M34 30h0M35 30h0M36 30h0M51 30h0M52 30h0M53 30h0M54 30h0M55 30h0M56 30h0M57 30h0M58 30h0M61 30h0M83 30h0M84 30h0M85 30h0M88 30h0M28 31h0M29 31h0M30 31h0M31 31h0M32 31h0M33 31h0M34 31h0M35 31h0M36 31h0M51 31h0M52 31h0M53 31h0M54 31h0M55 31h0M56 31h0M57 31h0M60 31h0M61 31h0M82 31h0M83 31h0M84 31h0M85 31h0M86 31h0M87 31h0M88 31h0M28 32h0M29 32h0M30 32h0M31 32h0M32 32h0M33 32h0M34 32h0M35 32h0M36 32h0M52 32h0M53 32h0M54 32h0M55 32h0M56 32h0M57 32h0M60 32h0M80 32h0M81 32h0M82 32h0M83 32h0M84 32h0M85 32h0M86 32h0M87 32h0M88 32h0M89 32h0M28 33h0M29 33h0M30 33h0M31 33h0M32 33h0M33 33h0M34 33h0M52 33h0M53 33h0M54 33h0M55 33h0M56 33h0M57 33h0M60 33h0M80 33h0M81 33h0M82 33h0M83 33h0M84 33h0M85 33h0M86 33h0M87 33h0M88 33h0M89 33h0M90 33h0M28 34h0M29 34h0M30 34h0M31 34h0M32 34h0M33 34h0M52 34h0M53 34h0M54 34h0M55 34h0M56 34h0M80 34h0M81 34h0M82 34h0M83 34h0M84 34h0M85 34h0M86 34h0M87 34h0M88 34h0M89 34h0M90 34h0M28 35h0M29 35h0M30 35h0M31 35h0M32 35h0M33 35h0M53 35h0M54 35h0M55 35h0M80 35h0M81 35h0M82 35h0M83 35h0M84 35h0M85 35h0M86 35h0M87 35h0M88 35h0M89 35h0M90 35h0M28 36h0M29 36h0M30 36h0M31 36h0M32 36h0M53 36h0M80 36h0M86 36h0M87 36h0M88 36h0M89 36h0M27 37h0M28 37h0M29 37h0M30 37h0M31 37h0M87 37h0M88 37h0M89 37h0M27 38h0M28 38h0M29 38h0M30 38h0M88 38h0M28 39h0M29 39h0M95 39h0M27 40h0M28 40h0M27 41h0M28 41h0M27 42h0M28 42h0';
+const muc = [50.7, 9.6];
+const worldPins = [
+  [26.8, 12.0],
+  [34.5, 32.6],
+  [52.6, 35.9],
+  [63.0, 16.9],
+  [76.5, 24.6],
+  [89.7, 35.9],
+];
+const arc = ([x, y]: number[]) => {
+  const mx = (muc[0] + x) / 2;
+  const my = Math.min(muc[1], y) - Math.abs(muc[0] - x) * 0.28 - 2;
+  return `M${muc[0]} ${muc[1]} Q${mx.toFixed(1)} ${my.toFixed(1)} ${x} ${y}`;
+};
 const pins = [
   [48, 34, 'office'],
   [22, 40, ''],
@@ -251,29 +267,38 @@ const pins = [
 
 {
   name === 'globe' && (
-    <div class="sc-globe">
-      <div class="sc-globe__ball">
-        <span class="sc-globe__lat" />
-        <span class="sc-globe__mer" />
-        <span class="sc-globe__mer sc-globe__mer--2" />
-        <span class="sc-globe__mer sc-globe__mer--3" />
-        {pins.map(([x, y, k], i) => (
-          <span class:list={['sc-globe__pin', { 'is-home': k === 'office' }]} style={`left:${x}%;top:${y}%;--k:${i}`}>
-            <b />
-          </span>
-        ))}
-        <svg class="sc-globe__arcs" viewBox="0 0 100 100" aria-hidden="true">
-          <path d="M48 34 Q 34 26 22 40" />
-          <path d="M48 34 Q 66 38 70 58" />
-          <path d="M48 34 Q 38 52 36 66" />
-          <path d="M48 34 Q 66 24 80 30" />
+    <div class="sc-world">
+      <div class="sc-world__map">
+        <svg viewBox="-1 -1 98 46" aria-hidden="true">
+          <defs>
+            <path id="sc-world-dots" d={worldDots} />
+            <clipPath id="sc-world-sweep">
+              <rect class="sc-world__band" x="-40" y="-2" width="26" height="50" />
+            </clipPath>
+          </defs>
+          <use href="#sc-world-dots" class="sc-world__dots" />
+          <use href="#sc-world-dots" class="sc-world__dots sc-world__dots--lit" clip-path="url(#sc-world-sweep)" />
+          {worldPins.map((p, k) => (
+            <g style={`--k:${k}`}>
+              <path class="sc-world__arc" d={arc(p)} pathLength="100" />
+              <path class="sc-world__spark" d={arc(p)} pathLength="100" />
+              <circle class="sc-world__ring" cx={p[0]} cy={p[1]} r="1.6" />
+              <circle class="sc-world__pin" cx={p[0]} cy={p[1]} r="0.85" />
+            </g>
+          ))}
+          <circle class="sc-world__home-ring" cx={muc[0]} cy={muc[1]} r="2" />
+          <circle class="sc-world__home-ring sc-world__home-ring--2" cx={muc[0]} cy={muc[1]} r="2" />
+          <circle class="sc-world__home" cx={muc[0]} cy={muc[1]} r="1.3" />
         </svg>
+        <span class="sc-chip sc-world__office" style={`left:${(muc[0] / 96) * 100}%;top:${(muc[1] / 44) * 100}%`}>
+          <i set:html={ico.pin} />
+          {T.office}
+        </span>
+        <span class="sc-chip sc-world__remote">
+          <span class="sc-live" />
+          {T.remote}
+        </span>
       </div>
-      <span class="sc-chip sc-globe__chip">
-        <i set:html={ico.pin} />
-        {T.office}
-      </span>
-      <span class="sc-chip sc-globe__chip2"><span class="sc-live" />{T.remote}</span>
     </div>
   )
 }
@@ -513,6 +538,9 @@ const pins = [
       <span class="sc-map__road sc-map__road--b" />
       <span class="sc-map__road sc-map__road--c" />
       <span class="sc-map__park" />
+      <span class="sc-map__label sc-map__label--a">Thalkirchner Straße</span>
+      <span class="sc-map__label sc-map__label--b">Ehrengutstraße</span>
+      <span class="sc-map__label sc-map__label--c">Isar</span>
       <span class="sc-map__pin">
         <img src="/media/jenomics-signet.png" alt="" width="26" height="26" />
       </span>
@@ -798,110 +826,162 @@ const pins = [
     bottom: 4%;
   }
 
-  /* ---------- globe: distributed team, office in Munich ---------- */
-  .sc-globe {
-    position: relative;
-    z-index: 1;
-  }
-  .sc-globe__ball {
-    position: relative;
-    width: 190px;
-    height: 190px;
-    border-radius: 50%;
-    background:
-      radial-gradient(circle at 35% 30%, #fff 0, transparent 45%),
-      linear-gradient(140deg, color-mix(in oklab, var(--hB) 30%, #fff), color-mix(in oklab, var(--hA) 40%, #fff));
-    box-shadow:
-      inset -14px -18px 36px color-mix(in oklab, var(--hA) 35%, transparent),
-      0 18px 40px rgba(30, 61, 126, 0.2);
-    overflow: hidden;
-  }
-  .sc-globe__lat {
+  /* ---------- globe: dotted world map, Munich office, team spread around the world ---------- */
+  .sc-world {
     position: absolute;
     inset: 0;
-    background: repeating-linear-gradient(180deg, transparent 0 30px, rgba(255, 255, 255, 0.5) 30px 31px);
+    display: grid;
+    place-items: center;
+    padding: 6% 4%;
   }
-  .sc-globe__mer {
+  .sc-world__map {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 98 / 46;
+  }
+  .sc-world__map svg {
     position: absolute;
-    left: 50%;
-    top: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
-    translate: -50% 0;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    animation: sc-mer 9s linear infinite;
+    overflow: visible;
   }
-  .sc-globe__mer--2 {
-    animation-delay: -3s;
+  .sc-world__dots {
+    fill: none;
+    stroke: color-mix(in oklab, var(--hA) 28%, #c9d6e2);
+    stroke-width: 0.62;
+    stroke-linecap: round;
   }
-  .sc-globe__mer--3 {
-    animation-delay: -6s;
+  .sc-world__dots--lit {
+    stroke: var(--hA);
+    stroke-width: 0.7;
   }
-  @keyframes sc-mer {
+  /* A soft band of light sweeps across the continents */
+  .sc-world__band {
+    animation: sc-sweep 7s linear infinite;
+  }
+  @keyframes sc-sweep {
     from {
-      transform: scaleX(1);
-    }
-    50% {
-      transform: scaleX(0.05);
+      transform: translateX(0);
     }
     to {
-      transform: scaleX(1);
+      transform: translateX(150px);
     }
   }
-  .sc-globe__pin {
-    position: absolute;
-    z-index: 2;
-    width: 9px;
-    height: 9px;
-    translate: -50% -50%;
-    border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 0 0 2px var(--hA);
-  }
-  .sc-globe__pin b {
-    position: absolute;
-    inset: -2px;
-    border-radius: 50%;
-    border: 2px solid #fff;
-    animation: sc-ring 2.4s ease-out infinite;
-    animation-delay: calc(var(--k) * -0.5s);
-  }
-  .sc-globe__pin.is-home {
-    width: 14px;
-    height: 14px;
-    background: var(--jx-navy);
-    box-shadow: 0 0 0 3px #fff;
-  }
-  .sc-globe__arcs {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-  .sc-globe__arcs path {
+  .sc-world__arc,
+  .sc-world__spark {
     fill: none;
-    stroke: #fff;
-    stroke-width: 1.4;
-    stroke-dasharray: 2 4;
-    animation: sc-flow 1.4s linear infinite;
+    stroke-linecap: round;
   }
-  .sc-chip.sc-globe__chip {
-    left: 52%;
-    top: 4px;
+  .sc-world__arc {
+    stroke: color-mix(in oklab, var(--hA) 50%, transparent);
+    stroke-width: 0.3;
+    stroke-dasharray: 100;
+    animation: sc-arc 12s var(--jx-ease) infinite both;
+    animation-delay: calc(var(--k) * 0.9s);
+  }
+  @keyframes sc-arc {
+    0% {
+      stroke-dashoffset: 100;
+      opacity: 1;
+    }
+    12%,
+    82% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    92%,
+    100% {
+      stroke-dashoffset: 0;
+      opacity: 0;
+    }
+  }
+  /* A bright spark travels along each arc */
+  .sc-world__spark {
+    stroke: var(--hB);
+    stroke-width: 0.55;
+    stroke-dasharray: 7 93;
+    filter: drop-shadow(0 0 0.6px var(--hB));
+    animation: sc-spark 2.6s linear infinite;
+    animation-delay: calc(var(--k) * -0.45s);
+  }
+  @keyframes sc-spark {
+    from {
+      stroke-dashoffset: 100;
+    }
+    to {
+      stroke-dashoffset: -6;
+    }
+  }
+  .sc-world__pin {
+    fill: #fff;
+    stroke: var(--hA);
+    stroke-width: 0.45;
+  }
+  .sc-world__ring,
+  .sc-world__home-ring {
+    fill: none;
+    stroke: var(--hA);
+    stroke-width: 0.3;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: sc-wring 2.6s ease-out infinite;
+    animation-delay: calc(var(--k, 0) * 0.9s + 1s);
+  }
+  .sc-world__home {
+    fill: var(--jx-navy);
+    stroke: #fff;
+    stroke-width: 0.5;
+  }
+  .sc-world__home-ring {
+    stroke: var(--jx-navy);
+    stroke-width: 0.35;
+    animation-duration: 3s;
+    animation-delay: 0s;
+  }
+  .sc-world__home-ring--2 {
+    animation-delay: -1.5s;
+  }
+  .sc-chip.sc-world__office {
+    translate: -50% calc(-100% - 14px);
     padding: 6px 12px 6px 8px;
     color: var(--jx-navy);
-    animation: jx-float 6s ease-in-out infinite;
+    animation: sc-wfloat 6s ease-in-out infinite;
   }
-  .sc-globe__chip i {
+  .sc-chip.sc-world__office > i {
+    width: 18px;
+    height: 18px;
     background: var(--jx-navy);
   }
-  .sc-chip.sc-globe__chip2 {
-    right: 58%;
-    bottom: 8px;
+  .sc-world__office i svg {
+    width: 11px;
+    height: 11px;
+  }
+  @keyframes sc-wring {
+    from {
+      transform: scale(0.6);
+      opacity: 0.9;
+    }
+    to {
+      transform: scale(2.2);
+      opacity: 0;
+    }
+  }
+  @keyframes sc-wfloat {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-4px);
+    }
+  }
+  .sc-chip.sc-world__remote {
+    left: 22%;
+    bottom: -6%;
     padding: 6px 12px;
     color: var(--jx-navy);
-    animation: jx-float 7s ease-in-out infinite -3s;
+    animation: sc-wfloat 7s ease-in-out infinite -3s;
   }
 
   /* ---------- apply: pick a job, upload, received ---------- */
@@ -1705,48 +1785,74 @@ const pins = [
   }
   .sc-map__river {
     position: absolute;
-    left: -10%;
-    right: -10%;
-    top: 30%;
-    height: 70%;
-    border-radius: 50%;
-    border-top: 22px solid #bfe1f3;
-    transform: rotate(-8deg);
+    right: -20%;
+    top: -10%;
+    width: 42%;
+    height: 130%;
+    background: linear-gradient(90deg, #cfe9f6, #bfe1f3 40%, #cfe9f6);
+    transform: rotate(24deg);
   }
   .sc-map__road {
     position: absolute;
     background: #fff;
     box-shadow: 0 0 0 1px #dbe3ea;
   }
+  /* Thalkirchner Straße: the diagonal the office sits on */
   .sc-map__road--a {
-    left: 0;
-    right: 0;
-    top: 58%;
-    height: 9px;
-    transform: rotate(-4deg);
+    left: -10%;
+    right: -10%;
+    top: 46%;
+    height: 12px;
+    transform: rotate(-32deg);
   }
+  /* Ehrengutstraße */
   .sc-map__road--b {
-    top: 0;
-    bottom: 0;
-    left: 44%;
-    width: 9px;
-    transform: rotate(12deg);
+    left: 40%;
+    right: 0;
+    top: 54%;
+    height: 8px;
+    transform: rotate(4deg);
   }
   .sc-map__road--c {
-    left: 10%;
-    right: 30%;
-    top: 22%;
-    height: 7px;
-    transform: rotate(18deg);
+    top: -10%;
+    bottom: -10%;
+    left: 18%;
+    width: 7px;
+    transform: rotate(10deg);
   }
   .sc-map__park {
     position: absolute;
-    right: 12%;
-    top: 12%;
+    left: 4%;
+    top: 8%;
     width: 22%;
-    height: 26%;
+    height: 24%;
     border-radius: 30% 40% 35% 45%;
     background: #cdeccf;
+  }
+  .sc-map__label {
+    position: absolute;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: #6f7f92;
+    white-space: nowrap;
+  }
+  .sc-map__label--a {
+    left: 57%;
+    top: 30%;
+    transform: rotate(-32deg);
+  }
+  .sc-map__label--b {
+    left: 62%;
+    top: 49%;
+    transform: rotate(4deg);
+  }
+  .sc-map__label--c {
+    right: 7%;
+    top: 22%;
+    transform: rotate(66deg);
+    font-style: italic;
+    color: #5a9cc0;
   }
   .sc-map__pin {
     position: absolute;

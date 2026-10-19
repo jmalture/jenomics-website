@@ -168,7 +168,8 @@
       "map_title": "So findest du uns",
       "map_btn": "Karte laden",
       "map_note": "Beim Laden der Karte werden Daten an Google übertragen.",
-      "map_open": "In Google Maps öffnen"
+      "map_open": "In Google Maps öffnen",
+      "map_route": "Route planen"
     },
     "ikona": {
       "meta_title": "IKONA - Jenomics GmbH",
@@ -441,7 +442,8 @@
       "map_title": "How to find us",
       "map_btn": "Load map",
       "map_note": "Loading the map sends data to Google.",
-      "map_open": "Open in Google Maps"
+      "map_open": "Open in Google Maps",
+      "map_route": "Get directions"
     },
     "ikona": {
       "meta_title": "IKONA - Jenomics GmbH",
