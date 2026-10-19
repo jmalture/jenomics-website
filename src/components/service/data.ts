@@ -15,7 +15,53 @@ export const SERVICE_VISUALS: Record<ServiceKey, { img: string; pal: [string, st
   host: { img: 'service-host', pal: ['#56c657', '#2ee59d', '#20d3c2'] },
 };
 
-export type SceneName = 'procure' | 'monitor' | 'train' | 'rack' | 'apps' | 'remote' | 'home';
+/** Scenes for Softwareentwicklung and Website & Branding (SceneBuild.astro). */
+export const BUILD_SCENES = [
+  'java',
+  'spa',
+  'arch',
+  'data',
+  'rails',
+  'ci',
+  'custom',
+  'site',
+  'logo',
+  'card',
+  'deck',
+  'letter',
+  'guide',
+  'ui',
+  'photo',
+] as const;
+/** Scenes for Linux, Infrastruktur & Netzwerk and Hosting (SceneOps.astro). */
+export const OPS_SCENES = [
+  'onprem',
+  'htop',
+  'deploy',
+  'config',
+  'sites',
+  'move',
+  'floor',
+  'switch',
+  'rollout',
+  'print',
+  'iaas',
+  'vms',
+  'coloc',
+  'cloudcfg',
+  'resell',
+  'webhost',
+] as const;
+export type SceneName =
+  | 'procure'
+  | 'monitor'
+  | 'train'
+  | 'rack'
+  | 'apps'
+  | 'remote'
+  | 'home'
+  | (typeof BUILD_SCENES)[number]
+  | (typeof OPS_SCENES)[number];
 
 /**
  * Feature bento with animated scenes (components/service/Scene.astro) instead of photos, one entry per
@@ -31,6 +77,52 @@ export const SERVICE_SCENES: Partial<Record<ServiceKey, { scene: SceneName; span
     { scene: 'remote', span: 3 },
     { scene: 'home', span: 3 },
   ],
+  dev: [
+    { scene: 'java', span: 2 },
+    { scene: 'spa', span: 4 },
+    { scene: 'arch', span: 2 },
+    { scene: 'data', span: 2 },
+    { scene: 'rails', span: 2 },
+    { scene: 'ci', span: 3 },
+    { scene: 'custom', span: 3 },
+  ],
+  web: [
+    { scene: 'site', span: 4 },
+    { scene: 'logo', span: 2 },
+    { scene: 'card', span: 2 },
+    { scene: 'deck', span: 2 },
+    { scene: 'letter', span: 2 },
+    { scene: 'guide', span: 2 },
+    { scene: 'ui', span: 2 },
+    { scene: 'photo', span: 2 },
+  ],
+  linux: [
+    { scene: 'onprem', span: 4 },
+    { scene: 'htop', span: 2 },
+    { scene: 'deploy', span: 2 },
+    { scene: 'config', span: 4 },
+  ],
+  net: [
+    { scene: 'procure', span: 2 },
+    { scene: 'home', span: 4 },
+    { scene: 'sites', span: 2 },
+    { scene: 'move', span: 2 },
+    { scene: 'floor', span: 2 },
+    { scene: 'switch', span: 2 },
+    { scene: 'config', span: 2 },
+    { scene: 'rollout', span: 2 },
+    { scene: 'monitor', span: 4 },
+    { scene: 'print', span: 2 },
+  ],
+  host: [
+    { scene: 'iaas', span: 2 },
+    { scene: 'vms', span: 4 },
+    { scene: 'coloc', span: 2 },
+    { scene: 'rack', span: 2 },
+    { scene: 'cloudcfg', span: 2 },
+    { scene: 'resell', span: 3 },
+    { scene: 'webhost', span: 3 },
+  ],
 };
 
 export interface Feature {
@@ -38,7 +130,7 @@ export interface Feature {
   text: string;
 }
 export interface Block {
-  type: 'columns' | 'logos' | 'cases' | 'refs' | 'tabs' | 'kit';
+  type: 'columns' | 'logos' | 'cases' | 'refs' | 'tabs' | 'kit' | 'process' | 'faq';
   [k: string]: any;
 }
 export interface ServicePage {

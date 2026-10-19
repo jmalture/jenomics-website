@@ -249,7 +249,8 @@ const wide = (i: number) => !two && n % 3 === 1 && (i === 0 || i === n - 1);
     .jx-bcard {
       grid-column: span 1;
     }
-    .jx-bcard:nth-child(2) {
+    /* odd count: the last card closes the row */
+    .jx-bcard:last-child:nth-child(odd) {
       grid-column: span 2;
     }
     .jx-feat__grid {
@@ -278,7 +279,7 @@ const wide = (i: number) => !two && n % 3 === 1 && (i === 0 || i === n - 1);
       grid-template-columns: 1fr;
     }
     .jx-bcard,
-    .jx-bcard:nth-child(2) {
+    .jx-bcard:last-child:nth-child(odd) {
       grid-column: auto;
     }
   }

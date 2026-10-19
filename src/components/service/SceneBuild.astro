@@ -1,0 +1,2024 @@
+---
+/**
+ * Scenes for Softwareentwicklung (java … custom) and Website & Branding (site … photo).
+ * Rendered inside Scene.astro's .jx-scene frame; shared helpers (.sc-s, .sc-c3, .sc-fill, .sc-term …) live there.
+ * Labels are generic on purpose: no customer names, no figures that are not on jenomics.de.
+ */
+import type { Lang } from '../../i18n';
+
+interface Props {
+  name: string;
+  lang: Lang;
+}
+const { name, lang } = Astro.props;
+
+const T = {
+  de: {
+    build: 'Build erfolgreich',
+    nav: ['Dashboard', 'Aufträge', 'Kunden'],
+    routes: ['dashboard', 'auftraege', 'kunden'],
+    noreload: 'Ohne Neuladen',
+    layers: ['Frontend', 'API', 'Services', 'Datenbank'],
+    fields: [
+      ['kunde', 'text', 'Kunde'],
+      ['menge', 'number', 'Menge'],
+      ['termin', 'date', 'Termin'],
+    ],
+    form: 'Formular',
+    pipeline: 'Pipeline',
+    commit: 'feat: Checkout',
+    stages: ['Build', 'Test', 'Deploy'],
+    live: 'Live',
+    products: ['IKONA · Portal', 'SDX · Branding', 'GM8 · Report'],
+    theme: 'Farben',
+    resp: 'Responsive',
+    brand: 'deine marke',
+    person: 'Alex Muster',
+    role: 'Projektleitung',
+    slides: ['Strategie 2026', 'Ergebnisse', 'Nächste Schritte'],
+    letter: 'Briefvorlage',
+    guide: 'Brandguide',
+    wire: 'Wireframe',
+    design: 'Design',
+    saved: 'Aufnahme gespeichert',
+  },
+  en: {
+    build: 'Build successful',
+    nav: ['Dashboard', 'Orders', 'Customers'],
+    routes: ['dashboard', 'orders', 'customers'],
+    noreload: 'No page reload',
+    layers: ['Frontend', 'API', 'Services', 'Database'],
+    fields: [
+      ['customer', 'text', 'Customer'],
+      ['quantity', 'number', 'Quantity'],
+      ['date', 'date', 'Date'],
+    ],
+    form: 'Form',
+    pipeline: 'Pipeline',
+    commit: 'feat: checkout',
+    stages: ['Build', 'Test', 'Deploy'],
+    live: 'Live',
+    products: ['IKONA · Portal', 'SDX · Branding', 'GM8 · Report'],
+    theme: 'Colours',
+    resp: 'Responsive',
+    brand: 'your brand',
+    person: 'Alex Sample',
+    role: 'Project lead',
+    slides: ['Strategy 2026', 'Results', 'Next steps'],
+    letter: 'Letter template',
+    guide: 'Brand guide',
+    wire: 'Wireframe',
+    design: 'Design',
+    saved: 'Shot saved',
+  },
+}[lang];
+
+const check =
+  '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+const lock =
+  '<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+
+const java = [
+  '<k>public class</k> <t>Order</t> {',
+  '  <k>private</k> <t>List</t>&lt;<t>Item</t>&gt; items;',
+  '  <k>public</k> <t>Money</t> total() {',
+  '    <k>return</k> items.stream()',
+  '      .map(<t>Item</t>::price)',
+  '      .reduce(<t>Money</t>::add);',
+  '  }',
+  '}',
+];
+const rails = [
+  '<span class="p">$</span> rails new shop',
+  '<span class="p">$</span> rails g scaffold Order',
+  '<span class="dim">    create  app/models/order.rb</span>',
+  '<span class="dim">    create  app/views/orders</span>',
+  '<span class="p">$</span> rails db:migrate',
+  '<span class="ok">== CreateOrders: migrated ==</span>',
+  '<span class="p">$</span> rails server',
+  '<span class="ok">* Listening on :3000</span>',
+];
+const bars = [38, 62, 48, 80, 56, 92, 70];
+---
+
+{
+  name === 'java' && (
+    <div class="sc-win sc-code">
+      <div class="sc-bar">
+        <span class="sc-dots">
+          <i />
+          <i />
+          <i />
+        </span>
+        Order.java
+      </div>
+      <div class="sc-mono sc-pre">
+        {java.map((l, i) => (
+          <span class="sc-s" style={`--k:${i};--g:.32s`} set:html={l || ' '} />
+        ))}
+      </div>
+      <span class="sc-chip sc-late sc-code__chip" style="--dl:.4s">
+        <i set:html={check} />
+        {T.build}
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'spa' && (
+    <div class="sc-win sc-spa">
+      <div class="sc-spa__top">
+        <span class="sc-dots">
+          <i />
+          <i />
+          <i />
+        </span>
+        <span class="sc-spa__addr">
+          <i set:html={lock} />
+          app.example.de/#/
+          <span class="sc-stack">
+            {T.routes.map((r, k) => (
+              <b class="sc-c3" style={`--k:${k}`}>
+                {r}
+              </b>
+            ))}
+          </span>
+        </span>
+      </div>
+      <div class="sc-spa__body">
+        <nav class="sc-spa__nav">
+          <b class="sc-spa__ind" />
+          {T.nav.map((n) => (
+            <span>{n}</span>
+          ))}
+          <i class="sc-sk" style="width:70%" />
+          <i class="sc-sk" style="width:50%" />
+        </nav>
+        <div class="sc-spa__view sc-stack">
+          <div class="sc-spa__pane sc-c3" style="--k:0">
+            <div class="sc-spa__kpis">
+              {[0, 1, 2].map((i) => (
+                <span class="sc-card">
+                  <i class="sc-sk" style="width:50%" />
+                  <b class={i === 1 ? 'sc-sk sc-sk--b' : 'sc-sk sc-sk--a'} />
+                </span>
+              ))}
+            </div>
+            <div class="sc-spa__chart">
+              {bars.map((h, i) => (
+                <i style={`--h:${h}%;--k:${i}`} />
+              ))}
+            </div>
+          </div>
+          <div class="sc-spa__pane sc-c3" style="--k:1">
+            {[0, 1, 2, 3].map((i) => (
+              <div class="sc-spa__row">
+                <span class="sc-avatar" />
+                <i class="sc-sk" style={`width:${70 - i * 8}%`} />
+                <i class="sc-sk" style="width:40%" />
+                <em class={i === 2 ? 'is-open' : ''} />
+              </div>
+            ))}
+          </div>
+          <div class="sc-spa__pane sc-spa__grid sc-c3" style="--k:2">
+            {[0, 1, 2, 3].map((i) => (
+              <span class="sc-card">
+                <span class="sc-avatar" />
+                <i class="sc-sk" style={`width:${80 - i * 10}%`} />
+                <i class="sc-sk" style="width:55%" />
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+      <span class="sc-chip sc-spa__chip">
+        <i set:html={check} />
+        {T.noreload}
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'arch' && (
+    <div class="sc-arch">
+      {T.layers.map((l, i) => (
+        <>
+          <div class="sc-card sc-arch__node sc-s" style={`--k:${i};--g:.6s`}>
+            <i style={`--o:${i}`} />
+            {l}
+          </div>
+          {i < 3 && <span class="sc-arch__link sc-s" style={`--k:${i + 0.5};--g:.6s`} />}
+        </>
+      ))}
+    </div>
+  )
+}
+
+{
+  name === 'data' && (
+    <div class="sc-data">
+      <div class="sc-term sc-data__json">
+        <div class="sc-mono sc-pre">
+          <span>{'{'}</span>
+          {T.fields.map(([k, t], i) => (
+            <span set:html={`  <b>"${k}"</b>: <em>"${t}"</em>${i < 2 ? ',' : ''}`} />
+          ))}
+          <span>{'}'}</span>
+        </div>
+      </div>
+      <svg class="sc-data__arrow" viewBox="0 0 60 40" aria-hidden="true">
+        <path d="M4 8 C 30 8, 30 32, 54 32" />
+      </svg>
+      <div class="sc-win sc-data__form">
+        <div class="sc-bar">{T.form}</div>
+        <div class="sc-data__fields">
+          {T.fields.map(([, , label], i) => (
+            <label class="sc-s" style={`--k:${i + 1};--g:.55s`}>
+              <span>{label}</span>
+              <span class="sc-fill" style={`--k:${i + 2};--g:.55s;--to:${0.9 - i * 0.2}`} />
+            </label>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+{
+  name === 'rails' && (
+    <div class="sc-term sc-rails">
+      <div class="sc-bar">
+        <span class="sc-dots">
+          <i />
+          <i />
+          <i />
+        </span>
+        ~/projects/shop
+      </div>
+      <div class="sc-mono sc-pre">
+        {rails.map((l, i) => (
+          <span class="sc-s" style={`--k:${i};--g:.38s`} set:html={l} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+{
+  name === 'ci' && (
+    <div class="sc-win sc-ci">
+      <div class="sc-bar">
+        {T.pipeline}
+        <em class="sc-ci__branch">main</em>
+      </div>
+      <div class="sc-ci__commit">
+        <span class="sc-avatar" />
+        <span>{T.commit}</span>
+        <code class="sc-mono">a3f9c1e</code>
+      </div>
+      <ol class="sc-ci__stages">
+        {T.stages.map((s, i) => (
+          <li style={`--k:${i}`}>
+            <span class="sc-ci__dot">
+              <i set:html={check} />
+            </span>
+            <span>{s}</span>
+            {i < 2 && <span class="sc-ci__track sc-fill" style={`--k:${i};--g:1.3s`} />}
+          </li>
+        ))}
+      </ol>
+      <span class="sc-chip sc-late sc-ci__chip" style="--dl:.9s">
+        <i set:html={check} />
+        {T.live}
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'custom' && (
+    <div class="sc-win sc-brand">
+      <div class="sc-brand__top">
+        <span class="sc-brand__logo" />
+        <span class="sc-stack">
+          {T.products.map((p, k) => (
+            <b class="sc-c3" style={`--k:${k}`}>
+              {p}
+            </b>
+          ))}
+        </span>
+        <span class="sc-brand__menu">
+          <i />
+          <i />
+          <i />
+        </span>
+      </div>
+      <div class="sc-brand__body">
+        <div class="sc-stack">
+          <div class="sc-brand__tiles sc-c3" style="--k:0">
+            {[0, 1, 2, 3, 4, 5].map((i) => (
+              <span class="sc-card">
+                <b style={`--o:${i % 3}`} />
+                <i class="sc-sk" style="width:70%" />
+              </span>
+            ))}
+          </div>
+          <div class="sc-brand__theme sc-c3" style="--k:1">
+            <span class="sc-card sc-brand__upload">
+              <b />
+              <i class="sc-sk" style="width:60%" />
+            </span>
+            <span class="sc-brand__btns">
+              <i />
+              <i />
+            </span>
+          </div>
+          <div class="sc-brand__report sc-c3" style="--k:2">
+            {bars.slice(0, 6).map((h) => (
+              <i style={`--h:${h}%`} />
+            ))}
+          </div>
+        </div>
+        <aside class="sc-brand__side">
+          <span>{T.theme}</span>
+          <span class="sc-brand__sw">
+            <i />
+            <i />
+            <i />
+            <b />
+          </span>
+          <i class="sc-sk" style="width:80%" />
+          <i class="sc-sk" style="width:60%" />
+        </aside>
+      </div>
+    </div>
+  )
+}
+
+{
+  name === 'site' && (
+    <div class="sc-win sc-site">
+      <div class="sc-spa__top">
+        <span class="sc-dots">
+          <i />
+          <i />
+          <i />
+        </span>
+        <span class="sc-spa__addr">
+          <i set:html={lock} />
+          www.deine-seite.de
+        </span>
+        <span class="sc-site__dev">
+          <i />
+          <i />
+        </span>
+      </div>
+      <div class="sc-site__stage">
+        <div class="sc-site__page">
+          <div class="sc-site__nav sc-s" style="--k:0;--g:.5s;--d:10s">
+            <b />
+            <span>
+              <i />
+              <i />
+              <i />
+            </span>
+          </div>
+          <div class="sc-site__hero sc-s" style="--k:1;--g:.5s;--d:10s">
+            <span>
+              <i class="sc-sk" style="width:80%;height:9px" />
+              <i class="sc-sk" style="width:55%" />
+              <em />
+            </span>
+          </div>
+          <div class="sc-site__cards">
+            {[0, 1, 2].map((i) => (
+              <span class="sc-s" style={`--k:${i + 2};--g:.5s;--d:10s`}>
+                <b style={`--o:${i}`} />
+                <i class="sc-sk" style="width:70%" />
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+      <span class="sc-chip sc-site__chip">
+        <i set:html={check} />
+        {T.resp}
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'logo' && (
+    <div class="sc-logo">
+      <svg viewBox="0 0 160 120" aria-hidden="true">
+        <g class="sc-logo__guide">
+          <circle cx="62" cy="60" r="44" />
+          <circle cx="98" cy="60" r="44" />
+          <path d="M0 60H160M80 0V120" />
+        </g>
+        <circle class="sc-logo__a" cx="62" cy="60" r="30" pathLength="100" />
+        <rect class="sc-logo__b" x="72" y="32" width="52" height="56" rx="16" pathLength="100" />
+      </svg>
+      <b class="sc-logo__word">{T.brand}</b>
+    </div>
+  )
+}
+
+{
+  name === 'card' && (
+    <div class="sc-bc">
+      <div class="sc-bc__in">
+        <div class="sc-bc__face sc-bc__front">
+          <span class="sc-bc__mark">
+            <i />
+            <i />
+          </span>
+          <span class="sc-bc__who">
+            <b>{T.person}</b>
+            <span>{T.role}</span>
+          </span>
+          <span class="sc-bc__lines">
+            <i class="sc-sk" style="width:80%" />
+            <i class="sc-sk" style="width:60%" />
+          </span>
+        </div>
+        <div class="sc-bc__face sc-bc__back">
+          <span class="sc-bc__mark sc-bc__mark--lg">
+            <i />
+            <i />
+          </span>
+        </div>
+      </div>
+      <span class="sc-bc__shadow" />
+    </div>
+  )
+}
+
+{
+  name === 'deck' && (
+    <div class="sc-deck">
+      <div class="sc-card sc-deck__main sc-stack">
+        <div class="sc-deck__s sc-deck__s--title sc-c3" style="--k:0">
+          <b>{T.slides[0]}</b>
+          <i class="sc-sk" style="width:45%" />
+        </div>
+        <div class="sc-deck__s sc-c3" style="--k:1">
+          <b>{T.slides[1]}</b>
+          <span class="sc-deck__bars">
+            {bars.slice(0, 5).map((h) => (
+              <i style={`--h:${h}%`} />
+            ))}
+          </span>
+        </div>
+        <div class="sc-deck__s sc-c3" style="--k:2">
+          <b>{T.slides[2]}</b>
+          {[0, 1, 2].map((i) => (
+            <span class="sc-deck__pt">
+              <em set:html={check} />
+              <i class="sc-sk" style={`width:${70 - i * 12}%`} />
+            </span>
+          ))}
+        </div>
+      </div>
+      <div class="sc-deck__thumbs">
+        <b class="sc-deck__ind" />
+        <i />
+        <i />
+        <i />
+      </div>
+    </div>
+  )
+}
+
+{
+  name === 'letter' && (
+    <div class="sc-letter">
+      <div class="sc-letter__page sc-letter__page--back" />
+      <div class="sc-letter__page">
+        <div class="sc-letter__head">
+          <span class="sc-bc__mark">
+            <i />
+            <i />
+          </span>
+          <i class="sc-sk" style="width:34%" />
+        </div>
+        <div class="sc-letter__addr">
+          <i class="sc-sk" style="width:46%" />
+          <i class="sc-sk" style="width:38%" />
+          <i class="sc-sk" style="width:30%" />
+        </div>
+        {[86, 92, 78, 88, 52].map((w, i) => (
+          <i class="sc-sk sc-s" style={`width:${w}%;--k:${i};--g:.4s`} />
+        ))}
+        <svg class="sc-letter__sig" viewBox="0 0 80 24" aria-hidden="true">
+          <path d="M3 18c8-14 12-14 12-4s6 8 12-2 8-8 10 0 8 6 14-4 10-6 24 2" pathLength="100" />
+        </svg>
+      </div>
+      <span class="sc-chip sc-letter__chip">{T.letter}</span>
+    </div>
+  )
+}
+
+{
+  name === 'guide' && (
+    <div class="sc-win sc-guide">
+      <div class="sc-bar">{T.guide}</div>
+      <div class="sc-guide__body">
+        <div class="sc-guide__sw">
+          {['#20D3C2', '#2EE59D', '#1AB8E8', '#0B1A36'].map((c, i) => (
+            <span class="sc-s" style={`--k:${i};--g:.35s`}>
+              <b style={`background:${c}`} />
+              <code class="sc-mono">{c}</code>
+            </span>
+          ))}
+        </div>
+        <div class="sc-guide__type sc-s" style="--k:4;--g:.35s">
+          <b>Aa</b>
+          <span>
+            <i class="sc-sk" style="width:90%;height:8px" />
+            <i class="sc-sk" style="width:70%" />
+            <i class="sc-sk" style="width:50%;height:4px" />
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+{
+  name === 'ui' && (
+    <div class="sc-ui">
+      <div class="sc-ui__frame sc-ui__wire">
+        <i class="sc-ui__img" />
+        <i class="sc-ui__l" style="width:70%" />
+        <i class="sc-ui__l" style="width:50%" />
+        <span class="sc-ui__row">
+          <i />
+          <i />
+        </span>
+        <em class="sc-ui__btn" />
+      </div>
+      <div class="sc-ui__frame sc-ui__design">
+        <i class="sc-ui__img" />
+        <i class="sc-ui__l" style="width:70%" />
+        <i class="sc-ui__l" style="width:50%" />
+        <span class="sc-ui__row">
+          <i />
+          <i />
+        </span>
+        <em class="sc-ui__btn" />
+      </div>
+      <span class="sc-ui__handle" />
+      <span class="sc-ui__tag sc-ui__tag--l">{T.wire}</span>
+      <span class="sc-ui__tag sc-ui__tag--r">{T.design}</span>
+    </div>
+  )
+}
+
+{
+  name === 'photo' && (
+    <div class="sc-photo">
+      <div class="sc-photo__vf">
+        <span class="sc-photo__sky" />
+        <span class="sc-photo__sun" />
+        <span class="sc-photo__hill sc-photo__hill--a" />
+        <span class="sc-photo__hill sc-photo__hill--b" />
+        <span class="sc-photo__focus" />
+        <span class="sc-photo__corners" />
+        <span class="sc-photo__flash" />
+      </div>
+      <span class="sc-chip sc-late sc-photo__chip" style="--dl:.2s">
+        <i set:html={check} />
+        {T.saved}
+      </span>
+    </div>
+  )
+}
+
+<style is:global>
+  /* ---------- java: code appears line by line, then the build goes green ---------- */
+  .sc-code {
+    width: min(100%, 300px);
+  }
+  .sc-code .sc-pre {
+    padding: 10px 14px 18px;
+    overflow: hidden;
+    color: #34445c;
+  }
+  .sc-code .sc-pre > span {
+    min-height: 1.6em;
+  }
+  .sc-code k {
+    color: var(--hA);
+    font-weight: 600;
+  }
+  .sc-code t {
+    color: #8a4bd6;
+  }
+  .sc-code__chip {
+    right: 12px;
+    bottom: -14px;
+  }
+
+  /* ---------- spa: browser with a single page app switching routes ---------- */
+  .sc-spa {
+    width: min(100%, 560px);
+  }
+  .sc-spa__top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 12px;
+    border-bottom: 1px solid rgba(30, 61, 126, 0.08);
+  }
+  .sc-spa__addr {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    min-width: 0;
+    padding: 5px 10px;
+    border-radius: 7px;
+    background: #f0f4f8;
+    color: #6a7a90;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .sc-spa__addr > i {
+    display: grid;
+    margin-right: 4px;
+    color: var(--sc-ok);
+  }
+  .sc-spa__addr b {
+    font-weight: 600;
+    color: var(--hA);
+  }
+  .sc-spa__body {
+    display: grid;
+    grid-template-columns: 112px 1fr;
+    height: 150px;
+    overflow: hidden;
+  }
+  .sc-spa__nav {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 2px;
+    padding: 10px 8px;
+    border-right: 1px solid rgba(30, 61, 126, 0.07);
+    font-weight: 500;
+    font-size: 11px;
+    color: var(--jx-navy);
+  }
+  .sc-spa__nav span {
+    position: relative;
+    z-index: 1;
+    height: 28px;
+    padding: 0 10px;
+    line-height: 28px;
+  }
+  .sc-spa__nav .sc-sk {
+    margin: 10px 10px 0;
+  }
+  .sc-spa__ind {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 10px;
+    height: 28px;
+    border-radius: 7px;
+    background: color-mix(in oklab, var(--hB) 16%, #fff);
+    animation: sc-ind 9s var(--jx-ease-io) infinite;
+  }
+  @keyframes sc-ind {
+    0%,
+    30% {
+      transform: none;
+    }
+    35%,
+    63% {
+      transform: translateY(30px);
+    }
+    68%,
+    96% {
+      transform: translateY(60px);
+    }
+  }
+  .sc-spa__view {
+    padding: 12px;
+  }
+  .sc-spa__pane {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+  }
+  .sc-spa__kpis {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .sc-spa__kpis .sc-card {
+    display: grid;
+    gap: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 12px rgba(30, 61, 126, 0.08);
+  }
+  .sc-spa__kpis b {
+    height: 10px;
+    width: 70%;
+  }
+  .sc-spa__chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 7px;
+    height: 64px;
+    padding: 0 4px;
+  }
+  .sc-spa__chart i {
+    flex: 1;
+    height: var(--h);
+    border-radius: 4px 4px 2px 2px;
+    background: linear-gradient(180deg, var(--hB), var(--hA));
+    opacity: 0.85;
+    transform-origin: bottom;
+    animation: sc-grow 9s var(--jx-ease) infinite both;
+    animation-delay: calc(var(--k) * 0.08s);
+  }
+  @keyframes sc-grow {
+    0%,
+    3% {
+      transform: scaleY(0.2);
+    }
+    14%,
+    100% {
+      transform: none;
+    }
+  }
+  .sc-spa__row {
+    display: grid;
+    grid-template-columns: 22px 1fr 0.6fr 46px;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 4px;
+    border-bottom: 1px solid #eef2f6;
+  }
+  .sc-spa__row .sc-avatar {
+    width: 22px;
+    height: 22px;
+  }
+  .sc-spa__row em {
+    height: 16px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--sc-ok) 22%, #fff);
+  }
+  .sc-spa__row em.is-open {
+    background: color-mix(in oklab, var(--hB) 22%, #fff);
+  }
+  .sc-spa__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sc-spa__grid .sc-card {
+    display: grid;
+    grid-template-columns: 26px 1fr;
+    align-items: center;
+    gap: 6px 10px;
+    padding: 10px;
+    box-shadow: 0 4px 12px rgba(30, 61, 126, 0.08);
+  }
+  .sc-spa__grid .sc-avatar {
+    grid-row: span 2;
+    width: 26px;
+    height: 26px;
+  }
+  .sc-spa__chip {
+    right: -10px;
+    top: 44px;
+    animation: jx-float 7s ease-in-out infinite;
+  }
+
+  /* ---------- arch: layers build up, data flows through ---------- */
+  .sc-arch {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    justify-items: center;
+    width: 190px;
+  }
+  .sc-arch__node {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 12px;
+    font-weight: 500;
+    color: var(--jx-navy);
+  }
+  .sc-arch__node > i {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    background: color-mix(in oklab, var(--hA) calc(100% - var(--o) * 22%), var(--hC));
+  }
+  .sc-arch__link {
+    width: 2px;
+    height: 16px;
+    background: repeating-linear-gradient(180deg, var(--hA) 0 3px, transparent 3px 7px);
+    background-size: 2px 14px;
+    opacity: 0.7;
+  }
+  .sc-arch__link.sc-s {
+    animation:
+      sc-seq var(--d, 8s) var(--jx-ease) infinite both,
+      sc-drip 0.8s linear infinite;
+    animation-delay: calc(var(--k, 0) * var(--g, 0.45s)), 0s;
+  }
+  @keyframes sc-drip {
+    to {
+      background-position: 0 14px;
+    }
+  }
+
+  /* ---------- data: a data schema becomes a form ---------- */
+  .sc-data {
+    position: relative;
+    width: min(100%, 320px);
+    height: 200px;
+  }
+  .sc-term.sc-data__json {
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 172px;
+  }
+  .sc-data__json .sc-pre {
+    padding: 10px 12px;
+  }
+  .sc-data__json b {
+    font-weight: 400;
+    color: var(--hC);
+  }
+  .sc-data__json em {
+    font-style: normal;
+    color: #f5c46b;
+  }
+  .sc-data__arrow {
+    position: absolute;
+    left: 118px;
+    top: 104px;
+    width: 60px;
+    height: 40px;
+    z-index: 2;
+  }
+  .sc-data__arrow path {
+    fill: none;
+    stroke: var(--hA);
+    stroke-width: 1.6;
+    stroke-dasharray: 3 5;
+    stroke-linecap: round;
+    animation: sc-flow 1.4s linear infinite;
+  }
+  .sc-win.sc-data__form {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 160px;
+  }
+  .sc-data__fields {
+    display: grid;
+    gap: 9px;
+    padding: 10px 12px 14px;
+  }
+  .sc-data__fields label {
+    display: grid;
+    gap: 4px;
+    font-size: 10.5px;
+    color: var(--jx-grey);
+  }
+  .sc-data__fields .sc-fill {
+    height: 18px;
+    border-radius: 6px;
+    background: #f0f4f8;
+  }
+  .sc-data__fields .sc-fill::after {
+    inset: 6px auto 6px 8px;
+    width: calc(100% - 16px);
+    background: #b9c6d6;
+  }
+
+  /* ---------- rails: generator output in a terminal ---------- */
+  .sc-rails .p {
+    color: #e2574c;
+  }
+
+  /* ---------- ci: commit runs through build, test, deploy ---------- */
+  .sc-ci {
+    width: min(100%, 380px);
+  }
+  .sc-ci .sc-ci__branch {
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: #f0f4f8;
+    color: var(--jx-navy);
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 10.5px;
+  }
+  .sc-ci__commit {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 14px 4px;
+    font-weight: 500;
+  }
+  .sc-ci__commit code {
+    margin-left: auto;
+    color: var(--jx-grey);
+  }
+  .sc-ci__stages {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0;
+    padding: 16px 14px 24px;
+    list-style: none;
+  }
+  .sc-ci__stages li {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 7px;
+    font-weight: 500;
+    font-size: 11px;
+    color: var(--jx-navy);
+  }
+  .sc-ci__dot {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: #fff;
+    background: #e3e9f0;
+    animation: sc-stage 8s var(--jx-ease) infinite both;
+    animation-delay: calc(var(--k) * 1.3s);
+  }
+  .sc-ci__dot i {
+    display: grid;
+    opacity: 0;
+    animation: inherit;
+    animation-name: sc-stage-i;
+  }
+  @keyframes sc-stage {
+    0%,
+    6% {
+      background: #e3e9f0;
+      box-shadow: 0 0 0 0 transparent;
+    }
+    10%,
+    18% {
+      background: var(--hB);
+      box-shadow: 0 0 0 6px color-mix(in oklab, var(--hB) 22%, transparent);
+    }
+    24%,
+    86% {
+      background: var(--sc-ok);
+      box-shadow: 0 0 0 0 transparent;
+    }
+    94%,
+    100% {
+      background: #e3e9f0;
+    }
+  }
+  @keyframes sc-stage-i {
+    0%,
+    20% {
+      opacity: 0;
+    }
+    24%,
+    86% {
+      opacity: 1;
+    }
+    94%,
+    100% {
+      opacity: 0;
+    }
+  }
+  .sc-ci .sc-ci__track {
+    position: absolute;
+    left: calc(50% + 20px);
+    right: calc(-50% + 20px);
+    top: 13px;
+    height: 4px;
+  }
+  .sc-ci .sc-ci__track::after {
+    background: var(--sc-ok);
+    animation-name: sc-track;
+  }
+  @keyframes sc-track {
+    0%,
+    18% {
+      transform: scaleX(0);
+    }
+    30%,
+    86% {
+      transform: none;
+    }
+    94%,
+    100% {
+      transform: scaleX(0);
+    }
+  }
+  .sc-ci__chip {
+    right: 14px;
+    bottom: -14px;
+  }
+
+  /* ---------- custom: one portal, three products, accent colour changes ---------- */
+  @property --sc-br {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #2a3bc8;
+  }
+  .sc-brand {
+    width: min(100%, 400px);
+    overflow: hidden;
+    animation: sc-brand 9s var(--jx-ease-io) infinite;
+  }
+  @keyframes sc-brand {
+    0%,
+    30% {
+      --sc-br: var(--hA);
+    }
+    35%,
+    63% {
+      --sc-br: #0f9e8e;
+    }
+    68%,
+    96% {
+      --sc-br: #7a4bd6;
+    }
+    100% {
+      --sc-br: var(--hA);
+    }
+  }
+  .sc-brand__top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    color: #fff;
+    background: var(--sc-br);
+    font-weight: 600;
+    font-size: 11.5px;
+  }
+  .sc-brand__logo {
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.85);
+  }
+  .sc-brand__menu {
+    display: flex;
+    gap: 6px;
+    margin-left: auto;
+  }
+  .sc-brand__menu i {
+    width: 22px;
+    height: 5px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.5);
+  }
+  .sc-brand__body {
+    display: grid;
+    grid-template-columns: 1fr 96px;
+    gap: 12px;
+    padding: 12px;
+    min-height: 150px;
+  }
+  .sc-brand__tiles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    align-content: start;
+  }
+  .sc-brand__tiles .sc-card {
+    display: grid;
+    gap: 8px;
+    padding: 9px;
+    box-shadow: 0 4px 12px rgba(30, 61, 126, 0.08);
+  }
+  .sc-brand__tiles b {
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    background: color-mix(in oklab, var(--sc-br) calc(100% - var(--o) * 30%), #fff);
+  }
+  .sc-brand__theme {
+    display: grid;
+    align-content: start;
+    gap: 12px;
+  }
+  .sc-brand__upload {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    padding: 16px;
+    border: 1.5px dashed color-mix(in oklab, var(--sc-br) 50%, #fff);
+    box-shadow: none;
+  }
+  .sc-brand__upload b {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(140deg, var(--sc-br), color-mix(in oklab, var(--sc-br) 40%, #fff));
+  }
+  .sc-brand__btns {
+    display: flex;
+    gap: 8px;
+  }
+  .sc-brand__btns i {
+    flex: 1;
+    height: 20px;
+    border-radius: 6px;
+    background: var(--sc-br);
+  }
+  .sc-brand__btns i + i {
+    background: #e6edf3;
+  }
+  .sc-brand__report {
+    display: flex;
+    align-items: flex-end;
+    gap: 7px;
+    height: 120px;
+    padding: 8px 4px 0;
+    border-bottom: 1px solid #e3e9f0;
+  }
+  .sc-brand__report i {
+    flex: 1;
+    height: var(--h);
+    border-radius: 4px 4px 0 0;
+    background: color-mix(in oklab, var(--sc-br) 85%, #fff);
+  }
+  .sc-brand__side {
+    display: grid;
+    align-content: start;
+    gap: 9px;
+    padding-left: 12px;
+    border-left: 1px solid #eef2f6;
+    font-weight: 600;
+    font-size: 10.5px;
+    color: var(--jx-navy);
+  }
+  .sc-brand__sw {
+    position: relative;
+    display: flex;
+    gap: 6px;
+  }
+  .sc-brand__sw i {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    background: var(--hA);
+  }
+  .sc-brand__sw i:nth-child(2) {
+    background: #0f9e8e;
+  }
+  .sc-brand__sw i:nth-child(3) {
+    background: #7a4bd6;
+  }
+  .sc-brand__sw b {
+    position: absolute;
+    left: -3px;
+    top: -3px;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    border: 2px solid var(--jx-navy);
+    animation: sc-sw 9s var(--jx-ease-io) infinite;
+  }
+  @keyframes sc-sw {
+    0%,
+    30% {
+      transform: none;
+    }
+    35%,
+    63% {
+      transform: translateX(26px);
+    }
+    68%,
+    96% {
+      transform: translateX(52px);
+    }
+  }
+
+  /* ---------- site: page builds up, then switches to the mobile layout and back ---------- */
+  .sc-site {
+    width: min(100%, 540px);
+  }
+  .sc-site__dev {
+    display: flex;
+    gap: 5px;
+  }
+  .sc-site__dev i {
+    width: 16px;
+    height: 12px;
+    border-radius: 3px;
+    border: 1.5px solid var(--hA);
+    animation: sc-dev 10s var(--jx-ease-io) infinite;
+  }
+  .sc-site__dev i + i {
+    width: 9px;
+    border-color: #c4cfdb;
+    animation-name: sc-dev2;
+  }
+  @keyframes sc-dev {
+    0%,
+    40%,
+    82%,
+    100% {
+      border-color: var(--hA);
+    }
+    48%,
+    74% {
+      border-color: #c4cfdb;
+    }
+  }
+  @keyframes sc-dev2 {
+    0%,
+    40%,
+    82%,
+    100% {
+      border-color: #c4cfdb;
+    }
+    48%,
+    74% {
+      border-color: var(--hA);
+    }
+  }
+  .sc-site__stage {
+    display: grid;
+    justify-items: center;
+    align-items: start;
+    height: 172px;
+    overflow: hidden;
+    padding: 12px;
+    background: #f4f7fa;
+    border-radius: 0 0 12px 12px;
+  }
+  .sc-site__page {
+    display: grid;
+    gap: 8px;
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(30, 61, 126, 0.08);
+    animation: sc-resp 10s var(--jx-ease-io) infinite;
+  }
+  @keyframes sc-resp {
+    0%,
+    40% {
+      width: 100%;
+    }
+    48%,
+    74% {
+      width: 34%;
+    }
+    82%,
+    100% {
+      width: 100%;
+    }
+  }
+  .sc-site__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sc-site__nav b {
+    width: 34px;
+    height: 10px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--hA), var(--hC));
+  }
+  .sc-site__nav span {
+    display: flex;
+    gap: 5px;
+  }
+  .sc-site__nav span i {
+    width: 18px;
+    height: 5px;
+    border-radius: 3px;
+    background: #dfe6ee;
+  }
+  .sc-site__hero {
+    padding: 16px 12px;
+    border-radius: 7px;
+    background:
+      radial-gradient(70% 120% at 90% 0%, color-mix(in oklab, var(--hB) 55%, transparent), transparent 70%),
+      linear-gradient(135deg, color-mix(in oklab, var(--hA) 70%, #fff), color-mix(in oklab, var(--hC) 60%, #fff));
+  }
+  .sc-site__hero span {
+    display: grid;
+    gap: 6px;
+    max-width: 70%;
+  }
+  .sc-site__hero .sc-sk {
+    background: rgba(255, 255, 255, 0.85);
+  }
+  .sc-site__hero em {
+    width: 46px;
+    height: 14px;
+    margin-top: 4px;
+    border-radius: 5px;
+    background: #0b1a36;
+  }
+  .sc-site__cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .sc-site__cards span {
+    flex: 1 1 70px;
+    display: grid;
+    gap: 6px;
+    padding: 8px;
+    border-radius: 7px;
+    background: #f4f7fa;
+  }
+  .sc-site__cards b {
+    width: 16px;
+    height: 16px;
+    border-radius: 5px;
+    background: color-mix(in oklab, var(--hA) calc(100% - var(--o) * 30%), var(--hC));
+  }
+  .sc-site__chip {
+    right: 16px;
+    top: 52px;
+    animation: jx-float 7s ease-in-out infinite;
+  }
+
+  /* ---------- logo: construction circles, shapes draw and fill, wordmark appears ---------- */
+  .sc-logo {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    justify-items: center;
+    gap: 6px;
+  }
+  .sc-logo svg {
+    width: 200px;
+    height: 150px;
+    overflow: visible;
+  }
+  .sc-logo__guide {
+    fill: none;
+    stroke: var(--hA);
+    stroke-width: 0.8;
+    stroke-dasharray: 2 4;
+    opacity: 0.45;
+  }
+  .sc-logo__a,
+  .sc-logo__b {
+    stroke-width: 2;
+    stroke-dasharray: 100;
+    animation: sc-draw 8s var(--jx-ease) infinite both;
+  }
+  .sc-logo__a {
+    fill: var(--hA);
+    stroke: var(--hA);
+  }
+  .sc-logo__b {
+    fill: var(--hC);
+    stroke: var(--hC);
+    mix-blend-mode: multiply;
+    animation-delay: 0.5s;
+  }
+  @keyframes sc-draw {
+    0%,
+    6% {
+      stroke-dashoffset: 100;
+      fill-opacity: 0;
+    }
+    30% {
+      stroke-dashoffset: 0;
+      fill-opacity: 0;
+    }
+    42%,
+    86% {
+      stroke-dashoffset: 0;
+      fill-opacity: 0.9;
+    }
+    96%,
+    100% {
+      stroke-dashoffset: 100;
+      fill-opacity: 0;
+    }
+  }
+  .sc-logo__word {
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: 0.02em;
+    color: var(--jx-navy);
+    animation: sc-pop 8s var(--jx-ease) infinite both;
+  }
+
+  /* ---------- card: business card turns front to back ---------- */
+  .sc-bc {
+    position: relative;
+    z-index: 1;
+    perspective: 800px;
+  }
+  .sc-bc__in {
+    position: relative;
+    width: 220px;
+    height: 128px;
+    transform-style: preserve-3d;
+    animation: sc-flip 8s var(--jx-ease-io) infinite;
+  }
+  @keyframes sc-flip {
+    0%,
+    38% {
+      transform: rotateY(-8deg) rotateX(6deg);
+    }
+    50%,
+    88% {
+      transform: rotateY(172deg) rotateX(6deg);
+    }
+    100% {
+      transform: rotateY(352deg) rotateX(6deg);
+    }
+  }
+  .sc-bc__face {
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow: hidden;
+  }
+  .sc-bc__front {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 10px 14px;
+    padding: 18px;
+    background: #fff;
+    border: 1px solid #e3e9f0;
+  }
+  .sc-bc__back {
+    display: grid;
+    place-items: center;
+    transform: rotateY(180deg);
+    background: linear-gradient(135deg, var(--hA), var(--hC));
+  }
+  .sc-bc__mark {
+    position: relative;
+    display: block;
+    width: 30px;
+    height: 24px;
+  }
+  .sc-bc__mark i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--hA);
+  }
+  .sc-bc__mark i + i {
+    left: 10px;
+    border-radius: 7px;
+    background: var(--hC);
+    mix-blend-mode: multiply;
+  }
+  .sc-bc__mark--lg {
+    transform: scale(1.7);
+  }
+  .sc-bc__back .sc-bc__mark i {
+    background: rgba(255, 255, 255, 0.95);
+  }
+  .sc-bc__back .sc-bc__mark i + i {
+    background: rgba(255, 255, 255, 0.6);
+    mix-blend-mode: normal;
+  }
+  .sc-bc__who {
+    display: grid;
+    align-content: start;
+    gap: 2px;
+  }
+  .sc-bc__who b {
+    font-weight: 600;
+    font-size: 12.5px;
+    color: var(--jx-navy);
+  }
+  .sc-bc__who span {
+    font-size: 10.5px;
+    color: var(--jx-grey);
+  }
+  .sc-bc__lines {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 5px;
+  }
+  .sc-bc__shadow {
+    display: block;
+    width: 180px;
+    height: 14px;
+    margin: 14px auto 0;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(30, 61, 126, 0.22), transparent);
+  }
+
+  /* ---------- deck: three slides take turns, thumbnail indicator follows ---------- */
+  .sc-deck {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 10px;
+    width: min(100%, 260px);
+  }
+  .sc-deck__main {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+  .sc-deck__s {
+    display: grid;
+    align-content: start;
+    gap: 9px;
+    padding: 14px 16px;
+  }
+  .sc-deck__s > b {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--jx-navy);
+  }
+  .sc-deck__s--title {
+    align-content: center;
+    background:
+      radial-gradient(60% 90% at 100% 100%, color-mix(in oklab, var(--hB) 45%, transparent), transparent 70%),
+      radial-gradient(40% 60% at 90% 10%, color-mix(in oklab, var(--hC) 35%, transparent), transparent 70%);
+  }
+  .sc-deck__s--title > b {
+    font-size: 16px;
+  }
+  .sc-deck__bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 64px;
+  }
+  .sc-deck__bars i {
+    flex: 1;
+    height: var(--h);
+    border-radius: 3px 3px 0 0;
+    background: linear-gradient(180deg, var(--hC), var(--hA));
+  }
+  .sc-deck__pt {
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    align-items: center;
+    gap: 8px;
+  }
+  .sc-deck__pt em {
+    display: grid;
+    place-items: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    color: #fff;
+    background: var(--hA);
+  }
+  .sc-deck__thumbs {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    width: 70%;
+  }
+  .sc-deck__thumbs i {
+    aspect-ratio: 16 / 9;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 3px 10px rgba(30, 61, 126, 0.1);
+  }
+  .sc-deck__ind {
+    position: absolute;
+    left: -3px;
+    top: -3px;
+    width: calc((100% - 16px) / 3 + 6px);
+    height: calc(100% + 6px);
+    border-radius: 7px;
+    border: 2px solid var(--hA);
+    animation: sc-ind3 9s var(--jx-ease-io) infinite;
+  }
+  @keyframes sc-ind3 {
+    0%,
+    30% {
+      transform: none;
+    }
+    35%,
+    63% {
+      transform: translateX(calc(100% + 2px));
+    }
+    68%,
+    96% {
+      transform: translateX(calc(200% + 4px));
+    }
+  }
+
+  /* ---------- letter: letterhead template, body is written, signature drawn ---------- */
+  .sc-letter {
+    position: relative;
+    z-index: 1;
+    width: 158px;
+    height: 206px;
+  }
+  .sc-letter__page {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    align-content: start;
+    gap: 7px;
+    padding: 16px 16px 0;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 12px 30px rgba(30, 61, 126, 0.16);
+  }
+  .sc-letter__page--back {
+    transform: translate(14px, -10px) rotate(4deg);
+    opacity: 0.7;
+  }
+  .sc-letter__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+    border-bottom: 2px solid color-mix(in oklab, var(--hA) 60%, #fff);
+  }
+  .sc-letter__head .sc-bc__mark {
+    transform: scale(0.75);
+    transform-origin: left;
+  }
+  .sc-letter__addr {
+    display: grid;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  .sc-letter__addr .sc-sk {
+    height: 4px;
+  }
+  .sc-letter__page > .sc-sk {
+    height: 4px;
+  }
+  .sc-letter__sig {
+    width: 70px;
+    height: 22px;
+    margin-top: 6px;
+  }
+  .sc-letter__sig path {
+    fill: none;
+    stroke: var(--jx-navy);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-dasharray: 100;
+    animation: sc-sign 8s var(--jx-ease) infinite both;
+  }
+  @keyframes sc-sign {
+    0%,
+    34% {
+      stroke-dashoffset: 100;
+    }
+    52%,
+    88% {
+      stroke-dashoffset: 0;
+    }
+    96%,
+    100% {
+      stroke-dashoffset: 100;
+    }
+  }
+  .sc-chip.sc-letter__chip {
+    left: -36px;
+    bottom: 22px;
+    padding: 6px 12px;
+    color: var(--jx-navy);
+    animation: jx-float 7s ease-in-out infinite;
+  }
+
+  /* ---------- guide: brand colours and type ---------- */
+  .sc-guide {
+    width: min(100%, 290px);
+  }
+  .sc-guide__body {
+    display: grid;
+    gap: 12px;
+    padding: 12px 14px 16px;
+  }
+  .sc-guide__sw {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .sc-guide__sw span {
+    display: grid;
+    gap: 5px;
+  }
+  .sc-guide__sw b {
+    height: 46px;
+    border-radius: 8px;
+  }
+  .sc-guide__sw code {
+    font-size: 9.5px;
+    color: var(--jx-grey);
+  }
+  .sc-guide__type {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 14px;
+    padding-top: 10px;
+    border-top: 1px solid #eef2f6;
+  }
+  .sc-guide__type b {
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 1;
+    color: var(--jx-navy);
+  }
+  .sc-guide__type span {
+    display: grid;
+    gap: 6px;
+  }
+
+  /* ---------- ui: wireframe wipes into the finished design ---------- */
+  .sc-ui {
+    position: relative;
+    z-index: 1;
+    width: 210px;
+    height: 176px;
+  }
+  .sc-ui__frame {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 12px;
+  }
+  .sc-ui__wire {
+    background: #fff;
+    border: 1.5px dashed #b9c6d6;
+  }
+  .sc-ui__wire > i,
+  .sc-ui__wire .sc-ui__row i,
+  .sc-ui__wire em {
+    border: 1.5px solid #c8d3df;
+    background: transparent;
+  }
+  .sc-ui__img {
+    height: 64px;
+    border-radius: 8px;
+  }
+  .sc-ui__l {
+    height: 7px;
+    border-radius: 4px;
+  }
+  .sc-ui__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .sc-ui__row i {
+    height: 22px;
+    border-radius: 6px;
+  }
+  .sc-ui__btn {
+    justify-self: start;
+    width: 70px;
+    height: 18px;
+    border-radius: 6px;
+  }
+  .sc-ui__design {
+    background: #fff;
+    box-shadow: 0 12px 30px rgba(30, 61, 126, 0.16);
+    clip-path: inset(0 100% 0 0 round 12px);
+    animation: sc-wipe 8s var(--jx-ease-io) infinite;
+  }
+  .sc-ui__design .sc-ui__img {
+    background:
+      radial-gradient(60% 90% at 80% 20%, color-mix(in oklab, var(--hB) 70%, transparent), transparent 70%),
+      linear-gradient(135deg, var(--hA), var(--hC));
+  }
+  .sc-ui__design .sc-ui__l {
+    background: #dfe6ee;
+  }
+  .sc-ui__design .sc-ui__l:nth-child(2) {
+    background: var(--jx-navy);
+  }
+  .sc-ui__design .sc-ui__row i {
+    background: color-mix(in oklab, var(--hA) 14%, #fff);
+  }
+  .sc-ui__design em {
+    background: var(--hA);
+  }
+  @keyframes sc-wipe {
+    0%,
+    14% {
+      clip-path: inset(0 100% 0 0 round 12px);
+    }
+    48%,
+    84% {
+      clip-path: inset(0 0 0 0 round 12px);
+    }
+    96%,
+    100% {
+      clip-path: inset(0 100% 0 0 round 12px);
+    }
+  }
+  .sc-ui__handle {
+    position: absolute;
+    z-index: 2;
+    top: -8px;
+    bottom: -8px;
+    left: 0;
+    width: 2px;
+    background: var(--hA);
+    animation: sc-handle 8s var(--jx-ease-io) infinite;
+  }
+  .sc-ui__handle::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    translate: -50% -50%;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid var(--hA);
+  }
+  @keyframes sc-handle {
+    0%,
+    14% {
+      left: 0;
+    }
+    48%,
+    84% {
+      left: 100%;
+    }
+    96%,
+    100% {
+      left: 0;
+    }
+  }
+  .sc-ui__tag {
+    position: absolute;
+    z-index: 3;
+    top: -12px;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: #fff;
+    font-weight: 500;
+    font-size: 10.5px;
+    color: var(--jx-navy);
+    box-shadow: 0 6px 16px rgba(30, 61, 126, 0.12);
+  }
+  .sc-ui__tag--l {
+    left: -18px;
+  }
+  .sc-ui__tag--r {
+    right: -18px;
+    color: #fff;
+    background: var(--hA);
+  }
+
+  /* ---------- photo: focus, shutter, saved ---------- */
+  .sc-photo {
+    position: relative;
+    z-index: 1;
+  }
+  .sc-photo__vf {
+    position: relative;
+    width: 250px;
+    height: 160px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 14px 34px rgba(30, 61, 126, 0.2);
+  }
+  .sc-photo__sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--hC) 50%, #fff),
+      color-mix(in oklab, var(--hB) 35%, #fff)
+    );
+  }
+  .sc-photo__sun {
+    position: absolute;
+    left: 64%;
+    top: 22%;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #fff6d6;
+    box-shadow: 0 0 30px 10px rgba(255, 246, 214, 0.7);
+  }
+  .sc-photo__hill {
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    bottom: 0;
+  }
+  .sc-photo__hill--a {
+    height: 60%;
+    background: color-mix(in oklab, var(--hA) 75%, #0b1a36);
+    clip-path: polygon(0 100%, 0 55%, 22% 20%, 40% 50%, 58% 10%, 80% 45%, 100% 30%, 100% 100%);
+    opacity: 0.75;
+  }
+  .sc-photo__hill--b {
+    height: 38%;
+    background: color-mix(in oklab, var(--hA) 50%, #0b1a36);
+    clip-path: polygon(0 100%, 0 40%, 30% 10%, 55% 45%, 78% 20%, 100% 50%, 100% 100%);
+  }
+  .sc-photo__corners {
+    position: absolute;
+    inset: 12px;
+    background:
+      linear-gradient(#fff, #fff) left top / 14px 2px,
+      linear-gradient(#fff, #fff) left top / 2px 14px,
+      linear-gradient(#fff, #fff) right top / 14px 2px,
+      linear-gradient(#fff, #fff) right top / 2px 14px,
+      linear-gradient(#fff, #fff) left bottom / 14px 2px,
+      linear-gradient(#fff, #fff) left bottom / 2px 14px,
+      linear-gradient(#fff, #fff) right bottom / 14px 2px,
+      linear-gradient(#fff, #fff) right bottom / 2px 14px;
+    background-repeat: no-repeat;
+    opacity: 0.9;
+  }
+  .sc-photo__focus {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 46px;
+    height: 46px;
+    translate: -50% -50%;
+    border: 2px solid #fff;
+    border-radius: 6px;
+    animation: sc-focus 8s var(--jx-ease) infinite both;
+  }
+  @keyframes sc-focus {
+    0%,
+    8% {
+      transform: scale(1.8);
+      opacity: 0;
+    }
+    20% {
+      transform: scale(1.8);
+      opacity: 1;
+    }
+    34%,
+    44% {
+      transform: none;
+      opacity: 1;
+      border-color: #9df0b5;
+    }
+    50%,
+    100% {
+      transform: none;
+      opacity: 0;
+    }
+  }
+  .sc-photo__flash {
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    opacity: 0;
+    animation: sc-flash 8s ease-out infinite;
+  }
+  @keyframes sc-flash {
+    0%,
+    45% {
+      opacity: 0;
+    }
+    46% {
+      opacity: 0.9;
+    }
+    56%,
+    100% {
+      opacity: 0;
+    }
+  }
+  .sc-photo__chip {
+    left: 50%;
+    bottom: -14px;
+    translate: -50% 0;
+  }
+</style>

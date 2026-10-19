@@ -90,6 +90,18 @@
             ]
           },
           {
+            "type": "process",
+            "kicker": "So arbeiten wir",
+            "title": "Von der Idee bis zur Wartung",
+            "text": "Wir begleiten deine Software über den ganzen Weg, nicht nur beim Programmieren.",
+            "steps": [
+              { "title": "Idee & Anforderungen", "text": "Wir hören zu, klären Ziele, Nutzer:innen und Rahmenbedingungen und halten alles nachvollziehbar fest." },
+              { "title": "Konzeption & Architektur", "text": "Wir entwerfen Datenmodell, Architektur und Oberflächen, bevor die erste Zeile Code entsteht." },
+              { "title": "Entwicklung in Etappen", "text": "Du siehst früh lauffähige Zwischenstände. Git und Continuous Integration sorgen für saubere, nachvollziehbare Builds." },
+              { "title": "Betrieb & Wartung", "text": "Auch nach dem Go-live bleiben wir an deiner Seite: mit Wartung, Weiterentwicklung und auf Wunsch dem Betrieb." }
+            ]
+          },
+          {
             "type": "cases",
             "kicker": "Referenzen",
             "title": "Referenzen",
@@ -100,6 +112,20 @@
               { "title": "Enterprise Sharepoint Picture Editor", "text": ["Die Mitarbeiter:innen eines internationalen Konzerns sollten selbst die Banner von Content Seiten für das MS Sharepoint Intranet erzeugen können. Dabei sollten die Vorgaben des Corporate Design eingehalten werden, ohne zusätzliche Werkzeuge wie Adobe Illustrator zu benötigen.", "Jenomics hat eine Java Applikation (Bildeditor) entwickelt, in der durch XML Corporate Design konforme Vorlagen und Templates definiert werden können. In einem Bildeditor können diese Templates dann in MS Sharepoint integriert für Banner auf Content Seiten im Intranet gestaltet und hochgeladen werden."], "tags": ["xml", "java", "ui", "constrained-editing"] },
               { "title": "Enterprise Multiplattform Communicator", "text": ["Für einen internationalen Konzern wurde eine interne Plattform für unabhängige internationalisierte Telefonie und Videokonferenz Lösung im Corporate Design geschaffen.", "Jenomics hat im Rahmen dieser Vorgaben einen SIP(S) Client für Telefonie und Videokonferenz auf Java Basis im JRC (JenomicsRichClient) Framework entwickelt und implementiert."], "tags": ["xml", "java", "sip", "telefonie", "videoconferencing"] },
               { "title": "Editinglösung für individualisierte Kreditkarten für große deutsche Bank", "text": ["Im Rahmen eines Projekts für eine große deutsche Bank sollte eine browserbasierte Applikation entwickelt werden, die das Hochladen und Bearbeiten von individuellen Bildern für das Gestalten von Kreditkarten ermöglicht.", "Jenomics hat ein WebFrontend entwickelt, das dem Kunden den Upload und die Bearbeitung ermöglicht hat und die Daten über ein Backend an die Kreditkartenproduktion gibt. Im Backend wurde ein regelbasiertes System zur Prüfung definierter Vorgaben implementiert."], "tags": ["html5", "java", "constrained-editing"] }
+            ]
+          },
+          {
+            "type": "faq",
+            "kicker": "Häufige Fragen",
+            "title": "Gut zu wissen",
+            "text": "Deine Frage ist nicht dabei? Schreib uns, wir melden uns bei dir.",
+            "cta": "Frage stellen",
+            "href": "/kontakt/",
+            "items": [
+              { "q": "Mit welchen Technologien arbeitet ihr?", "a": "Schwerpunkte sind Java (von Swing und JavaFX bis zu JEE-Backends), Ruby on Rails sowie Web-Frontends von HTML5 bis zu Single Page Applications. Für Quellcode und Builds setzen wir auf Git, GitLab und Continuous Integration." },
+              { "q": "Könnt ihr eine bestehende Anwendung weiterentwickeln?", "a": "Sprich uns an: Wir schauen uns deine Anwendung gemeinsam an und besprechen, wie wir dich bei Weiterentwicklung und Wartung unterstützen können." },
+              { "q": "Passt ihr auch eure eigenen Produkte an?", "a": "Ja. IKONA, SDX und GM8 passen wir individuell an deine Bedürfnisse an, zum Beispiel mit Portalen in IKONA, Branding in SDX oder neuen Reports in GM8." },
+              { "q": "Was passiert nach dem Go-live?", "a": "Wir begleiten dich von der ersten Idee bis zur Wartung im Arbeitsalltag. Auf Wunsch betreiben wir die Anwendung auch für dich." }
             ]
           }
         ]
@@ -150,19 +176,15 @@
             ]
           },
           {
-            "type": "columns",
-            "variant": "compact",
-            "kicker": "Unsere Leistungen",
-            "title": "Unsere Leistungen",
-            "items": [
-              { "icon": "globe", "title": "Website", "text": "Websites sind heutzutage nicht mehr wegzudenken. Daher ist es umso wichtiger, dass sie dich und deine Firma widerspiegelt und deine Message in die Welt hinausträgt." },
-              { "icon": "star", "title": "Logo", "text": "Ein Logo ist das A und O eines Unternehmens. Das Erste, was einem ins Auge fällt, und das Letzte, an das man denkt. Gemeinsam mit dir entwerfen wir einzigartige Logodesigns." },
-              { "icon": "exchange", "title": "Visitenkarten", "text": "In einer Welt, in der der erste Eindruck eine entscheidende Rolle spielt, bleiben Visitenkarten unverzichtbar." },
-              { "icon": "monitor", "title": "Präsentation", "text": "Du willst dich nicht mit PowerPoint herumärgern müssen, um Präsentationen zu erstellen? Wir übernehmen das und stellen dir eine individuelle Vorlage zur Verfügung." },
-              { "icon": "dev", "title": "Text- und Briefvorlage", "text": "Unsere Vorlagen helfen dir, deine Unternehmenskommunikation zu optimieren und deinen Dokumenten einen modernen und unverwechselbaren Stil zu verleihen." },
-              { "icon": "check", "title": "Brandguide", "text": "Ein Dokument, in dem du gesammelt auf alle Informationen und Assets deiner Brand zugreifen kannst. Damit immer alles parat ist." },
-              { "icon": "it", "title": "Software Design", "text": "Passende UI und UX ist essentiell für eine gut funktionierende Software. Wir helfen dir, das Beste aus deiner Idee herauszuholen." },
-              { "icon": "heart", "title": "Fotoshooting", "text": "Du möchtest professionelle Bilder von deinen Mitarbeiter:innen oder deinem Unternehmen? Wir wissen, wie wir deine Firma ins beste Licht rücken." }
+            "type": "process",
+            "kicker": "So arbeiten wir",
+            "title": "So entsteht dein neuer Auftritt",
+            "text": "Du begleitest uns durch den ganzen Prozess, so bleibt nichts im Dunkeln.",
+            "steps": [
+              { "title": "Kennenlernen & Ziele", "text": "Wir sprechen über deine Marke, deine Zielgruppe und das, was deine Website leisten soll." },
+              { "title": "Konzept & Design", "text": "Struktur, Look und Inhalte entstehen gemeinsam mit dir. Du bist bei jedem Schritt dabei." },
+              { "title": "Umsetzung mit WordPress", "text": "Wir bauen deine Seite responsiv und sicher mit WordPress, damit du sie später selbst pflegen kannst." },
+              { "title": "Launch & Betreuung", "text": "Nach dem Go-live kümmern wir uns auf Wunsch um Pflege, Sicherheit und Hosting." }
             ]
           },
           {
@@ -172,8 +194,33 @@
             "text": "Das Kit ist perfekt geeignet für One Pager oder Websites mit wenig Seitenumfang. Falls du dir nicht sicher bist, ob das Paket zu deinen Wünschen passt, kontaktiere uns einfach.",
             "cta": "Erfahre mehr",
             "href": "/web-deluxe-kit/"
+          },
+          {
+            "type": "faq",
+            "kicker": "Häufige Fragen",
+            "title": "Gut zu wissen",
+            "text": "Deine Frage ist nicht dabei? Schreib uns, wir melden uns bei dir.",
+            "cta": "Frage stellen",
+            "href": "/kontakt/",
+            "items": [
+              { "q": "Kann ich meine Website später selbst pflegen?", "a": "Ja. Wir setzen auf WordPress, damit du Inhalte selbst ändern kannst und unabhängig bleibst. Auf Wunsch übernehmen wir die Pflege für dich." },
+              { "q": "Gestaltet ihr auch Logo und Corporate Design?", "a": "Ja, von Logo, Visitenkarten sowie Präsentations-, Text- und Briefvorlagen bis zum Brandguide. Auch Software Design und Fotoshootings gehören zu unseren Leistungen." },
+              { "q": "Was ist das Web-Deluxe-Kit?", "a": "Unser Paket für One Pager und Websites mit wenig Seitenumfang. Wenn du unsicher bist, ob es zu deinen Wünschen passt, melde dich einfach bei uns." },
+              { "q": "Kümmert ihr euch auch um das Hosting?", "a": "Ja. Mit unserem Web- und CMS-Hosting bekommst du mehr als simplen Webspace: Wir unterstützen dich bei Wartung und Redaktion und kümmern uns um ein geeignetes CMS." }
+            ]
           }
-        ]
+        ],
+        "features": [
+          { "title": "Website", "text": "Websites sind heutzutage nicht mehr wegzudenken. Daher ist es umso wichtiger, dass sie dich und deine Firma widerspiegelt und deine Message in die Welt hinausträgt." },
+          { "title": "Logo", "text": "Ein Logo ist das A und O eines Unternehmens. Das Erste, was einem ins Auge fällt, und das Letzte, an das man denkt. Gemeinsam mit dir entwerfen wir einzigartige Logodesigns." },
+          { "title": "Visitenkarten", "text": "In einer Welt, in der der erste Eindruck eine entscheidende Rolle spielt, bleiben Visitenkarten unverzichtbar." },
+          { "title": "Präsentation", "text": "Du willst dich nicht mit PowerPoint herumärgern müssen, um Präsentationen zu erstellen? Wir übernehmen das und stellen dir eine individuelle Vorlage zur Verfügung." },
+          { "title": "Text- und Briefvorlage", "text": "Unsere Vorlagen helfen dir, deine Unternehmenskommunikation zu optimieren und deinen Dokumenten einen modernen und unverwechselbaren Stil zu verleihen." },
+          { "title": "Brandguide", "text": "Ein Dokument, in dem du gesammelt auf alle Informationen und Assets deiner Brand zugreifen kannst. Damit immer alles parat ist." },
+          { "title": "Software Design", "text": "Passende UI und UX ist essentiell für eine gut funktionierende Software. Wir helfen dir, das Beste aus deiner Idee herauszuholen." },
+          { "title": "Fotoshooting", "text": "Du möchtest professionelle Bilder von deinen Mitarbeiter:innen oder deinem Unternehmen? Wir wissen, wie wir deine Firma ins beste Licht rücken." }
+        ],
+        "feat_title": "Unsere Leistungen"
       },
       "linux": {
         "meta_title": "Betrieb von Linux & Unix - Jenomics GmbH",
@@ -188,7 +235,34 @@
           { "title": "Setup, Rollout, Deployment, Betrieb und Monitoring von Linux Serversystemen", "text": "Unser Expertenteam kümmert sich vollumfänglich um deine Systeme." },
           { "title": "Zentralisiertes Konfigurationsmanagement", "text": "Unser Team hilft dir dabei, ein zentralisiertes System zur Steuerung und Administration von verschiedenen Konfigurationen im Unternehmen zu betreiben, damit du den Überblick behältst." }
         ],
-        "blocks": []
+        "blocks": [
+          {
+            "type": "process",
+            "kicker": "So arbeiten wir",
+            "title": "So betreuen wir deine Linux-Systeme",
+            "text": "Automatisiert, gehärtet und mit vollem Überblick für dich.",
+            "steps": [
+              { "title": "Bestandsaufnahme", "text": "Wir verschaffen uns einen Überblick über deine Server, Dienste und Abhängigkeiten." },
+              { "title": "Automatisieren & härten", "text": "Konfigurationen werden zentral verwaltet, Systeme abgesichert und Abläufe automatisiert." },
+              { "title": "Rollout & Betrieb", "text": "Setup, Rollout und Deployment übernehmen wir für dich und betreiben deine Linux-Server." },
+              { "title": "Monitoring", "text": "Automatische Meldungen zeigen Engpässe früh, damit du die Kontrolle über deine Prozesse behältst." }
+            ]
+          },
+          {
+            "type": "faq",
+            "kicker": "Häufige Fragen",
+            "title": "Gut zu wissen",
+            "text": "Deine Frage ist nicht dabei? Schreib uns, wir melden uns bei dir.",
+            "cta": "Frage stellen",
+            "href": "/kontakt/",
+            "items": [
+              { "q": "Gibt es SDX auch als Installation bei uns?", "a": "Ja. Auf Anfrage installieren wir SDX, unsere Umgebung für den sicheren Austausch von Daten, direkt in deiner IT-Umgebung." },
+              { "q": "Was überwacht ihr?", "a": "Geschäftsrelevante Systeme und Services. Automatische Meldungen helfen dir, Engpässe wie knappe Ressourcen schnell und frühzeitig zu erkennen." },
+              { "q": "Wozu zentrales Konfigurationsmanagement?", "a": "Damit du den Überblick behältst: Konfigurationen werden an einer Stelle gesteuert und einheitlich auf deine Systeme verteilt." },
+              { "q": "Übernehmt ihr auch bestehende Server?", "a": "Sprich uns an. Wir schauen uns deine Umgebung an und besprechen, wie wir dich bei Betrieb und Monitoring unterstützen können." }
+            ]
+          }
+        ]
       },
       "net": {
         "meta_title": "Infrastruktur & Netzwerk - Jenomics GmbH",
@@ -209,7 +283,34 @@
           { "title": "Monitoring Infrastruktur bereitstellen", "text": "Ein Kontrollsystem für deine IT hilft, Engpässe und Herausforderungen zu erkennen, noch bevor sie den Betrieb stören. Wir beraten dich gerne." },
           { "title": "Drucksysteme supporten", "text": "Unser Supportteam unterstützt dich bei technischen Problemen und hilft, die richtige Hardware und die passenden Serviceangebote im Markt zu finden." }
         ],
-        "blocks": []
+        "blocks": [
+          {
+            "type": "process",
+            "kicker": "So arbeiten wir",
+            "title": "So planen und bauen wir deine Infrastruktur",
+            "text": "Damit deine IT dein Geschäft bestmöglich unterstützt.",
+            "steps": [
+              { "title": "Beratung vor Ort", "text": "Wir lernen deine Räume, Standorte und Anforderungen kennen." },
+              { "title": "Planung & Beschaffung", "text": "Wir planen Netzwerk, Räume und Hardware und nutzen unsere Partnerschaften zu Herstellern." },
+              { "title": "Umsetzung", "text": "Wir bauen auf, ziehen um und rollen aus, mit möglichst wenig Eingriff ins Tagesgeschäft." },
+              { "title": "Monitoring & Support", "text": "Ein Kontrollsystem erkennt Engpässe früh, und unser Supportteam hilft, wenn es klemmt." }
+            ]
+          },
+          {
+            "type": "faq",
+            "kicker": "Häufige Fragen",
+            "title": "Gut zu wissen",
+            "text": "Deine Frage ist nicht dabei? Schreib uns, wir melden uns bei dir.",
+            "cta": "Frage stellen",
+            "href": "/kontakt/",
+            "items": [
+              { "q": "Wie arbeite ich sicher im Home Office?", "a": "Wir beraten dich bei VPN-Konzepten und ihrer Sicherheit, damit die Verbindung ins Firmennetz verschlüsselt läuft." },
+              { "q": "Könnt ihr mehrere Standorte verbinden?", "a": "Ja. Wir beraten und unterstützen dich bei allen Aspekten einer sicheren, standortübergreifenden Unternehmenskommunikation." },
+              { "q": "Wie läuft ein Hardwareumzug ab?", "a": "Wir planen ihn gemeinsam mit dir im Detail, damit der Eingriff ins Tagesgeschäft so klein wie möglich bleibt." },
+              { "q": "Helft ihr auch bei Druckern?", "a": "Ja. Unser Supportteam hilft bei technischen Problemen und bei der Suche nach passender Hardware und den richtigen Serviceangeboten." }
+            ]
+          }
+        ]
       },
       "host": {
         "meta_title": "Hosting - Jenomics GmbH",
@@ -227,7 +328,34 @@
           { "title": "Reselling von VMs anderer Anbieter", "text": "Du hast bereits eine Cloud? Unsere Expert:innen implementieren VM Umgebungen auch bei anderen Hosting Anbietern für dich." },
           { "title": "Web-Hosting / CMS-Hosting", "text": "Bei uns gibt es mehr als nur simplen Webspace: Neben der Einrichtung von Webseiten unterstützen wir dich bei Wartung und Redaktion, kümmern uns um ein geeignetes CMS-System und übernehmen bei Bedarf auch das Grafik- und Layoutdesign sowie die Content Creation deiner Webseite." }
         ],
-        "blocks": []
+        "blocks": [
+          {
+            "type": "process",
+            "kicker": "So arbeiten wir",
+            "title": "So kommst du zu deiner Infrastruktur",
+            "text": "Flexibel gemietet, sauber eingerichtet und bereit zu wachsen.",
+            "steps": [
+              { "title": "Bedarf klären", "text": "Welche Anwendungen, welche Ressourcen, welche Anforderungen? Das klären wir gemeinsam." },
+              { "title": "Das passende Modell", "text": "Jenomics Cloud, Colocation, On-Premise oder deine bestehende Cloud: Wir finden den richtigen Ansatz." },
+              { "title": "Bereitstellung", "text": "Wir richten VMs, Server oder Umgebungen ein und konfigurieren sie für deinen Einsatz." },
+              { "title": "Betrieb & Wachstum", "text": "Deine Infrastruktur wächst mit: jederzeit erweiterbar und als flexibles Mietmodell." }
+            ]
+          },
+          {
+            "type": "faq",
+            "kicker": "Häufige Fragen",
+            "title": "Gut zu wissen",
+            "text": "Deine Frage ist nicht dabei? Schreib uns, wir melden uns bei dir.",
+            "cta": "Frage stellen",
+            "href": "/kontakt/",
+            "items": [
+              { "q": "Was bedeutet IaaS bei Jenomics?", "a": "Du mietest IT-Infrastruktur bei uns, zum Beispiel virtuelle Maschinen in der Jenomics Cloud, auf denen wir deine Anwendungen und Daten hosten. Sie ist jederzeit erweiterbar." },
+              { "q": "Ich habe schon eine Cloud. Könnt ihr trotzdem helfen?", "a": "Ja. Wir betreuen und konfigurieren bestehende Cloud-Umgebungen und implementieren VM-Umgebungen auch bei anderen Hosting-Anbietern." },
+              { "q": "Was ist Colocation?", "a": "Dein eigener Server steht im Rechenzentrum statt in deinem Büro. Wir erarbeiten mit dir den richtigen Ansatz und helfen bei der Umsetzung." },
+              { "q": "Bietet ihr auch Webhosting an?", "a": "Ja, und mehr als simplen Webspace: Einrichtung, Wartung und Redaktion, ein geeignetes CMS und auf Wunsch Grafik, Layout und Content Creation." }
+            ]
+          }
+        ]
       }
     }
   },
@@ -322,6 +450,18 @@
             ]
           },
           {
+            "type": "process",
+            "kicker": "How we work",
+            "title": "From the first idea to maintenance",
+            "text": "We support your software all the way, not just while we write the code.",
+            "steps": [
+              { "title": "Idea & requirements", "text": "We listen, clarify goals, users and constraints, and document everything in a traceable way." },
+              { "title": "Concept & architecture", "text": "We design the data model, architecture and interfaces before the first line of code is written." },
+              { "title": "Development in stages", "text": "You see working intermediate versions early. Git and continuous integration keep builds clean and traceable." },
+              { "title": "Operation & maintenance", "text": "We stay at your side after go-live: with maintenance, further development and, if you like, operation." }
+            ]
+          },
+          {
             "type": "cases",
             "kicker": "References",
             "title": "References",
@@ -332,6 +472,20 @@
               { "title": "Enterprise SharePoint picture editor", "text": ["Employees of an international corporation needed to create banners for content pages in their MS SharePoint intranet themselves, within the corporate design rules and without extra tools such as Adobe Illustrator.", "Jenomics built a Java application (image editor) in which corporate-design-compliant templates are defined in XML. Integrated into MS SharePoint, the editor lets people design and upload banners for intranet content pages from these templates."], "tags": ["xml", "java", "ui", "constrained-editing"] },
               { "title": "Enterprise multi-platform communicator", "text": ["For an international corporation, an internal platform for independent, internationalised telephony and video conferencing in the corporate design was created.", "Within these requirements, Jenomics developed and implemented a SIP(S) client for telephony and video conferencing in Java, based on the JRC (JenomicsRichClient) framework."], "tags": ["xml", "java", "sip", "telephony", "videoconferencing"] },
               { "title": "Editing solution for personalised credit cards for a large German bank", "text": ["For a large German bank, a browser-based application was needed to upload and edit personal images for designing credit cards.", "Jenomics built a web frontend for uploading and editing, which passes the data through a backend to credit card production. The backend includes a rule-based system that checks the defined requirements."], "tags": ["html5", "java", "constrained-editing"] }
+            ]
+          },
+          {
+            "type": "faq",
+            "kicker": "FAQ",
+            "title": "Good to know",
+            "text": "Your question is not here? Write to us and we will get back to you.",
+            "cta": "Ask a question",
+            "href": "/en/contact/",
+            "items": [
+              { "q": "Which technologies do you work with?", "a": "Our focus is Java (from Swing and JavaFX to JEE back ends), Ruby on Rails and web front ends from HTML5 to single page applications. For source code and builds we rely on Git, GitLab and continuous integration." },
+              { "q": "Can you develop an existing application further?", "a": "Talk to us: we look at your application together and discuss how we can support you with further development and maintenance." },
+              { "q": "Do you also customise your own products?", "a": "Yes. We adapt IKONA, SDX and GM8 to your needs, for example with portals in IKONA, branding in SDX or new reports in GM8." },
+              { "q": "What happens after go-live?", "a": "We support you from the first idea to maintenance in your daily work. If you like, we also operate the application for you." }
             ]
           }
         ]
@@ -382,19 +536,15 @@
             ]
           },
           {
-            "type": "columns",
-            "variant": "compact",
-            "kicker": "Our services",
-            "title": "Our services",
-            "items": [
-              { "icon": "globe", "title": "Website", "text": "Websites are indispensable today. That makes it all the more important that yours reflects you and your company and carries your message out into the world." },
-              { "icon": "star", "title": "Logo", "text": "A logo is the be-all and end-all of a company: the first thing people notice and the last thing they remember. Together with you we design one-of-a-kind logos." },
-              { "icon": "exchange", "title": "Business cards", "text": "In a world where first impressions play a decisive role, business cards remain indispensable." },
-              { "icon": "monitor", "title": "Presentation", "text": "Don't want to struggle with PowerPoint to create presentations? We take care of it and provide you with an individual template." },
-              { "icon": "dev", "title": "Document and letter templates", "text": "Our templates help you streamline your company communication and give your documents a modern, unmistakable style." },
-              { "icon": "check", "title": "Brand guide", "text": "One document with all the information and assets of your brand in one place, so everything is always at hand." },
-              { "icon": "it", "title": "Software design", "text": "The right UI and UX are essential for software that works well. We help you get the most out of your idea." },
-              { "icon": "heart", "title": "Photo shoot", "text": "Want professional pictures of your employees or your company? We know how to show your business in its best light." }
+            "type": "process",
+            "kicker": "How we work",
+            "title": "How your new presence comes together",
+            "text": "You are with us through the whole process, so nothing stays in the dark.",
+            "steps": [
+              { "title": "Getting to know you", "text": "We talk about your brand, your audience and what your website should achieve." },
+              { "title": "Concept & design", "text": "Structure, look and content are created together with you. You are involved in every step." },
+              { "title": "Built with WordPress", "text": "We build your site responsive and secure with WordPress, so you can maintain it yourself later." },
+              { "title": "Launch & support", "text": "After go-live we take care of maintenance, security and hosting if you like." }
             ]
           },
           {
@@ -404,8 +554,33 @@
             "text": "The kit is perfect for one-pagers or websites with only a few pages. If you are not sure whether the package fits your needs, just get in touch.",
             "cta": "Learn more",
             "href": "/web-deluxe-kit/"
+          },
+          {
+            "type": "faq",
+            "kicker": "FAQ",
+            "title": "Good to know",
+            "text": "Your question is not here? Write to us and we will get back to you.",
+            "cta": "Ask a question",
+            "href": "/en/contact/",
+            "items": [
+              { "q": "Can I maintain my website myself later?", "a": "Yes. We build on WordPress so you can change content yourself and stay independent. If you prefer, we take care of maintenance for you." },
+              { "q": "Do you also design logos and corporate design?", "a": "Yes, from logos, business cards and presentation, document and letter templates to the brand guide. Software design and photo shoots are part of our services too." },
+              { "q": "What is the Web Deluxe Kit?", "a": "Our package for one-pagers and small websites. If you are not sure whether it fits your needs, just get in touch." },
+              { "q": "Do you also take care of hosting?", "a": "Yes. With our web and CMS hosting you get more than simple web space: we support you with maintenance and editing and take care of a suitable CMS." }
+            ]
           }
-        ]
+        ],
+        "features": [
+          { "title": "Website", "text": "Websites are indispensable today. That makes it all the more important that yours reflects you and your company and carries your message out into the world." },
+          { "title": "Logo", "text": "A logo is the be-all and end-all of a company: the first thing people notice and the last thing they remember. Together with you we design one-of-a-kind logos." },
+          { "title": "Business cards", "text": "In a world where first impressions play a decisive role, business cards remain indispensable." },
+          { "title": "Presentation", "text": "Don't want to struggle with PowerPoint to create presentations? We take care of it and provide you with an individual template." },
+          { "title": "Document and letter templates", "text": "Our templates help you streamline your company communication and give your documents a modern, unmistakable style." },
+          { "title": "Brand guide", "text": "One document with all the information and assets of your brand in one place, so everything is always at hand." },
+          { "title": "Software design", "text": "The right UI and UX are essential for software that works well. We help you get the most out of your idea." },
+          { "title": "Photo shoot", "text": "Want professional pictures of your employees or your company? We know how to show your business in its best light." }
+        ],
+        "feat_title": "Our services"
       },
       "linux": {
         "meta_title": "Linux & Unix Operations - Jenomics GmbH",
@@ -420,7 +595,34 @@
           { "title": "Setup, rollout, deployment, operation and monitoring of Linux server systems", "text": "Our team of experts takes full care of your systems." },
           { "title": "Centralised configuration management", "text": "Our team helps you run a central system to control and administer the various configurations in your company, so you keep the overview." }
         ],
-        "blocks": []
+        "blocks": [
+          {
+            "type": "process",
+            "kicker": "How we work",
+            "title": "How we look after your Linux systems",
+            "text": "Automated, hardened and with full visibility for you.",
+            "steps": [
+              { "title": "Assessment", "text": "We get an overview of your servers, services and dependencies." },
+              { "title": "Automate & harden", "text": "Configurations are managed centrally, systems are secured and processes automated." },
+              { "title": "Rollout & operation", "text": "We handle setup, rollout and deployment for you and operate your Linux servers." },
+              { "title": "Monitoring", "text": "Automatic alerts show bottlenecks early, so you stay in control of your processes." }
+            ]
+          },
+          {
+            "type": "faq",
+            "kicker": "FAQ",
+            "title": "Good to know",
+            "text": "Your question is not here? Write to us and we will get back to you.",
+            "cta": "Ask a question",
+            "href": "/en/contact/",
+            "items": [
+              { "q": "Is SDX also available as an on-premise installation?", "a": "Yes. On request we install SDX, our environment for the secure exchange of data, directly in your IT environment." },
+              { "q": "What do you monitor?", "a": "Business-critical systems and services. Automatic alerts help you spot bottlenecks such as scarce resources quickly and early." },
+              { "q": "Why central configuration management?", "a": "So you keep the overview: configurations are controlled in one place and rolled out consistently to your systems." },
+              { "q": "Do you also take over existing servers?", "a": "Talk to us. We look at your environment and discuss how we can support you with operation and monitoring." }
+            ]
+          }
+        ]
       },
       "net": {
         "meta_title": "Infrastructure & Network - Jenomics GmbH",
@@ -441,7 +643,34 @@
           { "title": "Monitoring infrastructure", "text": "A control system for your IT helps detect bottlenecks and challenges before they disrupt operations. We are happy to advise you." },
           { "title": "Printing system support", "text": "Our support team helps with technical problems and finds the right hardware and service offers on the market." }
         ],
-        "blocks": []
+        "blocks": [
+          {
+            "type": "process",
+            "kicker": "How we work",
+            "title": "How we plan and build your infrastructure",
+            "text": "So your IT supports your business in the best possible way.",
+            "steps": [
+              { "title": "On-site consulting", "text": "We get to know your premises, locations and requirements." },
+              { "title": "Planning & procurement", "text": "We plan network, rooms and hardware and draw on our partnerships with manufacturers." },
+              { "title": "Implementation", "text": "We set up, relocate and roll out with as little impact on day-to-day business as possible." },
+              { "title": "Monitoring & support", "text": "A monitoring system spots bottlenecks early, and our support team helps when something gets stuck." }
+            ]
+          },
+          {
+            "type": "faq",
+            "kicker": "FAQ",
+            "title": "Good to know",
+            "text": "Your question is not here? Write to us and we will get back to you.",
+            "cta": "Ask a question",
+            "href": "/en/contact/",
+            "items": [
+              { "q": "How do I work securely from home?", "a": "We advise you on VPN concepts and their security, so the connection to your company network is encrypted." },
+              { "q": "Can you connect several sites?", "a": "Yes. We advise and support you on every aspect of secure communication across your locations." },
+              { "q": "How does a hardware relocation work?", "a": "We plan it in detail together with you, so the impact on day-to-day business stays as small as possible." },
+              { "q": "Do you also help with printers?", "a": "Yes. Our support team helps with technical problems and with finding suitable hardware and the right service offers." }
+            ]
+          }
+        ]
       },
       "host": {
         "meta_title": "Hosting - Jenomics GmbH",
@@ -459,7 +688,34 @@
           { "title": "Reselling VMs from other providers", "text": "Already have a cloud? Our experts also set up VM environments for you at other hosting providers." },
           { "title": "Web hosting / CMS hosting", "text": "With us you get more than simple webspace: besides setting up websites, we support you with maintenance and editing, take care of a suitable CMS and, if needed, handle graphic and layout design and content creation for your website." }
         ],
-        "blocks": []
+        "blocks": [
+          {
+            "type": "process",
+            "kicker": "How we work",
+            "title": "How you get your infrastructure",
+            "text": "Flexibly rented, cleanly set up and ready to grow.",
+            "steps": [
+              { "title": "Clarify your needs", "text": "Which applications, which resources, which requirements? We work it out together." },
+              { "title": "The right model", "text": "Jenomics Cloud, colocation, on-premise or your existing cloud: we find the right approach." },
+              { "title": "Provisioning", "text": "We set up VMs, servers or environments and configure them for your use." },
+              { "title": "Operation & growth", "text": "Your infrastructure grows with you: expandable at any time and as a flexible rental model." }
+            ]
+          },
+          {
+            "type": "faq",
+            "kicker": "FAQ",
+            "title": "Good to know",
+            "text": "Your question is not here? Write to us and we will get back to you.",
+            "cta": "Ask a question",
+            "href": "/en/contact/",
+            "items": [
+              { "q": "What does IaaS mean at Jenomics?", "a": "You rent IT infrastructure from us, for example virtual machines in the Jenomics Cloud on which we host your applications and data. It can be expanded at any time." },
+              { "q": "I already have a cloud. Can you still help?", "a": "Yes. We look after and configure existing cloud environments and also implement VM environments at other hosting providers." },
+              { "q": "What is colocation?", "a": "Your own server sits in the data centre instead of your office. We work out the right approach with you and help with the implementation." },
+              { "q": "Do you also offer web hosting?", "a": "Yes, and more than simple web space: setup, maintenance and editing, a suitable CMS and, if you like, graphics, layout and content creation." }
+            ]
+          }
+        ]
       }
     }
   }

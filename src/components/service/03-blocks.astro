@@ -11,9 +11,20 @@ import Cases from './block-cases.astro';
 import Tabs from './block-tabs.astro';
 import Refs from './block-refs.astro';
 import Kit from './block-kit.astro';
+import Process from './block-process.astro';
+import Faq from './block-faq.astro';
 const { lang, service } = Astro.props as { lang: Lang; service: ServiceKey };
 const p = servicePage(service, lang);
-const map = { columns: Columns, logos: Logos, cases: Cases, tabs: Tabs, refs: Refs, kit: Kit } as const;
+const map = {
+  columns: Columns,
+  logos: Logos,
+  cases: Cases,
+  tabs: Tabs,
+  refs: Refs,
+  kit: Kit,
+  process: Process,
+  faq: Faq,
+} as const;
 ---
 
 {

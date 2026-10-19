@@ -22,8 +22,13 @@
   "unzähligen". Linux "Zentralisiertes Konfigurationsmanagement" had the Schulungen text pasted by mistake on the
   old site; replaced with the Puppet text from Infrastruktur & Netzwerk. "43 Prozent aller Homepages" kept as is.
 
-- IT Administration: feature photos replaced by an animated bento of live UI scenes (`Scene.astro`), awaiting
-  review; the other 5 service pages still use photo cards.
+- All 6 service pages: feature photos replaced by an animated bento of live UI scenes (2026-10-19, awaiting
+  review). IT scenes in `Scene.astro`; Softwareentwicklung + Website & Branding in `SceneBuild.astro`; Linux,
+  Netzwerk, Hosting in `SceneOps.astro` (Netzwerk/Hosting reuse procure, home, monitor, rack, config).
+  Website & Branding: the 8 "Unsere Leistungen" items moved from a compact columns block into the feature bento.
+- NEW COPY, needs Jenomics approval: on the 5 non-IT service pages a "So arbeiten wir" process strip
+  (`block-process.astro`) and an FAQ (`block-faq.astro`), DE + EN, in `services.json`. Written only from facts
+  already on jenomics.de (no SLAs, numbers or new claims); scene labels are generic (Anbieter A/B/C, web-01 …).
 - Homepage hero: carousel replaced by a live app window (`hero-live.astro`), awaiting review.
 
 ## Next

@@ -1,0 +1,1985 @@
+---
+/**
+ * Scenes for Betrieb Linux & Unix (onprem … config), Infrastruktur & Netzwerk (sites … print; it also reuses
+ * procure, home, monitor and config) and Hosting (iaas … webhost; reuses rack for On-Premise).
+ * Rendered inside Scene.astro's .jx-scene frame; shared helpers live there. Generic labels only.
+ */
+import type { Lang } from '../../i18n';
+
+interface Props {
+  name: string;
+  lang: Lang;
+}
+const { name, lang } = Astro.props;
+
+const T = {
+  de: {
+    dc: 'Dein Rechenzentrum',
+    dataroom: 'SDX · Datenraum',
+    files: ['Vertrag.pdf', 'Planung.xlsx', 'Angebot.docx', 'Protokoll.pdf'],
+    inhouse: 'Daten bleiben im Haus',
+    alert: 'Alarm · Last wieder normal',
+    deploy: [
+      ['setup', 'srv-app-01'],
+      ['rollout', '3/3 Server'],
+      ['deploy', 'v2.4.1'],
+    ],
+    cfg: 'Konfiguration',
+    consistent: 'Alle Systeme konsistent',
+    sites: ['Zentrale', 'Filiale', 'Lager'],
+    old: 'Alt',
+    new: 'Neu',
+    steps: ['Abgebaut', 'Transportiert', 'Angeschlossen'],
+    online: 'Wieder online',
+    wifi: 'WLAN-Planung',
+    sw: 'Core-Switch',
+    documented: 'Ports dokumentiert',
+    wave: 'Rollout · Welle 1',
+    print_state: ['Papierstau', 'Bereit'],
+    queue: 'Druckaufträge',
+    jobs: ['Angebot.pdf', 'Rechnung.pdf', 'Plan.pdf'],
+    res: 'Ressourcen',
+    res_rows: [
+      ['vCPU', '4', '8'],
+      ['RAM', '16 GB', '32 GB'],
+      ['Storage', '250 GB', '500 GB'],
+    ],
+    scaled: 'Skaliert',
+    cloud: 'Jenomics Cloud',
+    newvm: '+ Neue VM',
+    cols: ['Name', 'System', 'Status'],
+    starting: 'Startet …',
+    running: 'Läuft',
+    yours: 'Dein Server',
+    facility: ['Strom', 'Kühlung', 'Netz'],
+    cloudenv: 'Cloud-Umgebung',
+    toggles: ['Backups', 'Firewall-Regeln', 'Monitoring', 'Updates'],
+    saved: 'Gespeichert',
+    providers: ['Anbieter A', 'Anbieter B', 'Anbieter C'],
+    onehand: 'Alles aus einer Hand',
+    post: 'Neuer Beitrag',
+    publish: 'Veröffentlichen',
+    host_chips: ['SSL aktiv', 'Backup erstellt', 'Veröffentlicht'],
+  },
+  en: {
+    dc: 'Your data centre',
+    dataroom: 'SDX · Data room',
+    files: ['Contract.pdf', 'Planning.xlsx', 'Quote.docx', 'Minutes.pdf'],
+    inhouse: 'Data stays in-house',
+    alert: 'Alert · load back to normal',
+    deploy: [
+      ['setup', 'srv-app-01'],
+      ['rollout', '3/3 servers'],
+      ['deploy', 'v2.4.1'],
+    ],
+    cfg: 'Configuration',
+    consistent: 'All systems consistent',
+    sites: ['Head office', 'Branch', 'Warehouse'],
+    old: 'Old',
+    new: 'New',
+    steps: ['Dismantled', 'Moved', 'Connected'],
+    online: 'Back online',
+    wifi: 'Wi-Fi plan',
+    sw: 'Core switch',
+    documented: 'Ports documented',
+    wave: 'Rollout · wave 1',
+    print_state: ['Paper jam', 'Ready'],
+    queue: 'Print jobs',
+    jobs: ['Quote.pdf', 'Invoice.pdf', 'Plan.pdf'],
+    res: 'Resources',
+    res_rows: [
+      ['vCPU', '4', '8'],
+      ['RAM', '16 GB', '32 GB'],
+      ['Storage', '250 GB', '500 GB'],
+    ],
+    scaled: 'Scaled',
+    cloud: 'Jenomics Cloud',
+    newvm: '+ New VM',
+    cols: ['Name', 'System', 'Status'],
+    starting: 'Starting …',
+    running: 'Running',
+    yours: 'Your server',
+    facility: ['Power', 'Cooling', 'Network'],
+    cloudenv: 'Cloud environment',
+    toggles: ['Backups', 'Firewall rules', 'Monitoring', 'Updates'],
+    saved: 'Saved',
+    providers: ['Provider A', 'Provider B', 'Provider C'],
+    onehand: 'All from one source',
+    post: 'New post',
+    publish: 'Publish',
+    host_chips: ['SSL active', 'Backup created', 'Published'],
+  },
+}[lang];
+
+const check =
+  '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+const lock =
+  '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+const file =
+  '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>';
+const building =
+  '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M10.5 21v-3h3v3"/></svg>';
+const laptop =
+  '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="10" rx="1.5"/><path d="M3 19h18"/></svg>';
+const cloud =
+  '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.6-7.96A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9z"/></svg>';
+const facIcons = [
+  '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>',
+  '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4.5 6.5l15 11M19.5 6.5l-15 11"/></svg>',
+  '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M6 16v-4h12v4"/></svg>',
+];
+const deployLines: [string, number][] = [
+  ...T.deploy.map(([a, b], i): [string, number] => [
+    `<span class="p">▸</span> ${a.padEnd(9)}<span class="dim">${b.padEnd(13)}</span><span class="ok">✓</span>`,
+    i,
+  ]),
+  ['<span class="p">$</span> systemctl status app', 3.4],
+  ['<span class="ok">●</span> app.service', 4],
+  ['  Active: <span class="ok">active (running)</span>', 4.4],
+];
+const nodes = ['web-01', 'web-02', 'db-01', 'mail-01'];
+const vms = [
+  ['web-01', 'Ubuntu 24.04', 0],
+  ['db-01', 'Debian 12', 0],
+  ['app-02', 'Rocky Linux 9', 1],
+  ['test-03', 'Ubuntu 24.04', 2],
+] as const;
+---
+
+{
+  name === 'onprem' && (
+    <div class="sc-dc">
+      <span class="sc-dc__label">{T.dc}</span>
+      <div class="sc-dc__srv">
+        {[0, 1, 2, 3].map((i) => (
+          <span style={`--k:${i}`}>
+            <i />
+            <b />
+            <b />
+          </span>
+        ))}
+      </div>
+      <svg class="sc-dc__link" viewBox="0 0 40 10" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 5H40" />
+      </svg>
+      <div class="sc-win sc-dc__app">
+        <div class="sc-bar">
+          <span class="sc-dc__sdx">SDX</span>
+          {T.dataroom}
+        </div>
+        <ul>
+          {T.files.map((f, i) => (
+            <li class="sc-s" style={`--k:${i};--g:.5s`}>
+              <i set:html={file} />
+              <span>{f}</span>
+              <span class="sc-fill" style={`--k:${i + 1};--g:.5s`} />
+            </li>
+          ))}
+        </ul>
+      </div>
+      <span class="sc-chip sc-dc__chip">
+        <i set:html={lock} />
+        {T.inhouse}
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'htop' && (
+    <div class="sc-term sc-htop">
+      <div class="sc-bar">
+        <span class="sc-dots">
+          <i />
+          <i />
+          <i />
+        </span>
+        htop · srv-app-01
+      </div>
+      <div class="sc-htop__body sc-mono">
+        {[0, 1, 2, 3].map((i) => (
+          <div class:list={['sc-htop__row', { 'is-spike': i === 1 }]} style={`--k:${i}`}>
+            <span>{i + 1}</span>
+            <span class="sc-htop__bar">
+              <i />
+              <b />
+            </span>
+          </div>
+        ))}
+        <div class="sc-htop__row sc-htop__row--mem">
+          <span>Mem</span>
+          <span class="sc-htop__bar">
+            <i />
+          </span>
+        </div>
+        <span class="sc-htop__load">Load average: 0.42 0.38 0.31</span>
+      </div>
+      <span class="sc-chip sc-late sc-htop__chip" style="--dl:1s">
+        <i set:html={check} />
+        {T.alert}
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'deploy' && (
+    <div class="sc-term sc-deploy">
+      <div class="sc-bar">
+        <span class="sc-dots">
+          <i />
+          <i />
+          <i />
+        </span>
+        ops@jenomics
+      </div>
+      <div class="sc-mono sc-pre">
+        {deployLines.map(([l, k]) => (
+          <span class="sc-s" style={`--k:${k};--g:.7s`} set:html={l} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+{
+  name === 'config' && (
+    <div class="sc-cfg">
+      <div class="sc-card sc-cfg__hub">
+        <b>{T.cfg}</b>
+        <code class="sc-mono">site.pp</code>
+        <span class="sc-cfg__ver sc-stack">
+          <em class="sc-cfg__v1">v41</em>
+          <em class="sc-cfg__v2">v42</em>
+        </span>
+      </div>
+      <svg class="sc-cfg__lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        {[12.5, 37.5, 62.5, 87.5].map((y) => (
+          <path d={`M0 50 C 50 50, 50 ${y}, 100 ${y}`} />
+        ))}
+      </svg>
+      <ul class="sc-cfg__nodes">
+        {nodes.map((n, i) => (
+          <li class="sc-card" style={`--k:${i}`}>
+            <span class="sc-cfg__led" />
+            <span>{n}</span>
+            <span class="sc-cfg__ver sc-stack">
+              <em class="sc-cfg__v1">v41</em>
+              <em class="sc-cfg__v2">v42</em>
+            </span>
+          </li>
+        ))}
+      </ul>
+      <span class="sc-chip sc-late sc-cfg__chip" style="--dl:1.2s">
+        <i set:html={check} />
+        {T.consistent}
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'sites' && (
+    <div class="sc-sites">
+      <svg class="sc-sites__lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M24 26 C 50 18, 62 22, 78 36" />
+        <path d="M24 26 C 22 52, 34 68, 48 78" />
+        <path d="M78 36 C 80 58, 66 72, 48 78" />
+      </svg>
+      {T.sites.map((s, i) => (
+        <span class={`sc-card sc-sites__pin sc-sites__pin--${i}`}>
+          <i set:html={building} />
+          {s}
+        </span>
+      ))}
+      <span class="sc-sites__lock" set:html={lock} />
+    </div>
+  )
+}
+
+{
+  name === 'move' && (
+    <div class="sc-move">
+      <div class="sc-move__rooms">
+        <span class="sc-move__room">{T.old}</span>
+        <span class="sc-move__room">{T.new}</span>
+        <span class="sc-move__box">
+          <i />
+          <i />
+          <i />
+        </span>
+      </div>
+      <ul class="sc-move__steps">
+        {T.steps.map((s, i) => (
+          <li class="sc-s" style={`--k:${i};--g:1.1s`}>
+            <i set:html={check} />
+            {s}
+          </li>
+        ))}
+      </ul>
+      <span class="sc-chip sc-late sc-move__chip" style="--dl:1.3s">
+        <i set:html={check} />
+        {T.online}
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'floor' && (
+    <div class="sc-floor">
+      <div class="sc-floor__plan">
+        <span class="sc-floor__wall sc-floor__wall--v" />
+        <span class="sc-floor__wall sc-floor__wall--h" />
+        <span class="sc-floor__cover" />
+        {[0, 1, 2, 3, 4, 5].map((i) => (
+          <i class={`sc-floor__desk sc-floor__desk--${i}`} />
+        ))}
+        {[0, 1, 2].map((i) => (
+          <span class={`sc-floor__ap sc-floor__ap--${i}`} style={`--k:${i}`}>
+            <b />
+          </span>
+        ))}
+      </div>
+      <span class="sc-chip sc-floor__chip">{T.wifi}</span>
+    </div>
+  )
+}
+
+{
+  name === 'switch' && (
+    <div class="sc-sw">
+      <div class="sc-sw__dev">
+        <span class="sc-sw__name">{T.sw}</span>
+        <div class="sc-sw__ports">
+          {Array.from({ length: 16 }, (_, i) => (
+            <span style={`--k:${i};--o:${i % 3}`}>
+              <i />
+            </span>
+          ))}
+        </div>
+      </div>
+      <svg class="sc-sw__cables" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
+        {[8, 22, 36, 50, 64, 78, 92].map((x, i) => (
+          <path d={`M${x} 0 C ${x} 20, ${50 + (x - 50) * 0.3} 20, ${50 + (x - 50) * 0.3} 40`} style={`--o:${i % 3}`} />
+        ))}
+      </svg>
+      <span class="sc-chip sc-late sc-sw__chip" style="--dl:1.4s">
+        <i set:html={check} />
+        {T.documented}
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'rollout' && (
+    <div class="sc-win sc-roll">
+      <div class="sc-bar">
+        {T.wave}
+        <em>4/4</em>
+      </div>
+      <ul>
+        {[1, 2, 3, 4].map((n, i) => (
+          <li style={`--k:${i}`}>
+            <i set:html={laptop} />
+            <span class="sc-mono">NB-0{n}</span>
+            <span class="sc-fill" style={`--k:${i};--g:.7s`} />
+            <b set:html={check} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+{
+  name === 'print' && (
+    <div class="sc-print">
+      <div class="sc-print__dev">
+        <span class="sc-print__paper">
+          <i class="sc-sk" />
+          <i class="sc-sk" style="width:70%" />
+          <i class="sc-sk" style="width:85%" />
+        </span>
+        <span class="sc-print__body">
+          <span class="sc-print__lcd sc-stack">
+            <b class="sc-print__jam">{T.print_state[0]}</b>
+            <b class="sc-print__ready">{T.print_state[1]}</b>
+          </span>
+          <i />
+        </span>
+        <span class="sc-print__tray" />
+      </div>
+      <div class="sc-win sc-print__queue">
+        <div class="sc-bar">{T.queue}</div>
+        <ul>
+          {T.jobs.map((j, i) => (
+            <li style={`--k:${i}`}>
+              <span>{j}</span>
+              <span class="sc-fill" style={`--k:${i + 3};--g:.6s`} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+{
+  name === 'iaas' && (
+    <div class="sc-win sc-iaas">
+      <div class="sc-bar">{T.res}</div>
+      <ul>
+        {T.res_rows.map(([l, a, b], i) => (
+          <li style={`--k:${i}`}>
+            <span>{l}</span>
+            <span class="sc-iaas__val sc-stack">
+              <b class="sc-iaas__a">{a}</b>
+              <b class="sc-iaas__b">{b}</b>
+            </span>
+            <span class="sc-iaas__track">
+              <i />
+            </span>
+          </li>
+        ))}
+      </ul>
+      <span class="sc-chip sc-late sc-iaas__chip" style="--dl:.6s">
+        <i set:html={check} />
+        {T.scaled}
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'vms' && (
+    <div class="sc-win sc-vms">
+      <div class="sc-bar">
+        <span class="sc-live" />
+        {T.cloud}
+        <span class="sc-vms__new">{T.newvm}</span>
+      </div>
+      <div class="sc-vms__head">
+        {T.cols.map((c) => (
+          <span>{c}</span>
+        ))}
+      </div>
+      <ul>
+        {vms.map(([n, os, st]) => (
+          <li class:list={[`is-${st}`]}>
+            <span class="sc-mono">{n}</span>
+            <span>{os}</span>
+            <span class="sc-stack">
+              {st > 0 && <em class="sc-vms__start">{T.starting}</em>}
+              <em class="sc-vms__run">{T.running}</em>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+{
+  name === 'coloc' && (
+    <div class="sc-coloc">
+      <div class="sc-coloc__racks">
+        {[0, 1, 2].map((r) => (
+          <div class:list={['sc-coloc__rack', { 'is-yours': r === 1 }]}>
+            {[0, 1, 2, 3, 4].map((u) => (
+              <span style={`--k:${r * 5 + u}`}>
+                <i />
+              </span>
+            ))}
+            {r === 1 && <b class="sc-coloc__tag">{T.yours}</b>}
+          </div>
+        ))}
+      </div>
+      <ul class="sc-coloc__fac">
+        {T.facility.map((f, i) => (
+          <li class="sc-s" style={`--k:${i + 1};--g:.5s`}>
+            <i set:html={facIcons[i]} />
+            {f}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+{
+  name === 'cloudcfg' && (
+    <div class="sc-win sc-ccfg">
+      <div class="sc-bar">
+        <i set:html={cloud} />
+        {T.cloudenv}
+      </div>
+      <ul>
+        {T.toggles.map((t, i) => (
+          <li style={`--k:${i}`}>
+            <span>{t}</span>
+            <b class="sc-ccfg__tg" />
+          </li>
+        ))}
+      </ul>
+      <span class="sc-chip sc-late sc-ccfg__chip" style="--dl:.8s">
+        <i set:html={check} />
+        {T.saved}
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'resell' && (
+    <div class="sc-resell">
+      <div class="sc-resell__provs">
+        {T.providers.map((p, i) => (
+          <div class="sc-card sc-resell__prov" style={`--k:${i}`}>
+            <span class="sc-resell__name">
+              <i set:html={cloud} />
+              {p}
+            </span>
+            <span class="sc-resell__vms">
+              <i />
+              <i />
+            </span>
+          </div>
+        ))}
+      </div>
+      <svg class="sc-resell__lines" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M17 0 C 17 18, 50 12, 50 30" />
+        <path d="M50 0 V 30" />
+        <path d="M83 0 C 83 18, 50 12, 50 30" />
+      </svg>
+      <div class="sc-card sc-resell__hub">
+        <span class="sc-resell__logo">J</span>
+        {T.onehand}
+      </div>
+    </div>
+  )
+}
+
+{
+  name === 'webhost' && (
+    <div class="sc-win sc-wh">
+      <div class="sc-spa__top">
+        <span class="sc-dots">
+          <i />
+          <i />
+          <i />
+        </span>
+        <span class="sc-spa__addr">
+          <i set:html={lock} />
+          www.deine-seite.de/admin
+        </span>
+      </div>
+      <div class="sc-wh__body">
+        <nav>
+          {[70, 55, 80, 60, 50].map((w, i) => (
+            <i class:list={['sc-sk', { 'sc-sk--a': i === 1 }]} style={`width:${w}%`} />
+          ))}
+        </nav>
+        <div class="sc-wh__edit">
+          <b class="sc-wh__title">
+            <span>{T.post}</span>
+          </b>
+          {[92, 84, 70].map((w, i) => (
+            <i class="sc-sk sc-s" style={`width:${w}%;--k:${i + 2};--g:.4s`} />
+          ))}
+          <span class="sc-wh__img sc-s" style="--k:5;--g:.4s" />
+          <span class="sc-wh__btn">{T.publish}</span>
+        </div>
+        <div class="sc-wh__chips">
+          {T.host_chips.map((c, i) => (
+            <span class="sc-chip sc-s" style={`--k:${i + 7};--g:.4s`}>
+              <i set:html={check} />
+              {c}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+<style is:global>
+  /* ---------- onprem: SDX data room running on a server in your own data centre ---------- */
+  .sc-dc {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: auto 40px minmax(0, 300px);
+    align-items: center;
+    padding: 30px 22px 22px;
+    border: 1.5px dashed color-mix(in oklab, var(--hA) 45%, transparent);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.35);
+  }
+  .sc-dc__label {
+    position: absolute;
+    left: 16px;
+    top: -10px;
+    padding: 2px 10px;
+    border-radius: 6px;
+    background: var(--jx-navy);
+    color: #fff;
+    font-weight: 500;
+    font-size: 10.5px;
+  }
+  .sc-dc__srv {
+    display: grid;
+    gap: 5px;
+    width: 96px;
+    padding: 8px;
+    border-radius: 10px;
+    background: #0b1a36;
+    box-shadow: 0 14px 30px rgba(11, 26, 54, 0.3);
+  }
+  .sc-dc__srv span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 18px;
+    padding: 0 7px;
+    border-radius: 4px;
+    background: #16294c;
+  }
+  .sc-dc__srv i {
+    flex: 1;
+    height: 3px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .sc-dc__srv b {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #4fd47c;
+    animation: sc-blink 1.8s steps(2) infinite;
+    animation-delay: calc(var(--k) * -0.45s);
+  }
+  .sc-dc__srv b + b {
+    background: var(--hC);
+    animation-duration: 1.1s;
+  }
+  .sc-dc__link {
+    width: 40px;
+    height: 10px;
+  }
+  .sc-dc__link path {
+    fill: none;
+    stroke: var(--hA);
+    stroke-width: 2;
+    stroke-dasharray: 3 5;
+    vector-effect: non-scaling-stroke;
+    animation: sc-flow 1.4s linear infinite;
+  }
+  .sc-dc__sdx {
+    padding: 1px 6px;
+    border-radius: 5px;
+    color: #fff;
+    background: #2a73ff;
+    font-size: 10px;
+  }
+  .sc-dc__app ul {
+    margin: 0;
+    padding: 6px 14px 12px;
+    list-style: none;
+  }
+  .sc-dc__app li {
+    display: grid;
+    grid-template-columns: 16px minmax(0, 1fr) 70px;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 0;
+    font-size: 11px;
+  }
+  .sc-dc__app li > i {
+    display: grid;
+    color: var(--hA);
+  }
+  .sc-dc__app li > span:nth-child(2) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .sc-chip.sc-dc__chip {
+    right: 18px;
+    bottom: -16px;
+  }
+  .sc-dc__chip > i {
+    background: var(--jx-navy);
+  }
+
+  /* ---------- htop: CPU bars move, one spikes, alert resolves ---------- */
+  .sc-htop__body {
+    display: grid;
+    gap: 5px;
+    padding: 12px 14px 50px;
+  }
+  .sc-htop__row {
+    display: grid;
+    grid-template-columns: 26px 1fr;
+    align-items: center;
+    gap: 6px;
+    color: var(--hC);
+  }
+  .sc-htop__bar {
+    position: relative;
+    height: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .sc-htop__bar i,
+  .sc-htop__bar b {
+    position: absolute;
+    inset: 1px auto 1px 1px;
+    width: 30%;
+    background: repeating-linear-gradient(90deg, #4fd47c 0 2px, transparent 2px 4px);
+    animation: sc-cpu 6s ease-in-out infinite;
+    animation-delay: calc(var(--k) * -1.4s);
+  }
+  .sc-htop__bar b {
+    display: none;
+  }
+  @keyframes sc-cpu {
+    0%,
+    100% {
+      width: 22%;
+    }
+    30% {
+      width: 46%;
+    }
+    55% {
+      width: 31%;
+    }
+    80% {
+      width: 58%;
+    }
+  }
+  .is-spike .sc-htop__bar i {
+    animation: sc-spike 8s var(--jx-ease) infinite;
+  }
+  .is-spike .sc-htop__bar b {
+    display: block;
+    background: repeating-linear-gradient(90deg, var(--sc-bad) 0 2px, transparent 2px 4px);
+    animation: sc-spike-r 8s var(--jx-ease) infinite;
+  }
+  @keyframes sc-spike {
+    0%,
+    20% {
+      width: 34%;
+    }
+    32%,
+    50% {
+      width: 94%;
+    }
+    62%,
+    100% {
+      width: 34%;
+    }
+  }
+  @keyframes sc-spike-r {
+    0%,
+    20% {
+      width: 34%;
+      opacity: 0;
+    }
+    32%,
+    50% {
+      width: 94%;
+      opacity: 1;
+    }
+    62%,
+    100% {
+      width: 34%;
+      opacity: 0;
+    }
+  }
+  .sc-htop__row--mem .sc-htop__bar i {
+    width: 48%;
+    animation: none;
+    background: repeating-linear-gradient(90deg, var(--hC) 0 2px, transparent 2px 4px);
+  }
+  .sc-htop__load {
+    margin-top: 4px;
+    color: #8fa6c4;
+  }
+  .sc-chip.sc-htop__chip {
+    left: 50%;
+    bottom: 8px;
+    translate: -50% 0;
+  }
+
+  /* ---------- config: one central configuration, every node follows ---------- */
+  .sc-cfg {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 104px minmax(28px, 110px) 128px;
+    align-items: center;
+  }
+  .sc-cfg__hub {
+    display: grid;
+    gap: 6px;
+    padding: 12px;
+    font-size: 11px;
+  }
+  .sc-cfg__hub b {
+    font-weight: 600;
+    color: var(--jx-navy);
+  }
+  .sc-cfg__hub code {
+    color: var(--jx-grey);
+  }
+  .sc-cfg__lines {
+    width: 100%;
+    height: 172px;
+  }
+  .sc-cfg__lines path {
+    fill: none;
+    stroke: var(--hA);
+    stroke-width: 1.5;
+    stroke-dasharray: 3 5;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.6;
+    animation: sc-flow 1.4s linear infinite;
+  }
+  .sc-cfg__nodes {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .sc-cfg__nodes li {
+    display: grid;
+    grid-template-columns: 8px 1fr auto;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 10px;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 10.5px;
+    box-shadow: 0 6px 16px rgba(30, 61, 126, 0.1);
+  }
+  .sc-cfg__led {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: sc-sync 8s var(--jx-ease) infinite both;
+    animation-delay: calc(0.8s + var(--k) * 0.45s);
+  }
+  @keyframes sc-sync {
+    0%,
+    10% {
+      background: var(--sc-warn);
+    }
+    16%,
+    86% {
+      background: var(--sc-ok);
+    }
+    94%,
+    100% {
+      background: var(--sc-warn);
+    }
+  }
+  .sc-cfg__ver em {
+    padding: 1px 6px;
+    border-radius: 5px;
+    font-style: normal;
+    font-size: 10px;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    color: var(--jx-grey);
+    background: #f0f4f8;
+  }
+  .sc-cfg__hub .sc-cfg__ver {
+    justify-self: start;
+  }
+  .sc-cfg__v1 {
+    animation: sc-v1 8s var(--jx-ease) infinite both;
+  }
+  .sc-cfg__ver em.sc-cfg__v2 {
+    color: #fff;
+    background: var(--hA);
+    animation: sc-v2 8s var(--jx-ease) infinite both;
+  }
+  .sc-cfg__nodes .sc-cfg__v1,
+  .sc-cfg__nodes .sc-cfg__v2 {
+    animation-delay: calc(0.8s + var(--k) * 0.45s);
+  }
+  @keyframes sc-v1 {
+    0%,
+    6% {
+      opacity: 1;
+    }
+    12%,
+    88% {
+      opacity: 0;
+    }
+    94%,
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes sc-v2 {
+    0%,
+    6% {
+      opacity: 0;
+    }
+    12%,
+    88% {
+      opacity: 1;
+    }
+    94%,
+    100% {
+      opacity: 0;
+    }
+  }
+  .sc-chip.sc-cfg__chip {
+    left: 50%;
+    bottom: -26px;
+    translate: -50% 0;
+  }
+
+  /* ---------- sites: three locations linked securely ---------- */
+  .sc-sites {
+    position: absolute;
+    inset: 0;
+  }
+  .sc-sites__lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .sc-sites__lines path {
+    fill: none;
+    stroke: var(--hA);
+    stroke-width: 1.8;
+    stroke-dasharray: 3 6;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.75;
+    animation: sc-flow 1.6s linear infinite;
+  }
+  .sc-card.sc-sites__pin {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px 8px 9px;
+    font-weight: 500;
+    font-size: 11px;
+    color: var(--jx-navy);
+    translate: -50% -50%;
+    animation: jx-float 7s ease-in-out infinite;
+  }
+  .sc-sites__pin i {
+    display: grid;
+    color: var(--hA);
+  }
+  .sc-sites__pin--0 {
+    left: 26%;
+    top: 26%;
+  }
+  .sc-sites__pin--1 {
+    left: 76%;
+    top: 36%;
+    animation-delay: -2.4s;
+  }
+  .sc-sites__pin--2 {
+    left: 48%;
+    top: 78%;
+    animation-delay: -4.6s;
+  }
+  .sc-sites__lock {
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    translate: -50% -50%;
+    border-radius: 9px;
+    color: #fff;
+    background: var(--jx-navy);
+    box-shadow: 0 0 0 6px color-mix(in oklab, var(--hB) 22%, transparent);
+    animation: sc-guard 3s ease-in-out infinite;
+  }
+
+  /* ---------- move: hardware goes from old to new room, checklist, back online ---------- */
+  .sc-move {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 14px;
+    width: min(100%, 280px);
+  }
+  .sc-move__rooms {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .sc-move__room {
+    height: 84px;
+    padding: 7px 9px;
+    border: 1.5px dashed #b9c6d6;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 10.5px;
+    color: var(--jx-grey);
+  }
+  .sc-move__room + .sc-move__room {
+    border-color: color-mix(in oklab, var(--hA) 60%, transparent);
+    color: var(--hA);
+  }
+  .sc-move__box {
+    position: absolute;
+    left: 26px;
+    top: 28px;
+    display: grid;
+    gap: 4px;
+    width: 64px;
+    padding: 6px;
+    border-radius: 7px;
+    background: #0b1a36;
+    box-shadow: 0 10px 22px rgba(11, 26, 54, 0.28);
+    animation: sc-move 8s var(--jx-ease-io) infinite;
+  }
+  .sc-move__box i {
+    height: 8px;
+    border-radius: 3px;
+    background: #16294c;
+  }
+  @keyframes sc-move {
+    0%,
+    12% {
+      transform: none;
+    }
+    44%,
+    88% {
+      transform: translateX(calc(100% + 102px));
+    }
+    94% {
+      transform: translateX(calc(100% + 102px));
+      opacity: 0;
+    }
+    96% {
+      transform: none;
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  .sc-move__steps {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--jx-navy);
+  }
+  .sc-move__steps li {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .sc-move__steps i {
+    display: grid;
+    place-items: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    color: #fff;
+    background: var(--sc-ok);
+  }
+  .sc-chip.sc-move__chip {
+    right: 0;
+    top: -14px;
+  }
+
+  /* ---------- floor: office floor plan, access points light up, coverage fills ---------- */
+  .sc-floor {
+    position: relative;
+    z-index: 1;
+  }
+  .sc-floor__plan {
+    position: relative;
+    width: 250px;
+    height: 160px;
+    border: 3px solid var(--jx-navy);
+    border-radius: 6px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .sc-floor__wall {
+    position: absolute;
+    background: var(--jx-navy);
+  }
+  .sc-floor__wall--v {
+    left: 58%;
+    top: 0;
+    width: 3px;
+    height: 62%;
+  }
+  .sc-floor__wall--h {
+    left: 0;
+    top: 62%;
+    width: 40%;
+    height: 3px;
+  }
+  .sc-floor__cover {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 28% 32%, color-mix(in oklab, var(--hB) 40%, transparent) 0, transparent 34%),
+      radial-gradient(circle at 80% 30%, color-mix(in oklab, var(--hC) 40%, transparent) 0, transparent 34%),
+      radial-gradient(circle at 56% 82%, color-mix(in oklab, var(--hA) 32%, transparent) 0, transparent 36%);
+    animation: sc-cover 8s var(--jx-ease) infinite both;
+  }
+  @keyframes sc-cover {
+    0%,
+    20% {
+      opacity: 0;
+    }
+    50%,
+    86% {
+      opacity: 1;
+    }
+    96%,
+    100% {
+      opacity: 0;
+    }
+  }
+  .sc-floor__desk {
+    position: absolute;
+    width: 26px;
+    height: 14px;
+    border-radius: 3px;
+    background: #e3e9f0;
+  }
+  .sc-floor__desk--0 {
+    left: 8%;
+    top: 12%;
+  }
+  .sc-floor__desk--1 {
+    left: 30%;
+    top: 12%;
+  }
+  .sc-floor__desk--2 {
+    left: 8%;
+    top: 38%;
+  }
+  .sc-floor__desk--3 {
+    left: 68%;
+    top: 14%;
+    width: 50px;
+    height: 26px;
+    border-radius: 13px;
+  }
+  .sc-floor__desk--4 {
+    left: 50%;
+    top: 72%;
+  }
+  .sc-floor__desk--5 {
+    left: 74%;
+    top: 72%;
+  }
+  .sc-floor__ap {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    translate: -50% -50%;
+    border-radius: 50%;
+    background: var(--hA);
+    box-shadow: 0 0 0 3px #fff;
+  }
+  .sc-floor__ap b {
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    border: 2px solid var(--hA);
+    animation: sc-ring 2.4s ease-out infinite;
+    animation-delay: calc(var(--k) * -0.8s);
+  }
+  @keyframes sc-ring {
+    from {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    to {
+      transform: scale(5);
+      opacity: 0;
+    }
+  }
+  .sc-floor__ap--0 {
+    left: 28%;
+    top: 32%;
+  }
+  .sc-floor__ap--1 {
+    left: 80%;
+    top: 30%;
+  }
+  .sc-floor__ap--2 {
+    left: 56%;
+    top: 82%;
+  }
+  .sc-chip.sc-floor__chip {
+    right: -14px;
+    top: -14px;
+    padding: 6px 12px;
+    color: var(--jx-navy);
+  }
+
+  /* ---------- switch: ports get patched one by one, link LEDs blink ---------- */
+  .sc-sw {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 290px);
+  }
+  .sc-sw__dev {
+    padding: 10px 12px 12px;
+    border-radius: 10px;
+    background: #0b1a36;
+    box-shadow: 0 14px 30px rgba(11, 26, 54, 0.3);
+  }
+  .sc-sw__name {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 10.5px;
+    color: #8fa6c4;
+  }
+  .sc-sw__ports {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 6px;
+  }
+  .sc-sw__ports span {
+    position: relative;
+    height: 22px;
+    border-radius: 3px;
+    background: #16294c;
+    box-shadow: inset 0 2px 0 rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+  }
+  .sc-sw__ports span::before {
+    content: '';
+    position: absolute;
+    inset: 4px 3px 0;
+    border-radius: 2px 2px 0 0;
+    background: color-mix(in oklab, var(--hA) calc(100% - var(--o) * 35%), var(--hC));
+    animation: sc-plug 8s var(--jx-ease) infinite both;
+    animation-delay: calc(var(--k) * 0.18s);
+  }
+  @keyframes sc-plug {
+    0%,
+    6% {
+      transform: translateY(100%);
+    }
+    12%,
+    88% {
+      transform: none;
+    }
+    96%,
+    100% {
+      transform: translateY(100%);
+    }
+  }
+  .sc-sw__ports i {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    z-index: 1;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #4fd47c;
+    animation: sc-blink 1.2s steps(2) infinite;
+    animation-delay: calc(var(--k) * -0.37s);
+  }
+  .sc-sw__cables {
+    display: block;
+    width: 100%;
+    height: 44px;
+  }
+  .sc-sw__cables path {
+    fill: none;
+    stroke: color-mix(in oklab, var(--hA) calc(100% - var(--o) * 35%), var(--hC));
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.55;
+  }
+  .sc-chip.sc-sw__chip {
+    left: 50%;
+    bottom: -6px;
+    translate: -50% 0;
+  }
+
+  /* ---------- rollout: notebooks get updated one after another ---------- */
+  .sc-roll {
+    width: min(100%, 290px);
+  }
+  .sc-roll ul {
+    margin: 0;
+    padding: 6px 14px 12px;
+    list-style: none;
+  }
+  .sc-roll li {
+    display: grid;
+    grid-template-columns: 16px 46px 1fr 18px;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+  }
+  .sc-roll li > i {
+    display: grid;
+    color: var(--hA);
+  }
+  .sc-roll .sc-fill {
+    --d: 8s;
+    --g: 0.7s;
+  }
+  .sc-roll li > b {
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    color: #fff;
+    background: var(--sc-ok);
+    animation: sc-pop 8s var(--jx-ease) infinite both;
+    animation-delay: calc(var(--k) * 0.7s - 0.5s);
+  }
+
+  /* ---------- print: paper jam fixed, sheet comes out, queue prints ---------- */
+  .sc-print {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 120px minmax(0, 150px);
+    align-items: center;
+    gap: 16px;
+  }
+  .sc-print__dev {
+    position: relative;
+    height: 150px;
+  }
+  .sc-print__paper {
+    position: absolute;
+    left: 22px;
+    right: 22px;
+    top: 8px;
+    height: 70px;
+    display: grid;
+    align-content: start;
+    gap: 6px;
+    padding: 10px 8px;
+    border-radius: 3px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(30, 61, 126, 0.14);
+    animation: sc-paper 8s var(--jx-ease-io) infinite both;
+  }
+  .sc-print__paper .sc-sk {
+    height: 4px;
+  }
+  @keyframes sc-paper {
+    0%,
+    46% {
+      transform: translateY(46px);
+    }
+    66%,
+    90% {
+      transform: none;
+    }
+    100% {
+      transform: translateY(46px);
+    }
+  }
+  .sc-print__body {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 54px;
+    height: 64px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 12px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #fff, #eef2f6);
+    box-shadow: 0 12px 28px rgba(30, 61, 126, 0.18);
+  }
+  .sc-print__body > i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--sc-ok);
+  }
+  .sc-print__lcd {
+    padding: 3px 7px;
+    border-radius: 4px;
+    background: #0b1a36;
+    font-size: 9.5px;
+  }
+  .sc-print__lcd b {
+    font-weight: 500;
+  }
+  .sc-print__jam {
+    color: var(--sc-warn);
+    animation: sc-v1 8s var(--jx-ease) infinite both;
+    animation-delay: 2.8s;
+  }
+  .sc-print__ready {
+    color: #4fd47c;
+    animation: sc-v2 8s var(--jx-ease) infinite both;
+    animation-delay: 2.8s;
+  }
+  .sc-print__tray {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    top: 118px;
+    height: 10px;
+    border-radius: 0 0 8px 8px;
+    background: #d6dee7;
+  }
+  .sc-print__queue ul {
+    margin: 0;
+    padding: 6px 12px 12px;
+    list-style: none;
+  }
+  .sc-print__queue li {
+    display: grid;
+    gap: 5px;
+    padding: 5px 0;
+    font-size: 10.5px;
+  }
+
+  /* ---------- iaas: resources are scaled up ---------- */
+  .sc-iaas {
+    width: min(100%, 280px);
+  }
+  .sc-iaas ul {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 12px 14px 18px;
+    list-style: none;
+  }
+  .sc-iaas li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 11px;
+  }
+  .sc-iaas__val b {
+    justify-self: end;
+    font-weight: 600;
+    color: var(--jx-navy);
+  }
+  .sc-iaas__a {
+    animation: sc-v1 8s var(--jx-ease) infinite both;
+    animation-delay: calc(1.6s + var(--k) * 0.3s);
+  }
+  .sc-iaas__b {
+    animation: sc-v2 8s var(--jx-ease) infinite both;
+    animation-delay: calc(1.6s + var(--k) * 0.3s);
+  }
+  .sc-iaas__track {
+    grid-column: 1 / -1;
+    position: relative;
+    height: 6px;
+    border-radius: 3px;
+    background: #e6edf3;
+  }
+  .sc-iaas__track i {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 32%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--hA), var(--hB));
+    animation: sc-scale 8s var(--jx-ease-io) infinite both;
+    animation-delay: calc(var(--k) * 0.3s);
+  }
+  .sc-iaas__track i::after {
+    content: '';
+    position: absolute;
+    right: -7px;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    translate: 0 -50%;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid var(--hA);
+    box-shadow: 0 2px 6px rgba(30, 61, 126, 0.2);
+  }
+  @keyframes sc-scale {
+    0%,
+    12% {
+      width: 32%;
+    }
+    32%,
+    86% {
+      width: 68%;
+    }
+    96%,
+    100% {
+      width: 32%;
+    }
+  }
+  .sc-chip.sc-iaas__chip {
+    right: 12px;
+    bottom: -14px;
+  }
+
+  /* ---------- vms: VMs in the Jenomics Cloud, new ones boot up ---------- */
+  .sc-vms {
+    width: min(100%, 470px);
+  }
+  .sc-vms__new {
+    margin-left: auto;
+    padding: 4px 10px;
+    border-radius: 7px;
+    color: #fff;
+    background: var(--hA);
+    font-weight: 500;
+    font-size: 10.5px;
+    animation: sc-press 8s var(--jx-ease) infinite;
+    animation-delay: -3.3s;
+  }
+  .sc-vms__head,
+  .sc-vms li {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr 96px;
+    align-items: center;
+    gap: 12px;
+    padding: 0 14px;
+  }
+  .sc-vms__head {
+    padding-top: 9px;
+    padding-bottom: 6px;
+    font-weight: 500;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #8a97a8;
+  }
+  .sc-vms ul {
+    margin: 0;
+    padding: 0 0 8px;
+    list-style: none;
+  }
+  .sc-vms li {
+    height: 34px;
+    border-top: 1px solid #eef2f6;
+    font-size: 11px;
+  }
+  .sc-vms li.is-2 {
+    animation: sc-seq 8s var(--jx-ease) infinite both;
+    animation-delay: 0.6s;
+  }
+  .sc-vms em {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 9px 2px 7px;
+    border-radius: 999px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10.5px;
+  }
+  .sc-vms em::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .sc-vms__run {
+    color: #1f8a45;
+    background: color-mix(in oklab, var(--sc-ok) 16%, #fff);
+  }
+  .sc-vms__start {
+    color: var(--hA);
+    background: color-mix(in oklab, var(--hB) 16%, #fff);
+  }
+  .is-1 .sc-vms__start,
+  .is-2 .sc-vms__start {
+    animation: sc-v1 8s var(--jx-ease) infinite both;
+    animation-delay: 2.2s;
+  }
+  .is-1 .sc-vms__run,
+  .is-2 .sc-vms__run {
+    animation: sc-v2 8s var(--jx-ease) infinite both;
+    animation-delay: 2.2s;
+  }
+  .is-2 .sc-vms__start,
+  .is-2 .sc-vms__run {
+    animation-delay: 3.4s;
+  }
+
+  /* ---------- coloc: racks in the data centre, yours is marked ---------- */
+  .sc-coloc {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    justify-items: center;
+    gap: 14px;
+  }
+  .sc-coloc__racks {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  .sc-coloc__rack {
+    position: relative;
+    display: grid;
+    gap: 4px;
+    width: 64px;
+    padding: 7px;
+    border-radius: 7px;
+    background: #16294c;
+    opacity: 0.75;
+  }
+  .sc-coloc__rack.is-yours {
+    opacity: 1;
+    background: #0b1a36;
+    box-shadow:
+      0 0 0 2px var(--hA),
+      0 14px 30px rgba(11, 26, 54, 0.3);
+  }
+  .sc-coloc__rack span {
+    position: relative;
+    height: 16px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.07);
+  }
+  .sc-coloc__rack span i {
+    position: absolute;
+    right: 5px;
+    top: 6px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #4fd47c;
+    animation: sc-blink 1.6s steps(2) infinite;
+    animation-delay: calc(var(--k) * -0.31s);
+  }
+  .sc-coloc__tag {
+    position: absolute;
+    left: 50%;
+    top: -30px;
+    translate: -50% 0;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: var(--hA);
+    color: #fff;
+    font-weight: 500;
+    font-size: 10.5px;
+    white-space: nowrap;
+    animation: jx-float 6s ease-in-out infinite;
+  }
+  .sc-coloc__fac {
+    display: flex;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .sc-coloc__fac li {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 9px 4px 6px;
+    border-radius: 999px;
+    background: #fff;
+    font-weight: 500;
+    font-size: 10.5px;
+    color: var(--jx-navy);
+    box-shadow: 0 6px 16px rgba(30, 61, 126, 0.12);
+  }
+  .sc-coloc__fac i {
+    display: grid;
+    color: var(--hA);
+  }
+
+  /* ---------- cloudcfg: settings get switched on, saved ---------- */
+  .sc-ccfg {
+    width: min(100%, 270px);
+  }
+  .sc-ccfg .sc-bar i {
+    display: grid;
+    color: var(--hA);
+  }
+  .sc-ccfg ul {
+    margin: 0;
+    padding: 4px 14px 16px;
+    list-style: none;
+  }
+  .sc-ccfg li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eef2f6;
+    font-size: 11px;
+  }
+  .sc-ccfg__tg {
+    position: relative;
+    width: 30px;
+    height: 17px;
+    border-radius: 9px;
+    animation: sc-tg 8s var(--jx-ease) infinite both;
+    animation-delay: calc(var(--k) * 0.5s);
+  }
+  .sc-ccfg__tg::after {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    animation: inherit;
+    animation-name: sc-tg-k;
+  }
+  @keyframes sc-tg {
+    0%,
+    8% {
+      background: #d6dee7;
+    }
+    14%,
+    86% {
+      background: var(--hA);
+    }
+    94%,
+    100% {
+      background: #d6dee7;
+    }
+  }
+  @keyframes sc-tg-k {
+    0%,
+    8% {
+      transform: none;
+    }
+    14%,
+    86% {
+      transform: translateX(13px);
+    }
+    94%,
+    100% {
+      transform: none;
+    }
+  }
+  .sc-chip.sc-ccfg__chip {
+    right: 12px;
+    bottom: -14px;
+  }
+
+  /* ---------- resell: VMs at other providers, one point of contact ---------- */
+  .sc-resell {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    justify-items: center;
+    width: min(100%, 400px);
+  }
+  .sc-resell__provs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width: 100%;
+  }
+  .sc-resell__prov {
+    display: grid;
+    gap: 8px;
+    padding: 10px;
+    animation: jx-float 7s ease-in-out infinite;
+    animation-delay: calc(var(--k) * -2.3s);
+  }
+  .sc-resell__name {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 10.5px;
+    color: var(--jx-navy);
+    white-space: nowrap;
+  }
+  .sc-resell__name i {
+    display: grid;
+    color: var(--hA);
+  }
+  .sc-resell__vms {
+    display: flex;
+    gap: 5px;
+  }
+  .sc-resell__vms i {
+    flex: 1;
+    height: 14px;
+    border-radius: 4px;
+    background: color-mix(in oklab, var(--hA) 18%, #fff);
+    border: 1px solid color-mix(in oklab, var(--hA) 35%, #fff);
+  }
+  .sc-resell__lines {
+    width: 100%;
+    height: 44px;
+  }
+  .sc-resell__lines path {
+    fill: none;
+    stroke: var(--hA);
+    stroke-width: 1.6;
+    stroke-dasharray: 3 5;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.7;
+    animation: sc-flow 1.4s linear infinite reverse;
+  }
+  .sc-resell__hub {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 14px 9px 9px;
+    font-weight: 600;
+    font-size: 11.5px;
+    color: var(--jx-navy);
+    box-shadow:
+      0 0 0 6px color-mix(in oklab, var(--hB) 20%, transparent),
+      0 12px 26px rgba(30, 61, 126, 0.16);
+  }
+  .sc-resell__logo {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    color: #fff;
+    background: linear-gradient(140deg, var(--hA), var(--hC));
+  }
+
+  /* ---------- webhost: CMS post published, SSL and backup confirmed ---------- */
+  .sc-wh {
+    width: min(100%, 440px);
+  }
+  .sc-wh__body {
+    position: relative;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    min-height: 160px;
+  }
+  .sc-wh__body nav {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    padding: 14px 12px;
+    border-right: 1px solid #eef2f6;
+    background: #f7f9fb;
+    border-radius: 0 0 0 12px;
+  }
+  .sc-wh__edit {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    padding: 14px;
+  }
+  .sc-wh__title {
+    display: block;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--jx-navy);
+  }
+  .sc-wh__title span {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: bottom;
+    border-right: 2px solid var(--hA);
+    animation: sc-type 8s steps(14) infinite both;
+  }
+  @keyframes sc-type {
+    0%,
+    4% {
+      max-width: 0;
+    }
+    18%,
+    88% {
+      max-width: 14ch;
+    }
+    96%,
+    100% {
+      max-width: 0;
+    }
+  }
+  .sc-wh__img {
+    height: 34px;
+    width: 60%;
+    border-radius: 6px;
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--hA) 50%, #fff),
+      color-mix(in oklab, var(--hC) 50%, #fff)
+    );
+  }
+  .sc-wh__btn {
+    justify-self: start;
+    margin-top: 4px;
+    padding: 5px 12px;
+    border-radius: 7px;
+    color: #fff;
+    background: var(--hA);
+    font-weight: 500;
+    font-size: 10.5px;
+    animation: sc-press 8s var(--jx-ease) infinite;
+    animation-delay: -1.6s;
+  }
+  .sc-wh__chips {
+    position: absolute;
+    right: -10px;
+    bottom: 12px;
+    display: grid;
+    justify-items: end;
+    gap: 6px;
+  }
+  .sc-wh__chips .sc-chip {
+    position: static;
+  }
+
+  @media (max-width: 480px) {
+    .sc-dc {
+      grid-template-columns: 1fr;
+      padding: 26px 14px 22px;
+    }
+    .sc-dc__srv,
+    .sc-dc__link {
+      display: none;
+    }
+    .sc-vms__head span:nth-child(2),
+    .sc-vms li > span:nth-child(2) {
+      display: none;
+    }
+    .sc-vms__head,
+    .sc-vms li {
+      grid-template-columns: 1fr 96px;
+    }
+    .sc-wh__body {
+      grid-template-columns: 1fr;
+    }
+    .sc-wh__body nav {
+      display: none;
+    }
+  }
+</style>

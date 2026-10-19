@@ -1,0 +1,152 @@
+---
+/**
+ * Block "faq": heading + contact hint on the left, native <details> accordion on the right (works without JS;
+ * smooth height where the browser supports ::details-content). Copy in services.json (blocks[].items).
+ */
+import Icon from '../ui/Icon.astro';
+import { fill } from '../../i18n';
+import type { Block } from './data';
+const { block: b, id } = Astro.props as { block: Block; id: string };
+const items = b.items as { q: string; a: string }[];
+---
+
+<section class="jx-section jx-faq" id={id}>
+  <div class="jx-wrap jx-faq__grid">
+    <header class="jx-faq__head">
+      <span class="jx-kicker" data-reveal>{b.kicker}</span>
+      <h2 class="jx-h2" data-reveal style="--i:1">{b.title}</h2>
+      {
+        b.text && (
+          <p data-reveal style="--i:2">
+            {fill(b.text)}
+          </p>
+        )
+      }
+      {
+        b.cta && (
+          <a class="jx-btn jx-btn--ghost" href={b.href} data-reveal style="--i:3">
+            {b.cta}
+            <Icon name="arrow" />
+          </a>
+        )
+      }
+    </header>
+    <div class="jx-faq__list" data-reveal style="--i:1">
+      {
+        items.map((it, i) => (
+          <details name={id} open={i === 0}>
+            <summary>
+              <span>{it.q}</span>
+              <i aria-hidden="true">
+                <Icon name="chevron" size={18} />
+              </i>
+            </summary>
+            <p>{fill(it.a)}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .jx-faq__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: start;
+  }
+  .jx-faq__head {
+    position: sticky;
+    top: 110px;
+    display: grid;
+    justify-items: start;
+    gap: 16px;
+  }
+  .jx-faq__head p {
+    color: var(--jx-grey);
+    max-width: 40ch;
+  }
+  .jx-faq__list {
+    display: grid;
+    gap: 12px;
+  }
+  .jx-faq details {
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(30, 61, 126, 0.08);
+    transition: box-shadow var(--jx-med) var(--jx-ease);
+  }
+  .jx-faq details[open] {
+    box-shadow:
+      0 0 0 1px rgba(14, 120, 177, 0.2),
+      0 14px 34px rgba(30, 61, 126, 0.08);
+  }
+  .jx-faq details::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size var(--jx-med) var(--jx-ease),
+      content-visibility var(--jx-med) allow-discrete;
+  }
+  .jx-faq details[open]::details-content {
+    block-size: auto;
+  }
+  @supports (interpolate-size: allow-keywords) {
+    .jx-faq {
+      interpolate-size: allow-keywords;
+    }
+  }
+  .jx-faq summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 22px;
+    cursor: pointer;
+    list-style: none;
+    font-weight: 600;
+    font-size: 1.0625rem;
+    color: var(--jx-ink);
+  }
+  .jx-faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .jx-faq summary i {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    color: var(--jx-blue);
+    background: rgba(14, 120, 177, 0.08);
+    transition:
+      transform var(--jx-med) var(--jx-ease),
+      background var(--jx-med) var(--jx-ease),
+      color var(--jx-med) var(--jx-ease);
+  }
+  .jx-faq details[open] summary i {
+    transform: rotate(180deg);
+    color: #fff;
+    background: var(--jx-blue);
+  }
+  .jx-faq summary:focus-visible {
+    outline: 2px solid var(--jx-blue);
+    outline-offset: -2px;
+    border-radius: 16px;
+  }
+  .jx-faq details p {
+    padding: 0 22px 22px;
+    color: var(--jx-grey);
+    max-width: 62ch;
+  }
+  @media (max-width: 860px) {
+    .jx-faq__grid {
+      grid-template-columns: 1fr;
+    }
+    .jx-faq__head {
+      position: static;
+    }
+  }
+</style>

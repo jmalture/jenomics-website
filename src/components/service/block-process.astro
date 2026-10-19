@@ -1,0 +1,145 @@
+---
+/**
+ * Block "process": "So arbeiten wir", 4 numbered steps on a track. A light pulse runs along the track
+ * (calm, pauses off screen via [data-live]). Copy in services.json (blocks[].steps), new for 2026.
+ */
+import { fill } from '../../i18n';
+import type { Block } from './data';
+const { block: b, id } = Astro.props as { block: Block; id: string };
+const steps = b.steps as { title: string; text: string }[];
+---
+
+<section class="jx-section jx-proc" id={id}>
+  <div class="jx-wrap">
+    <header class="jx-head jx-head--center">
+      <span class="jx-kicker" data-reveal>{b.kicker}</span>
+      <h2 class="jx-h2" data-reveal style="--i:1">{b.title}</h2>
+      {
+        b.text && (
+          <p class="jx-lead jx-proc__lead" data-reveal style="--i:2">
+            {fill(b.text)}
+          </p>
+        )
+      }
+    </header>
+    <ol class="jx-proc__list" data-reveal data-live style={`--n:${steps.length}`}>
+      {
+        steps.map((s, i) => (
+          <li style={`--k:${i}`}>
+            <span class="jx-proc__num" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3>{s.title}</h3>
+            <p>{fill(s.text)}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style is:global>
+  .jx-proc {
+    background: linear-gradient(180deg, #f5f8fa 0%, #fff 100%);
+  }
+  .jx-proc__lead {
+    max-width: 60ch;
+  }
+  .jx-proc__list {
+    position: relative;
+    display: grid;
+    --g: clamp(16px, 2.4vw, 32px);
+    grid-template-columns: repeat(var(--n), 1fr);
+    gap: var(--g);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  /* Track behind the numbers with a soft highlight running along it */
+  .jx-proc__list::before {
+    content: '';
+    position: absolute;
+    left: 28px;
+    right: calc((100% - (var(--n) - 1) * var(--g)) / var(--n) - 28px);
+    top: 27px;
+    height: 2px;
+    border-radius: 2px;
+    background:
+      linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95), transparent) -40% 0 / 30% 100% no-repeat,
+      linear-gradient(90deg, rgba(14, 120, 177, 0.4), rgba(86, 198, 87, 0.45));
+    animation: jx-proc-run 4.5s var(--jx-ease-io) infinite;
+  }
+  .jx-proc__list.is-paused::before {
+    animation-play-state: paused;
+  }
+  @keyframes jx-proc-run {
+    from {
+      background-position:
+        -40% 0,
+        0 0;
+    }
+    to {
+      background-position:
+        140% 0,
+        0 0;
+    }
+  }
+  .jx-proc__list li {
+    position: relative;
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: 10px;
+  }
+  .jx-proc__num {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 8px;
+    border-radius: 18px;
+    background: #fff;
+    color: var(--jx-blue);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    box-shadow:
+      0 0 0 1px rgba(14, 120, 177, 0.12),
+      0 10px 26px rgba(30, 61, 126, 0.1);
+  }
+  .jx-proc__list li:last-child .jx-proc__num {
+    color: #fff;
+    background: linear-gradient(140deg, var(--jx-blue), #56c657);
+    box-shadow: 0 10px 26px rgba(14, 120, 177, 0.25);
+  }
+  .jx-proc__list h3 {
+    font-size: 1.125rem;
+    line-height: 1.3;
+  }
+  .jx-proc__list p {
+    color: var(--jx-grey);
+    font-size: 0.9688rem;
+  }
+  @media (max-width: 900px) {
+    .jx-proc__list {
+      grid-template-columns: 1fr 1fr;
+      row-gap: 36px;
+    }
+    .jx-proc__list::before {
+      display: none;
+    }
+  }
+  @media (max-width: 560px) {
+    .jx-proc__list {
+      grid-template-columns: 1fr;
+      row-gap: 28px;
+    }
+    .jx-proc__list li {
+      grid-template-columns: 56px 1fr;
+      column-gap: 18px;
+    }
+    .jx-proc__num {
+      grid-row: span 2;
+      margin: 0;
+    }
+  }
+</style>

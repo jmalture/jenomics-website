@@ -6,7 +6,9 @@
  * Colours come from the page palette --hA/--hB/--hC. Add a scene: name in data.ts (SceneName) + markup + CSS.
  */
 import type { Lang } from '../../i18n';
-import type { SceneName } from './data';
+import { BUILD_SCENES, OPS_SCENES, type SceneName } from './data';
+import SceneBuild from './SceneBuild.astro';
+import SceneOps from './SceneOps.astro';
 
 interface Props {
   name: SceneName;
@@ -317,6 +319,9 @@ const check =
       </div>
     )
   }
+
+  {(BUILD_SCENES as readonly string[]).includes(name) && <SceneBuild name={name} lang={lang} />}
+  {(OPS_SCENES as readonly string[]).includes(name) && <SceneOps name={name} lang={lang} />}
 </div>
 
 <style is:global>
@@ -1228,6 +1233,164 @@ const check =
     translate: -50% 0;
     padding: 6px 12px;
     color: var(--jx-navy);
+  }
+
+  /* ---------- Shared helpers for the scenes in SceneBuild / SceneOps ---------- */
+  .sc-mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+  /* Items that appear one after another: --k = index, --g = gap, --d = loop length */
+  .sc-s {
+    animation: sc-seq var(--d, 8s) var(--jx-ease) infinite both;
+    animation-delay: calc(var(--k, 0) * var(--g, 0.45s));
+  }
+  @keyframes sc-seq {
+    0%,
+    6% {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+    12%,
+    86% {
+      opacity: 1;
+      transform: none;
+    }
+    94%,
+    100% {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+  }
+  /* Chip/badge that arrives late in the loop (--dl shifts it) */
+  .sc-late {
+    animation: sc-pop var(--d, 8s) var(--jx-ease) infinite both;
+    animation-delay: var(--dl, 0s);
+  }
+  /* Three states that take turns (9 s, 3 s each): --k = 0..2 */
+  .sc-c3 {
+    animation: sc-c3 9s var(--jx-ease) infinite both;
+    animation-delay: calc(var(--k, 0) * 3s);
+  }
+  @keyframes sc-c3 {
+    0% {
+      opacity: 0;
+    }
+    4%,
+    30% {
+      opacity: 1;
+    }
+    35%,
+    100% {
+      opacity: 0;
+    }
+  }
+  .sc-stack {
+    display: grid;
+  }
+  .sc-stack > * {
+    grid-area: 1 / 1;
+  }
+  /* Progress bar that fills (--to = end value) */
+  .sc-fill {
+    position: relative;
+    display: block;
+    height: 6px;
+    border-radius: 3px;
+    background: #e6edf3;
+    overflow: hidden;
+  }
+  .sc-fill::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--hA), var(--hB));
+    transform-origin: left;
+    animation: sc-fill var(--d, 8s) var(--jx-ease) infinite both;
+    animation-delay: calc(var(--k, 0) * var(--g, 0.45s));
+  }
+  @keyframes sc-fill {
+    0%,
+    8% {
+      transform: scaleX(0);
+    }
+    40%,
+    86% {
+      transform: scaleX(var(--to, 1));
+    }
+    94%,
+    100% {
+      transform: scaleX(0);
+    }
+  }
+  /* Skeleton line */
+  .sc-sk {
+    display: block;
+    height: 6px;
+    border-radius: 3px;
+    background: #e6edf3;
+  }
+  .sc-sk--a {
+    background: color-mix(in oklab, var(--hA) 55%, #fff);
+  }
+  .sc-sk--b {
+    background: color-mix(in oklab, var(--hB) 45%, #fff);
+  }
+  /* Window dots and dark terminal */
+  .sc-dots {
+    display: inline-flex;
+    gap: 5px;
+  }
+  .sc-dots i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #d6dee7;
+  }
+  .sc-term {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 300px);
+    border-radius: 12px;
+    background: #0b1a36;
+    color: #c9dbef;
+    box-shadow: 0 16px 36px rgba(11, 26, 54, 0.32);
+    overflow: hidden;
+  }
+  .sc-term .sc-bar {
+    color: #8fa6c4;
+    border-color: rgba(255, 255, 255, 0.08);
+    font-weight: 500;
+  }
+  .sc-term .sc-dots i {
+    background: rgba(255, 255, 255, 0.18);
+  }
+  .sc-pre > span {
+    display: block;
+    white-space: pre;
+  }
+  .sc-term .sc-pre {
+    padding: 12px 14px 14px;
+    overflow: hidden;
+  }
+  .sc-term .p {
+    color: var(--hC);
+  }
+  .sc-term .ok {
+    color: #4fd47c;
+  }
+  .sc-term .dim {
+    color: #6f86a6;
+  }
+  /* Small white card */
+  .sc-card {
+    position: relative;
+    z-index: 1;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 8px 22px rgba(30, 61, 126, 0.13);
   }
 
   @media (max-width: 480px) {

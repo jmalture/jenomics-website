@@ -42,8 +42,10 @@ src/templates/Home.astro                          page template
 src/components/home/NN-name.astro                 sections in page order (own CSS + script)
 src/components/home/hero-live.astro               hero visual: live app window (see below)
 src/templates/Service.astro, Services.astro       6 service pages / overview (/leistungen/, /en/services/)
-src/components/service/                           page hero, feature cards, blocks (columns/logos/cases/tabs/refs/kit), CTA
-  Scene.astro                                     animated UI scenes for the feature bento (SERVICE_SCENES in data.ts; IT only so far)
+src/components/service/                           page hero, feature bento, blocks (columns/logos/cases/tabs/refs/kit/process/faq), CTA
+  Scene.astro                                     animated UI scenes for the feature bento (SERVICE_SCENES in data.ts, all 6 services):
+                                                  IT scenes + shared helpers (.sc-s, .sc-c3, .sc-fill, .sc-term); dev/web scenes in
+                                                  SceneBuild.astro, linux/net/host in SceneOps.astro
   services.json                                   service page texts (pages.<key>: lead, features, blocks)
 src/components/ui/{Icon,Blobs}.astro              line icons, live blob field
 src/components/{Header,Footer}.astro              mega menu + mobile drawer, dark footer
@@ -98,6 +100,10 @@ frame. Signature: organic gradient blobs (green→teal→cyan, blue→cyan, roya
   not on each project panel), or the first hover snaps.
 - **No `box-shadow` on elements inside a 3D (`preserve-3d`) context**: Chrome clips it into a pale rectangle.
 - Smooth scroll is on (`html { scroll-behavior: smooth }`); in Playwright use `behavior: 'instant'` before measuring.
+- Scene CSS is global and split over 3 files, so equal-specificity rules may load in either order. When a scene
+  element also carries a shared class (`.sc-win`, `.sc-term`, `.sc-card`, `.sc-chip`, `.sc-fill`) and you change
+  position/padding/size, use a double class (`.sc-win.sc-data__form`), or the shared rule may win.
+- Scenes below the fold are paused (`is-paused`); for screenshots use a viewport as tall as the section.
 - Blobs/3D can widen the page on mobile; `html { overflow-x: clip }` is set, still check `scrollWidth === 390`.
 
 ## How to verify a change (do this before pushing)
