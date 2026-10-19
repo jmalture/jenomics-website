@@ -38,9 +38,13 @@ Hostinger settings that work: framework Astro, build `npm run build`, **output d
 ## Structure
 ```
 src/pages/index.astro, src/pages/en/index.astro   route files, only pass the language
-src/templates/Home.astro                          page template (preloads the LCP image)
+src/templates/Home.astro                          page template
 src/components/home/NN-name.astro                 sections in page order (own CSS + script)
-src/components/home/hero-slider.astro             hero showcase (see below)
+src/components/home/hero-live.astro               hero visual: live app window (see below)
+src/templates/Service.astro, Services.astro       6 service pages / overview (/leistungen/, /en/services/)
+src/components/service/                           page hero, feature cards, blocks (columns/logos/cases/tabs/refs/kit), CTA
+  Scene.astro                                     animated UI scenes for the feature bento (SERVICE_SCENES in data.ts; IT only so far)
+  services.json                                   service page texts (pages.<key>: lead, features, blocks)
 src/components/ui/{Icon,Blobs}.astro              line icons, live blob field
 src/components/{Header,Footer}.astro              mega menu + mobile drawer, dark footer
 src/i18n/*.json                                   texts { de, en }; missing keys fall back to DE
@@ -55,16 +59,17 @@ docs/BRAND.md, docs/STATUS.md                     brand guide, status
 Raw scrape of the old site (HTML + original images): `Documents\Jenomics\jenomics-scrape\` on Honza's PC.
 
 ## Homepage sections
-01 hero ("Make IT possible!" + showcase) · 02 trust (full-width key-figures band with count-up + customer
+01 hero ("Make IT possible!" + live collage) · 02 trust (full-width key-figures band with count-up + customer
 marquee) · 03 solutions (3 auto-advancing tabs) · 04 portfolio (dark bento: 6 services + 3 products, pointer
 spotlight) · 05 testimonials (7 voices, filter chips, swipe) · 06 projects (4 expanding panels) · 07 blog
 (Markdown) · 08 careers (blue band).
 
-**Hero showcase** (`hero-slider.astro`): one framed screen at a time, cinematic cross-fade (fade + slight zoom +
-blur), Ken Burns on the active screen, 7 screens (IT, Dev, Web photos; Linux = typing terminal; Network = pulsing
-map; Hosting = landscape + "hostet grün" badge; Products = floating icons). Each screen re-themes the hero:
-registered custom properties `--hA/--hB/--hC` (set on `.jx-hero`) blend the blob and wash colours. Only text on a
-screen: a small label "NN Name →". Autoplay 5.5 s with progress, pauses on hover/off screen/hidden tab.
+**Hero visual** (`hero-live.astro`, 2026-10-19, awaiting Honza's review; replaced the cross-fade slider): one
+live app window. Icon rail (6 services + products) on the left, one pane at a time showing that service as a small
+live UI (dashboard, code typing, site building, terminal, network, rack + "hostet grün", product apps). A cursor clicks
+the next icon, the pane's story replays, then the cursor points at its [data-poi]; each switch re-themes the hero via
+registered `--hA/--hB/--hC`. Hovering an icon previews it. Sized in `cqw`. No hero photo, so no LCP preload.
+A 7-window collage (all services at once) was tried first: "way too busy, I don't know where to look". Keep one focal point.
 
 ## Brand in one paragraph
 Poppins only (600 headings, 400 text, 500 UI). Blue #0E78B1 (primary), kicker blue #0C82C0, green #56C657 (products,
@@ -78,7 +83,8 @@ frame. Signature: organic gradient blobs (green→teal→cyan, blue→cyan, roya
 - Never hard-code "25 Jahre": use `{years}` / `{founded}` placeholders and `fill()` (years since 2001).
 - **Blobs only float.** No cursor parallax and no touch/"lava lamp" reaction (both tried and rejected).
 - **Hero: little text, no carousel.** A 3D ring carousel and a caption block with description + giant ghost word
-  were tried and rejected ("too much text", "PowerPoint-ish"). Current single-screen cross-fade is approved.
+  were tried and rejected ("too much text", "PowerPoint-ish"). The single-screen cross-fade was approved, then found
+  "boring, a classic carousel"; replaced by the live app window (product UIs, the approach of the service-page bento).
 - Key-figures band runs full width, edge to edge.
 - Project panels: open/close must be smooth with **no text reflow** (body has the fixed open width via container
   units; a separate label shows in collapsed panels; they cross-fade). Hover intent 160 ms.
@@ -93,7 +99,6 @@ frame. Signature: organic gradient blobs (green→teal→cyan, blue→cyan, roya
 - **No `box-shadow` on elements inside a 3D (`preserve-3d`) context**: Chrome clips it into a pale rectangle.
 - Smooth scroll is on (`html { scroll-behavior: smooth }`); in Playwright use `behavior: 'instant'` before measuring.
 - Blobs/3D can widen the page on mobile; `html { overflow-x: clip }` is set, still check `scrollWidth === 390`.
-- Hero LCP image is preloaded in `Home.astro`; if the first hero screen changes, update those two preload links.
 
 ## How to verify a change (do this before pushing)
 1. `npm run build` passes.
@@ -103,10 +108,13 @@ frame. Signature: organic gradient blobs (green→teal→cyan, blue→cyan, roya
 5. Commit with a clear message, push to `main`, Hostinger deploys; check the preview URL.
 
 ## Next tasks
-1. Connect the Jenomics EMCP (WordPress) and scrape the rest of jenomics.de: 6 service pages, IKONA, SDX,
-   Großmarkt, Über uns, Team, Karriere, Pricing, Kontakt, Projekte, AGB, Datenschutz, Impressum, full blog posts.
+1. Scrape the rest of jenomics.de: IKONA, SDX, Großmarkt, Über uns, Team, Karriere, Pricing, Kontakt, Projekte,
+   Web-Deluxe-Kit, AGB, Datenschutz, Impressum, full blog posts. The EMCP (`emcp-jenomics-de`, local scope) fails
+   OAuth because Mittwald 403s `/.well-known/*`; the public REST API works:
+   `/wp-json/wp/v2/pages?slug=<slug>` (old-site photos have baked blobs; crop them like `public/media/svc-*`).
 2. Build those pages on the same template/section pattern, DE + EN (EN slugs in `offer.json`/`chrome.json` are
    placeholders until the pages exist). Kontakt uses `/api/contact` (set SMTP env vars in Hostinger).
+   The 6 service pages + `/leistungen/` are done (2026-10-19), awaiting Honza's review.
 3. Blog: full article bodies into `src/content/blog/*.md`, plus a blog index and post template.
 4. Run `npm audit` (one high-severity warning on install) and update the affected dependency if safe.
 5. Update `jenomics-knowledge` and `docs/STATUS.md` whenever pages or decisions are added.

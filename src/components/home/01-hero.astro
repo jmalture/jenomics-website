@@ -1,12 +1,12 @@
 ---
 /**
  * Section "hero": Make IT possible!
- * Texts: src/i18n/home.json, keys "hero_*". Right side: the cross-fading showcase (hero-slider.astro)
- * on live blobs that take each screen's colours.
+ * Texts: src/i18n/home.json, keys "hero_*". Right side: the live collage of all services (hero-live.astro)
+ * on live blobs that take the active window's colours.
  */
 import Icon from '../ui/Icon.astro';
 import Blobs from '../ui/Blobs.astro';
-import HeroSlider from './hero-slider.astro';
+import HeroLive from './hero-live.astro';
 import { pick, fill, type Lang } from '../../i18n';
 import data from '../../i18n/home.json';
 const { lang } = Astro.props as { lang: Lang };
@@ -18,8 +18,25 @@ const ring = fill(t.hero_ring);
   <Blobs
     class="jx-hero__bg"
     blobs={[
-      { x: '58%', y: '-18%', size: 'min(56vw, 760px)', g: 'linear-gradient(140deg, var(--hA), var(--hB))', o: 0.2, soft: true, d: 24 },
-      { x: '-12%', y: '22%', size: 'min(40vw, 520px)', g: 'linear-gradient(140deg, var(--hC), var(--hB))', o: 0.12, soft: true, d: 28, delay: 6 },
+      {
+        x: '58%',
+        y: '-18%',
+        size: 'min(56vw, 760px)',
+        g: 'linear-gradient(140deg, var(--hA), var(--hB))',
+        o: 0.2,
+        soft: true,
+        d: 24,
+      },
+      {
+        x: '-12%',
+        y: '22%',
+        size: 'min(40vw, 520px)',
+        g: 'linear-gradient(140deg, var(--hC), var(--hB))',
+        o: 0.12,
+        soft: true,
+        d: 28,
+        delay: 6,
+      },
     ]}
   />
   <div class="jx-wrap jx-hero__grid">
@@ -29,7 +46,10 @@ const ring = fill(t.hero_ring);
         {fill(t.hero_badge)}
       </p>
       <h1 class="jx-hero__title" aria-label={`${t.hero_title_a} ${t.hero_title_b} ${t.hero_title_c}`}>
-        <span class="jx-hero__line" aria-hidden="true"><span style="--i:1">{t.hero_title_a}</span> <span class="jx-hero__it" style="--i:2">{t.hero_title_b}</span></span>
+        <span class="jx-hero__line" aria-hidden="true"
+          ><span style="--i:1">{t.hero_title_a}</span>
+          <span class="jx-hero__it" style="--i:2">{t.hero_title_b}</span></span
+        >
         <span class="jx-hero__line" aria-hidden="true"><span style="--i:3">{t.hero_title_c}</span></span>
       </h1>
       <p class="jx-hero__lead" data-reveal style="--i:4">{t.hero_lead}</p>
@@ -44,12 +64,38 @@ const ring = fill(t.hero_ring);
       <Blobs
         class="jx-hero__blobs"
         blobs={[
-          { x: '30%', y: '-10%', size: '62%', g: 'linear-gradient(135deg, var(--hA) 0%, var(--hB) 100%)', d: 16, dx: '4%', dy: '6%' },
-          { x: '-8%', y: '18%', size: '36%', g: 'linear-gradient(140deg, var(--hB), var(--hC))', d: 19, delay: 5, dx: '-5%', dy: '4%' },
-          { x: '72%', y: '34%', size: '26%', g: 'linear-gradient(150deg, var(--hC), var(--hA))', d: 14, delay: 3, dx: '6%', dy: '-6%' },
+          {
+            x: '30%',
+            y: '-10%',
+            size: '62%',
+            g: 'linear-gradient(135deg, var(--hA) 0%, var(--hB) 100%)',
+            d: 16,
+            dx: '4%',
+            dy: '6%',
+          },
+          {
+            x: '-8%',
+            y: '18%',
+            size: '36%',
+            g: 'linear-gradient(140deg, var(--hB), var(--hC))',
+            d: 19,
+            delay: 5,
+            dx: '-5%',
+            dy: '4%',
+          },
+          {
+            x: '72%',
+            y: '34%',
+            size: '26%',
+            g: 'linear-gradient(150deg, var(--hC), var(--hA))',
+            d: 14,
+            delay: 3,
+            dx: '6%',
+            dy: '-6%',
+          },
         ]}
       />
-      <HeroSlider lang={lang} />
+      <HeroLive lang={lang} />
       <div class="jx-hero__pill jx-hero__pill--a" data-reveal="right" style="--i:5">
         <span class="jx-pill"><i><Icon name="calendar" /></i>{fill(t.hero_pill_since)}</span>
       </div>
@@ -150,7 +196,14 @@ const ring = fill(t.hero_ring);
     }
   }
   .jx-hero__it {
-    background: linear-gradient(100deg, var(--jx-blue) 0%, #1ab8e8 35%, #20d3a6 62%, var(--jx-green) 80%, var(--jx-blue) 100%);
+    background: linear-gradient(
+      100deg,
+      var(--jx-blue) 0%,
+      #1ab8e8 35%,
+      #20d3a6 62%,
+      var(--jx-green) 80%,
+      var(--jx-blue) 100%
+    );
     background-size: 220% 100%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -227,8 +280,8 @@ const ring = fill(t.hero_ring);
   .jx-hero__ring {
     position: absolute;
     z-index: 2;
-    right: 0;
-    top: -12px;
+    right: -14px;
+    top: -10px;
     width: clamp(96px, 9vw, 124px);
     aspect-ratio: 1;
     display: grid;
