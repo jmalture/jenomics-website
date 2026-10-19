@@ -1,7 +1,8 @@
 ---
 /**
  * Site header: logo, mega menu "Leistungen" (services, products, company), page links,
- * language switch, Fernzugriff (TeamViewer) and the contact CTA. Below 1080px a full-screen drawer.
+ * language switch (hidden for now: SHOW_LANG), Fernzugriff (TeamViewer) and the contact CTA.
+ * Below 1080px the burger opens a full-screen drawer (current page marked, quick call / mail buttons).
  * Behaviour (glass on scroll, hide on scroll down, menu/drawer toggles) is in src/scripts/site.ts.
  */
 import Icon from './ui/Icon.astro';
@@ -24,6 +25,12 @@ const links = [
   [t.h_contact, t.h_contact_href],
 ];
 const remote = 'https://get.teamviewer.com/tnedds2';
+/** Language switch off until the EN translations are reviewed (Honza, 2026-10-19). The /en/ pages still build. */
+const SHOW_LANG = false;
+const path = Astro.url.pathname;
+const here = (href: string) => (href === path ? 'page' : undefined);
+const phone = '+49 89 2000 337 0';
+const mail = 'anfrage@jenomics.de';
 ---
 
 <header class="jx-hd" data-header>
@@ -107,7 +114,7 @@ const remote = 'https://get.teamviewer.com/tnedds2';
     </nav>
 
     <div class="jx-hd__tools">
-      <div class="jx-lang" role="group" aria-label={t.h_lang_label}>
+      {SHOW_LANG && <div class="jx-lang" role="group" aria-label={t.h_lang_label}>
         {
           LANGS.map((l) => (
             <a
@@ -121,7 +128,7 @@ const remote = 'https://get.teamviewer.com/tnedds2';
             </a>
           ))
         }
-      </div>
+      </div>}
       <a class="jx-remote" href={remote} target="_blank" rel="noopener" title={t.h_remote_title}>
         <Icon name="remote" size={18} /><span>{t.h_remote}</span>
       </a>
@@ -140,7 +147,7 @@ const remote = 'https://get.teamviewer.com/tnedds2';
           {
             o.services.map((s) => (
               <li>
-                <a href={s.href}>
+                <a href={s.href} aria-current={here(s.href)}>
                   <Icon name={s.key as any} size={18} />
                   {s.name}
                 </a>
@@ -155,7 +162,7 @@ const remote = 'https://get.teamviewer.com/tnedds2';
           {
             o.products.map((p) => (
               <li>
-                <a href={p.href}>
+                <a href={p.href} aria-current={here(p.href)}>
                   <img src={p.icon} alt="" width="22" height="22" loading="lazy" />
                   {p.name}
                 </a>
@@ -165,17 +172,24 @@ const remote = 'https://get.teamviewer.com/tnedds2';
         </ul>
       </details>
       <ul class="jx-drawer__links">
-        <li><a href={t.h_about_href}>{t.h_about}</a></li>
-        <li><a href={t.h_team_href}>{t.h_team}</a></li>
+        <li><a href={t.h_about_href} aria-current={here(t.h_about_href)}>{t.h_about}<Icon name="arrow" size={18} /></a></li>
+        <li><a href={t.h_team_href} aria-current={here(t.h_team_href)}>{t.h_team}<Icon name="arrow" size={18} /></a></li>
         {
           links.map(([label, href]) => (
             <li>
-              <a href={href}>{label}</a>
+              <a href={href} aria-current={here(href)}>
+                {label}
+                <Icon name="arrow" size={18} />
+              </a>
             </li>
           ))
         }
       </ul>
       <div class="jx-drawer__foot">
+        <div class="jx-drawer__quick">
+          <a href={`tel:${phone.replace(/\s/g, '')}`}><Icon name="phone" size={18} /><span>{phone}</span></a>
+          <a href={`mailto:${mail}`}><Icon name="mail" size={18} /><span>{mail}</span></a>
+        </div>
         <a class="jx-btn" href={t.h_contact_href}>{t.h_cta}<Icon name="arrow" /></a>
         <a class="jx-remote jx-remote--full" href={remote} target="_blank" rel="noopener"
           ><Icon name="remote" size={18} /><span>{t.h_remote}</span></a
@@ -616,12 +630,93 @@ const remote = 'https://get.teamviewer.com/tnedds2';
     color: var(--jx-blue);
   }
   .jx-drawer__links a {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 14px 0;
     font-size: 1.25rem;
     font-weight: 600;
     text-decoration: none;
+    color: var(--jx-ink);
     border-bottom: 1px solid var(--jx-line);
+  }
+  .jx-drawer__links a svg {
+    color: var(--jx-blue);
+    opacity: 0.35;
+    transition:
+      opacity var(--jx-fast),
+      translate var(--jx-fast) var(--jx-ease);
+  }
+  .jx-drawer__links a:hover svg,
+  .jx-drawer__links a[aria-current] svg {
+    opacity: 1;
+    translate: 3px 0;
+  }
+  .jx-drawer a[aria-current] {
+    color: var(--jx-blue);
+  }
+  .jx-drawer__group a[aria-current] {
+    border-radius: 10px;
+    background: rgba(14, 120, 177, 0.07);
+    padding-inline: 10px;
+  }
+  /* Drawer items rise in one after another when it opens (calm, no bounce) */
+  .jx-drawer__inner > * {
+    opacity: 0;
+    translate: 0 10px;
+    transition:
+      opacity 0.35s var(--jx-ease),
+      translate 0.5s var(--jx-ease);
+  }
+  .jx-hd.is-open .jx-drawer__inner > * {
+    opacity: 1;
+    translate: 0 0;
+  }
+  .jx-hd.is-open .jx-drawer__inner > :nth-child(1) {
+    transition-delay: 0.08s;
+  }
+  .jx-hd.is-open .jx-drawer__inner > :nth-child(2) {
+    transition-delay: 0.14s;
+  }
+  .jx-hd.is-open .jx-drawer__inner > :nth-child(3) {
+    transition-delay: 0.2s;
+  }
+  .jx-hd.is-open .jx-drawer__inner > :nth-child(4) {
+    transition-delay: 0.26s;
+  }
+  .jx-drawer__quick {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .jx-drawer__quick a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 52px;
+    padding: 0 12px;
+    border-radius: 12px;
+    background: var(--jx-surface);
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--jx-ink);
+    text-decoration: none;
+    overflow: hidden;
+  }
+  .jx-drawer__quick svg {
+    flex: none;
+    color: var(--jx-blue);
+  }
+  .jx-drawer__quick span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  @media (max-width: 420px) {
+    .jx-drawer__quick {
+      grid-template-columns: 1fr;
+    }
   }
   .jx-drawer__foot {
     display: grid;
@@ -631,6 +726,9 @@ const remote = 'https://get.teamviewer.com/tnedds2';
   .jx-remote--full {
     justify-content: center;
     min-height: 52px;
+  }
+  .jx-remote--full span {
+    display: inline !important;
   }
 
   @media (max-width: 1180px) {
