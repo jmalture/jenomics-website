@@ -1,0 +1,207 @@
+---
+/**
+ * Block "logos": vendor partnerships / technologies as logo tiles (/media/brand-*.webp, /media/tech-*.webp).
+ * Logos sit in greyscale and take their colours on hover. A "featured" group gets larger tiles.
+ */
+import { fill } from '../../i18n';
+import type { Block } from './data';
+const { block: b, id } = Astro.props as { block: Block; id: string };
+const groups = b.groups as { title: string; text: string; logos: string[]; featured?: boolean; tech?: boolean }[];
+const names: Record<string, string> = {
+  ms: 'Microsoft Partner',
+  cisco: 'Cisco Select Partner',
+  cubebackup: 'CubeBackup',
+  tm: 'Trend Micro Partner',
+  apc: 'APC by Schneider Electric',
+  intel: 'Intel',
+  dell: 'Dell',
+  hp: 'Hewlett Packard',
+  lenovo: 'Lenovo',
+  iiyama: 'iiyama',
+  apple: 'Apple',
+  sophos: 'Sophos',
+  vmware: 'VMware',
+  veeam: 'Veeam',
+  datev: 'DATEV',
+  linux: 'Linux',
+  sfirm: 'SFirm',
+  starmoney: 'StarMoney',
+  multicash: 'MultiCash',
+  java: 'Java',
+  js: 'JavaScript',
+  ts: 'TypeScript',
+  html5: 'HTML5',
+  css: 'CSS3',
+  json: 'JSON',
+  vuejs: 'Vue.js',
+  antlr: 'ANTLR',
+  nodejs: 'Node.js',
+  postgres: 'PostgreSQL',
+  nginx: 'NGINX',
+  tomcat: 'Apache Tomcat',
+  haproxy: 'HAProxy',
+  visualcode: 'Visual Studio Code',
+  git: 'Git',
+  jira: 'Jira',
+  confluence: 'Confluence',
+};
+---
+
+<section class="jx-section jx-logos" id={id}>
+  <div class="jx-wrap">
+    {
+      groups.map((g, gi) => (
+        <div class:list={['jx-logos__group', { 'is-featured': g.featured, 'is-tech': g.tech }]}>
+          <header class="jx-logos__head">
+            <h2 class:list={[gi === 0 ? 'jx-h2' : 'jx-logos__sub']} data-reveal>
+              {g.title}
+            </h2>
+            <p class="jx-lead" data-reveal style="--i:1">
+              {fill(g.text)}
+            </p>
+          </header>
+          <ul class="jx-logos__grid">
+            {g.logos.map((l, i) => (
+              <li class="jx-logo" data-reveal style={`--i:${i % 6}`}>
+                <img
+                  src={`/media/${g.tech ? 'tech' : 'brand'}-${l}.webp`}
+                  alt={names[l] ?? l}
+                  title={names[l] ?? l}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style is:global>
+  /* white on white: no double padding against the neighbouring sections */
+  .jx-cols:not(.jx-cols--compact) + .jx-logos {
+    padding-top: 0;
+  }
+  .jx-logos {
+    padding-bottom: clamp(24px, 3vw, 48px);
+  }
+  .jx-logos__group + .jx-logos__group {
+    margin-top: clamp(48px, 6vw, 88px);
+  }
+  .jx-logos__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px 32px;
+    margin-bottom: clamp(24px, 3vw, 40px);
+  }
+  .jx-logos__head .jx-h2 {
+    margin-top: 0;
+  }
+  .jx-logos__head .jx-lead {
+    max-width: 52ch;
+  }
+  .jx-logos__sub {
+    font-size: var(--jx-h3);
+  }
+  /* Rows wrap and centre, so a short last row looks intended */
+  .jx-logos__grid {
+    --cols: 5;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-logo {
+    flex: 0 0 calc((100% - (var(--cols) - 1) * 12px) / var(--cols));
+    display: grid;
+    place-items: center;
+    height: 96px;
+    padding: 18px 22px;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid var(--jx-line);
+    transition:
+      border-color var(--jx-med) var(--jx-ease),
+      box-shadow var(--jx-med) var(--jx-ease),
+      translate var(--jx-med) var(--jx-ease);
+  }
+  .jx-logo img {
+    max-width: 100%;
+    max-height: 52px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.62;
+    mix-blend-mode: multiply;
+    transition:
+      filter var(--jx-med) var(--jx-ease),
+      opacity var(--jx-med) var(--jx-ease);
+  }
+  .jx-logo:hover {
+    translate: 0 -3px;
+    border-color: rgba(14, 120, 177, 0.22);
+    box-shadow: var(--jx-shadow);
+  }
+  .jx-logo:hover img {
+    filter: none;
+    opacity: 1;
+  }
+  .is-featured .jx-logos__grid {
+    --cols: 4;
+  }
+  .is-featured .jx-logo {
+    height: 140px;
+    box-shadow: var(--jx-shadow-sm);
+  }
+  .is-featured .jx-logo img {
+    max-height: 84px;
+    filter: none;
+    opacity: 1;
+  }
+  .is-tech .jx-logos__grid {
+    --cols: 9;
+  }
+  .is-tech .jx-logo {
+    height: 112px;
+  }
+  .is-tech .jx-logo img {
+    max-height: 60px;
+    filter: none;
+    opacity: 0.92;
+  }
+  @media (max-width: 1000px) {
+    .is-tech .jx-logos__grid {
+      --cols: 6;
+    }
+  }
+  @media (max-width: 760px) {
+    .is-featured .jx-logos__grid {
+      --cols: 2;
+    }
+    .jx-logos__grid {
+      --cols: 3;
+    }
+    .is-tech .jx-logos__grid {
+      --cols: 4;
+    }
+    .jx-logo {
+      height: 80px;
+      padding: 14px;
+    }
+    .is-tech .jx-logo {
+      height: 76px;
+    }
+  }
+  @media (max-width: 420px) {
+    .is-tech .jx-logos__grid {
+      --cols: 3;
+    }
+  }
+</style>

@@ -1,0 +1,43 @@
+---
+/**
+ * One service page (IT Administration, Softwareentwicklung, ...). One template for all six services and
+ * both languages; texts come from src/i18n/services.json ("pages.<key>"), names/URLs from offer.json.
+ * Sections: hero, feature grid, the service's own blocks, contact band + links to the other services.
+ */
+import Base from '../layouts/Base.astro';
+import Hero from '../components/service/01-hero.astro';
+import Features from '../components/service/02-features.astro';
+import Blocks from '../components/service/03-blocks.astro';
+import Cta from '../components/service/04-cta.astro';
+import { SERVICE_VISUALS, servicePage, serviceAlternates, serviceUi, offerServices, type ServiceKey } from '../components/service/data';
+import type { Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  service: ServiceKey;
+}
+const { lang, service } = Astro.props;
+const p = servicePage(service, lang);
+const v = SERVICE_VISUALS[service];
+const u = serviceUi(lang);
+const name = offerServices(lang).find((s) => s.key === service)!.name;
+---
+
+<Base lang={lang} title={p.meta_title} description={p.meta_desc} alternates={serviceAlternates(service)} ogImage={`/media/${v.img}-1200.webp`}>
+  <link rel="preload" slot="head" as="image" href={`/media/${v.img}-1200.webp`} media="(min-width: 701px)" fetchpriority="high" />
+  <link rel="preload" slot="head" as="image" href={`/media/${v.img}-720.webp`} media="(max-width: 700px)" fetchpriority="high" />
+  <Hero
+    lang={lang}
+    title={p.title}
+    lead={p.lead}
+    img={v.img}
+    alt={p.hero_alt}
+    pal={v.pal}
+    kicker={u.hero_kicker}
+    icon={service}
+    crumbs={[{ label: u.crumb_services, href: u.crumb_services_href }, { label: name }]}
+  />
+  {p.features?.length > 0 && <Features lang={lang} service={service} />}
+  <Blocks lang={lang} service={service} />
+  <Cta lang={lang} current={service} />
+</Base>

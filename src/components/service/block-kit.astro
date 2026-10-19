@@ -1,0 +1,64 @@
+---
+/** Block "kit": teaser for a smaller package (Web-Deluxe-Kit), light card with a green accent and blobs. */
+import Icon from '../ui/Icon.astro';
+import Blobs from '../ui/Blobs.astro';
+import { fill } from '../../i18n';
+import type { Block } from './data';
+const { block: b, id } = Astro.props as { block: Block; id: string };
+---
+
+<section class="jx-section jx-kit" id={id}>
+  <div class="jx-wrap">
+    <div class="jx-kit__box" data-reveal="scale">
+      <Blobs
+        blobs={[
+          { x: '78%', y: '-40%', size: 'min(38vw, 460px)', g: 'green', o: 0.85, d: 18 },
+          { x: '90%', y: '55%', size: 'min(18vw, 220px)', g: 'blue', o: 0.9, d: 14, delay: 4 },
+        ]}
+      />
+      <div class="jx-kit__copy">
+        <span class="jx-tag jx-tag--green">{b.kicker}</span>
+        <h2 class="jx-h2">{b.title}</h2>
+        <p>{fill(b.text)}</p>
+        <a class="jx-btn" href={b.href}>{b.cta}<Icon name="arrow" /></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .jx-kit {
+    padding-top: clamp(56px, 7vw, 110px);
+    padding-bottom: 0;
+  }
+  .jx-kit__box {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: clamp(32px, 5vw, 72px);
+    border-radius: 32px;
+    background: linear-gradient(120deg, #fff 40%, #f0faf3);
+    border: 1px solid rgba(86, 198, 87, 0.25);
+    box-shadow: var(--jx-shadow);
+  }
+  .jx-kit__box .jx-blobs {
+    z-index: -1;
+  }
+  .jx-kit__copy {
+    max-width: 760px;
+  }
+  .jx-kit__copy .jx-h2 {
+    margin-top: 18px;
+    font-size: clamp(1.5rem, 1.2rem + 1.1vw, 2.25rem);
+  }
+  .jx-kit__copy p {
+    margin: 18px 0 30px;
+    color: var(--jx-grey);
+    font-size: 1.0625rem;
+  }
+  @media (max-width: 760px) {
+    .jx-kit__box .jx-blobs {
+      opacity: 0.35;
+    }
+  }
+</style>

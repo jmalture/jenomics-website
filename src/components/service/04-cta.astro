@@ -1,0 +1,188 @@
+---
+/**
+ * Section "cta": Interesse an unseren Services? (blue band with blobs, like the careers band) followed by
+ * links to the other services, so every service page leads on. Without `current` only the band is shown.
+ */
+import Icon from '../ui/Icon.astro';
+import Blobs from '../ui/Blobs.astro';
+import type { Lang } from '../../i18n';
+import { serviceUi, offerServices, type ServiceKey } from './data';
+const { lang, current } = Astro.props as { lang: Lang; current?: ServiceKey };
+const u = serviceUi(lang);
+const others = current ? offerServices(lang).filter((s) => s.key !== current) : [];
+---
+
+<section class="jx-scta" id="kontakt">
+  <div class="jx-wrap">
+    <div class="jx-scta__band" data-reveal="scale">
+      <Blobs
+        blobs={[
+          { x: '62%', y: '-50%', size: 'min(46vw, 600px)', g: 'green', o: 0.9, d: 20 },
+          { x: '-8%', y: '50%', size: 'min(26vw, 340px)', g: 'royal', o: 0.85, d: 17, delay: 5 },
+          { x: '88%', y: '62%', size: 'min(14vw, 180px)', g: 'blue', d: 13, delay: 2 },
+        ]}
+      />
+      <div class="jx-scta__copy">
+        <span class="jx-kicker jx-kicker--light">{u.cta_kicker}</span>
+        <h2 class="jx-h2">{u.cta_title}</h2>
+        <p>{u.cta_text}</p>
+      </div>
+      <a class="jx-btn jx-btn--white" href={u.cta_btn_href}>{u.cta_btn}<Icon name="arrow" /></a>
+    </div>
+
+    {
+      others.length > 0 && (
+        <div class="jx-more">
+          <header class="jx-more__head">
+            <span class="jx-kicker" data-reveal>{u.more_kicker}</span>
+            <h2 class="jx-more__title" data-reveal style="--i:1">{u.more_title}</h2>
+          </header>
+          <ul class="jx-more__grid">
+            {others.map((s, i) => (
+              <li data-reveal style={`--i:${i}`}>
+                <a class="jx-more__card" href={s.href}>
+                  <span class="jx-more__ico">
+                    <Icon name={s.key as any} size={20} />
+                  </span>
+                  <strong>{s.name}</strong>
+                  <span class="jx-more__desc">{s.desc}</span>
+                  <Icon name="arrow" size={18} class="jx-more__go" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style is:global>
+  .jx-scta {
+    padding-block: clamp(48px, 6vw, 96px) clamp(80px, 9vw, 140px);
+  }
+  .jx-scta__band {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px 48px;
+    padding: clamp(36px, 5vw, 76px);
+    border-radius: 32px;
+    background: var(--jx-blue);
+    color: #fff;
+  }
+  .jx-scta__band .jx-blobs {
+    z-index: -1;
+  }
+  .jx-scta__band .jx-kicker::before {
+    background: #fff;
+  }
+  .jx-scta__band .jx-kicker--light {
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .jx-scta__copy {
+    max-width: 620px;
+  }
+  .jx-scta__copy p {
+    margin-top: 16px;
+    font-size: 1.0625rem;
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  .jx-more {
+    margin-top: clamp(56px, 7vw, 100px);
+  }
+  .jx-more__head {
+    margin-bottom: 28px;
+  }
+  .jx-more__title {
+    margin-top: 12px;
+    font-size: var(--jx-h3);
+  }
+  .jx-more__grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-more__grid > li {
+    display: flex;
+  }
+  .jx-more__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    padding: 22px 20px 48px;
+    border-radius: 16px;
+    background: #fff;
+    border: 1px solid var(--jx-line);
+    text-decoration: none;
+    transition:
+      translate var(--jx-med) var(--jx-ease),
+      border-color var(--jx-med) var(--jx-ease),
+      box-shadow var(--jx-med) var(--jx-ease);
+  }
+  .jx-more__card:hover {
+    translate: 0 -4px;
+    border-color: rgba(14, 120, 177, 0.3);
+    box-shadow: var(--jx-shadow);
+  }
+  .jx-more__ico {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 6px;
+    border-radius: 12px;
+    color: var(--jx-blue);
+    background: rgba(14, 120, 177, 0.08);
+    transition:
+      color var(--jx-med) var(--jx-ease),
+      background-color var(--jx-med) var(--jx-ease);
+  }
+  .jx-more__card:hover .jx-more__ico {
+    color: #fff;
+    background: var(--jx-blue);
+  }
+  .jx-more__card strong {
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .jx-more__desc {
+    font-size: 0.875rem;
+    color: var(--jx-grey);
+  }
+  .jx-more__go {
+    position: absolute;
+    left: 20px;
+    bottom: 18px;
+    color: var(--jx-blue);
+    transition: translate var(--jx-fast) var(--jx-ease);
+  }
+  .jx-more__card:hover .jx-more__go {
+    translate: 4px 0;
+  }
+  @media (max-width: 1100px) {
+    .jx-more__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 760px) {
+    .jx-more__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 460px) {
+    .jx-more__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

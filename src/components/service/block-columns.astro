@@ -1,0 +1,166 @@
+---
+/**
+ * Block "columns": cards with icon, title, text and an optional check list.
+ * Variants: default (3 tall cards with lists), "usp" (3 × 2 cards), "compact" (4 per row, small).
+ */
+import Icon from '../ui/Icon.astro';
+import { fill } from '../../i18n';
+import type { Block } from './data';
+const { block: b, id } = Astro.props as { block: Block; id: string };
+const variant = (b.variant as string) ?? 'default';
+const items = b.items as { icon?: string; title: string; text: string; list?: string[] }[];
+---
+
+<section class:list={['jx-section jx-cols', `jx-cols--${variant}`]} id={id}>
+  <div class="jx-wrap">
+    {
+      variant === 'usp' ? (
+        <h2 class="screen-reader-text">{b.title}</h2>
+      ) : (
+        <header class="jx-head jx-head--center">
+          <span class="jx-kicker" data-reveal>{b.kicker}</span>
+          <h2 class="jx-h2" data-reveal style="--i:1">{b.title}</h2>
+        </header>
+      )
+    }
+    <ul class="jx-cols__grid">
+      {
+        items.map((it, i) => (
+          <li class="jx-ccard" data-reveal style={`--i:${i % (variant === 'compact' ? 4 : 3)}`}>
+            {it.icon && (
+              <span class="jx-ccard__ico">
+                <Icon name={it.icon as any} size={variant === 'compact' ? 20 : 22} />
+              </span>
+            )}
+            <h3>{it.title}</h3>
+            <p>{fill(it.text)}</p>
+            {it.list && (
+              <ul class="jx-ccard__list">
+                {it.list.map((l) => (
+                  <li>
+                    <Icon name="check" size={16} />
+                    <span>{l}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style is:global>
+  .jx-cols__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(16px, 2vw, 28px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-cols--compact .jx-cols__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .jx-ccard {
+    position: relative;
+    padding: clamp(26px, 2.6vw, 38px);
+    border-radius: var(--jx-r-lg);
+    background: #fff;
+    border: 1px solid rgba(30, 61, 126, 0.08);
+    box-shadow: var(--jx-shadow-sm);
+    transition:
+      translate var(--jx-med) var(--jx-ease),
+      box-shadow var(--jx-med) var(--jx-ease),
+      border-color var(--jx-med) var(--jx-ease);
+  }
+  .jx-ccard:hover {
+    translate: 0 -4px;
+    box-shadow: var(--jx-shadow);
+    border-color: rgba(14, 120, 177, 0.22);
+  }
+  .jx-ccard__ico {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 20px;
+    border-radius: 14px;
+    color: var(--jx-blue);
+    background: linear-gradient(140deg, rgba(26, 143, 224, 0.12), rgba(46, 229, 157, 0.16));
+    transition:
+      color var(--jx-med) var(--jx-ease),
+      background-color var(--jx-med) var(--jx-ease);
+  }
+  .jx-ccard:hover .jx-ccard__ico {
+    color: #fff;
+    background-color: var(--jx-blue);
+  }
+  .jx-ccard h3 {
+    font-size: var(--jx-h3);
+    line-height: 1.25;
+  }
+  .jx-ccard p {
+    margin-top: 12px;
+    color: var(--jx-grey);
+  }
+  .jx-ccard__list {
+    display: grid;
+    gap: 10px;
+    margin: 20px 0 0;
+    padding: 18px 0 0;
+    border-top: 1px solid var(--jx-line);
+    list-style: none;
+  }
+  .jx-ccard__list li {
+    display: flex;
+    gap: 10px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+  .jx-ccard__list svg {
+    flex: none;
+    margin-top: 4px;
+    color: var(--jx-green);
+  }
+
+  /* USP: no visible header (the first card's title is the headline), sits right under the hero */
+  .jx-cols--usp {
+    padding-block: clamp(24px, 3vw, 48px);
+  }
+
+  /* Compact: small cards, 4 per row, on the light surface */
+  .jx-cols--compact {
+    background: #f5f8fa;
+  }
+  .jx-cols--compact .jx-ccard {
+    padding: 24px 22px 26px;
+  }
+  .jx-cols--compact .jx-ccard__ico {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+  }
+  .jx-cols--compact h3 {
+    font-size: 1.0625rem;
+  }
+  .jx-cols--compact p {
+    margin-top: 8px;
+    font-size: 0.9063rem;
+  }
+
+  @media (max-width: 1000px) {
+    .jx-cols__grid,
+    .jx-cols--compact .jx-cols__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .jx-cols__grid,
+    .jx-cols--compact .jx-cols__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

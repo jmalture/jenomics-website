@@ -1,0 +1,197 @@
+---
+/**
+ * Block "cases": references as vertical tabs (list of projects left, story right). Uses the shared tab
+ * behaviour from site.ts in manual mode (no auto-advance: the texts are long). All stories stay in the HTML.
+ */
+import Icon from '../ui/Icon.astro';
+import { fill } from '../../i18n';
+import type { Block } from './data';
+const { block: b, id } = Astro.props as { block: Block; id: string };
+const items = b.items as { title: string; text: string[]; tags: string[] }[];
+---
+
+<section class="jx-section jx-cases" id={id}>
+  <div class="jx-wrap">
+    <header class="jx-head">
+      <div>
+        <span class="jx-kicker jx-kicker--light" data-reveal>{b.kicker}</span>
+        <h2 class="jx-h2" data-reveal style="--i:1">{b.title}</h2>
+      </div>
+      {b.text && <p class="jx-cases__intro" data-reveal style="--i:2">{fill(b.text)}</p>}
+    </header>
+
+    <div class="jx-cases__box" data-tabs="manual" data-reveal style="--i:2">
+      <div class="jx-cases__list" role="tablist" aria-orientation="vertical" aria-label={b.title}>
+        {
+          items.map((c, i) => (
+            <button
+              class="jx-cases__tab"
+              role="tab"
+              id={`${id}-tab-${i}`}
+              aria-controls={`${id}-panel-${i}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+            >
+              <span class="jx-cases__n">{String(i + 1).padStart(2, '0')}</span>
+              <span>{c.title}</span>
+              <Icon name="right" size={18} />
+            </button>
+          ))
+        }
+      </div>
+      <div class="jx-cases__panels">
+        {
+          items.map((c, i) => (
+            <article
+              class:list={['jx-cases__panel', { 'is-active': i === 0 }]}
+              role="tabpanel"
+              id={`${id}-panel-${i}`}
+              aria-labelledby={`${id}-tab-${i}`}
+              hidden={i !== 0}
+            >
+              <h3>{c.title}</h3>
+              {c.text.map((t) => (
+                <p>{fill(t)}</p>
+              ))}
+              <ul class="jx-cases__tags">
+                {c.tags.map((t) => (
+                  <li>{t}</li>
+                ))}
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .jx-cases {
+    position: relative;
+    color: #fff;
+    background:
+      radial-gradient(60% 80% at 100% 0%, rgba(42, 59, 200, 0.45), transparent 70%),
+      radial-gradient(50% 70% at 0% 100%, rgba(32, 211, 194, 0.16), transparent 70%),
+      var(--jx-night);
+    overflow: clip;
+  }
+  .jx-cases .jx-kicker::before {
+    background: linear-gradient(90deg, #9fd6f5, var(--jx-green));
+  }
+  .jx-cases__intro {
+    max-width: 42ch;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1.0625rem;
+  }
+  .jx-cases__box {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.9fr) 1.4fr;
+    gap: clamp(20px, 3vw, 48px);
+    align-items: start;
+  }
+  .jx-cases__list {
+    display: grid;
+    gap: 6px;
+  }
+  .jx-cases__tab {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 16px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.9688rem;
+    font-weight: 500;
+    line-height: 1.35;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background-color var(--jx-med) var(--jx-ease),
+      border-color var(--jx-med) var(--jx-ease),
+      color var(--jx-med) var(--jx-ease);
+  }
+  .jx-cases__tab svg {
+    opacity: 0;
+    translate: -6px 0;
+    transition:
+      opacity var(--jx-med) var(--jx-ease),
+      translate var(--jx-med) var(--jx-ease);
+  }
+  .jx-cases__tab:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.07);
+  }
+  .jx-cases__tab[aria-selected='true'] {
+    color: #fff;
+    background: rgba(14, 120, 177, 0.32);
+    border-color: rgba(63, 198, 242, 0.45);
+  }
+  .jx-cases__tab[aria-selected='true'] svg {
+    opacity: 1;
+    translate: 0 0;
+  }
+  .jx-cases__n {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: #9fd6f5;
+  }
+  .jx-cases__panels {
+    display: grid;
+  }
+  .jx-cases__panel {
+    grid-area: 1 / 1;
+    padding: clamp(26px, 3.4vw, 48px);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition:
+      opacity var(--jx-med) var(--jx-ease),
+      translate var(--jx-slow) var(--jx-ease);
+  }
+  .jx-cases__panel[hidden] {
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 14px;
+    pointer-events: none;
+  }
+  .jx-cases__panel h3 {
+    font-size: var(--jx-h3);
+    line-height: 1.25;
+    margin-bottom: 18px;
+  }
+  .jx-cases__panel p {
+    color: rgba(255, 255, 255, 0.78);
+  }
+  .jx-cases__panel p + p {
+    margin-top: 14px;
+  }
+  .jx-cases__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 26px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-cases__tags li {
+    padding: 4px 10px;
+    border-radius: var(--jx-r-sm);
+    background: rgba(86, 198, 87, 0.16);
+    color: #a6e8a7;
+    font-size: 0.75rem;
+    font-weight: 500;
+    font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  }
+  @media (max-width: 900px) {
+    .jx-cases__box {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

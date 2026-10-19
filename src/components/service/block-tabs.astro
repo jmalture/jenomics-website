@@ -1,0 +1,260 @@
+---
+/**
+ * Block "tabs": "Das unterscheidet uns". Intro and two key points on the left, a tab card on the right
+ * (shared tab behaviour from site.ts: auto-advance with progress until the visitor picks a tab).
+ */
+import Icon from '../ui/Icon.astro';
+import Blobs from '../ui/Blobs.astro';
+import { fill } from '../../i18n';
+import type { Block } from './data';
+const { block: b, id } = Astro.props as { block: Block; id: string };
+const items = b.items as { tab: string; icon: string; text: string }[];
+const points = b.points as { title: string; text: string }[];
+---
+
+<section class="jx-section jx-diff" id={id}>
+  <div class="jx-wrap jx-diff__grid">
+    <div class="jx-diff__copy">
+      <span class="jx-kicker" data-reveal>{b.kicker}</span>
+      <h2 class="jx-h2" data-reveal style="--i:1">{b.title}</h2>
+      {
+        (b.text as string[]).map((t, i) => (
+          <p class="jx-diff__text" data-reveal style={`--i:${2 + i}`}>
+            {fill(t)}
+          </p>
+        ))
+      }
+      <ul class="jx-diff__points">
+        {
+          points.map((p, i) => (
+            <li data-reveal style={`--i:${4 + i}`}>
+              <h3>
+                <Icon name="check" size={18} />
+                {p.title}
+              </h3>
+              <p>{fill(p.text)}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="jx-diff__card" data-tabs data-reveal="right" style="--i:2">
+      <Blobs
+        blobs={[
+          { x: '62%', y: '-30%', size: '62%', g: 'green', o: 0.9, d: 19 },
+          { x: '-18%', y: '62%', size: '48%', g: 'blue', o: 0.85, d: 22, delay: 6 },
+        ]}
+      />
+      <div class="jx-diff__bar" role="tablist" aria-label={b.tabs_label}>
+        <span class="jx-diff__ink" aria-hidden="true"></span>
+        {
+          items.map((it, i) => (
+            <button
+              class="jx-diff__tab"
+              role="tab"
+              id={`${id}-tab-${i}`}
+              aria-controls={`${id}-panel-${i}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+            >
+              <span>{it.tab}</span>
+              <i class="jx-diff__prog" aria-hidden="true" />
+            </button>
+          ))
+        }
+      </div>
+      <div class="jx-diff__panels">
+        {
+          items.map((it, i) => (
+            <div
+              class:list={['jx-diff__panel', { 'is-active': i === 0 }]}
+              role="tabpanel"
+              id={`${id}-panel-${i}`}
+              aria-labelledby={`${id}-tab-${i}`}
+              hidden={i !== 0}
+            >
+              <span class="jx-diff__ico">
+                <Icon name={it.icon as any} size={24} />
+              </span>
+              <h3>{it.tab}</h3>
+              <p>{fill(it.text)}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .jx-diff {
+    overflow: clip;
+  }
+  .jx-diff__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: center;
+  }
+  .jx-diff__text {
+    margin-top: 16px;
+    color: var(--jx-grey);
+    font-size: 1.0625rem;
+  }
+  .jx-diff__points {
+    display: grid;
+    gap: 22px;
+    margin: 34px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-diff__points li {
+    padding-left: 20px;
+    border-left: 2px solid;
+    border-image: linear-gradient(180deg, var(--jx-blue-k), var(--jx-green)) 1;
+  }
+  .jx-diff__points h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1875rem;
+  }
+  .jx-diff__points h3 svg {
+    color: var(--jx-green);
+  }
+  .jx-diff__points p {
+    margin-top: 8px;
+    color: var(--jx-grey);
+    font-size: 0.9688rem;
+  }
+
+  .jx-diff__card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: clamp(22px, 3vw, 40px);
+    border-radius: 28px;
+    background: var(--jx-blue);
+    color: #fff;
+  }
+  .jx-diff__card .jx-blobs {
+    z-index: -1;
+  }
+  .jx-diff__bar {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    padding: 5px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .jx-diff__ink {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    left: 5px;
+    width: calc((100% - 10px - 8px) / 3);
+    border-radius: 10px;
+    background: #fff;
+    translate: calc(var(--tab, 0) * (100% + 4px)) 0;
+    transition: translate var(--jx-med) var(--jx-ease);
+  }
+  .jx-diff__tab {
+    position: relative;
+    z-index: 1;
+    min-height: 48px;
+    padding: 8px 10px;
+    border: 0;
+    border-radius: 10px;
+    background: none;
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color var(--jx-med) var(--jx-ease);
+  }
+  .jx-diff__tab[aria-selected='true'] {
+    color: var(--jx-blue);
+  }
+  .jx-diff__prog {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 6px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--jx-green);
+    transform: scaleX(0);
+    transform-origin: left;
+    opacity: 0;
+  }
+  .jx-diff__card.is-auto .jx-diff__tab[aria-selected='true'] .jx-diff__prog {
+    opacity: 1;
+    animation: jx-diff-prog var(--tab-time, 8s) linear forwards;
+  }
+  .jx-diff__card.is-hold .jx-diff__prog {
+    animation-play-state: paused !important;
+  }
+  @keyframes jx-diff-prog {
+    to {
+      transform: scaleX(1);
+    }
+  }
+  .jx-diff__panels {
+    display: grid;
+    margin-top: 22px;
+  }
+  .jx-diff__panel {
+    grid-area: 1 / 1;
+    padding: clamp(24px, 3vw, 36px);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.94);
+    color: var(--jx-ink);
+    box-shadow: 0 24px 50px rgba(5, 30, 60, 0.25);
+    transition:
+      opacity var(--jx-med) var(--jx-ease),
+      translate var(--jx-slow) var(--jx-ease);
+  }
+  .jx-diff__panel[hidden] {
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 14px;
+  }
+  .jx-diff__ico {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    color: #fff;
+    background: linear-gradient(140deg, var(--jx-blue), #1ab8e8);
+  }
+  .jx-diff__panel h3 {
+    margin: 18px 0 12px;
+    font-size: var(--jx-h3);
+    color: var(--jx-blue);
+  }
+  .jx-diff__panel p {
+    color: var(--jx-grey);
+    font-size: 0.9688rem;
+  }
+  @media (max-width: 960px) {
+    .jx-diff__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .jx-diff__tab {
+      font-size: 0.75rem;
+      padding: 6px 4px;
+    }
+  }
+</style>

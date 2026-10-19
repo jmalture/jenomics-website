@@ -1,0 +1,37 @@
+---
+/**
+ * Services overview (/leistungen/, /en/services/): page hero, the dark services & products bento from the
+ * homepage, and the contact band. Texts: services.json "ui.overview_*".
+ */
+import Base from '../layouts/Base.astro';
+import Hero from '../components/service/01-hero.astro';
+import Portfolio from '../components/home/04-portfolio.astro';
+import Cta from '../components/service/04-cta.astro';
+import { serviceUi } from '../components/service/data';
+import type { Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const u = serviceUi(lang);
+const alternates = { de: '/leistungen/', en: '/en/services/' };
+---
+
+<Base lang={lang} title={u.overview_meta_title} description={u.overview_meta_desc} alternates={alternates} ogImage="/media/service-overview-1200.webp">
+  <link rel="preload" slot="head" as="image" href="/media/service-overview-1200.webp" media="(min-width: 701px)" fetchpriority="high" />
+  <link rel="preload" slot="head" as="image" href="/media/service-overview-720.webp" media="(max-width: 700px)" fetchpriority="high" />
+  <Hero
+    lang={lang}
+    title={u.overview_title}
+    lead={[u.overview_lead]}
+    img="service-overview"
+    alt={u.overview_img_alt}
+    pal={['#1a8fe0', '#20d3c2', '#2ee59d']}
+    kicker={u.overview_kicker}
+    crumbs={[{ label: u.crumb_services }]}
+    cta2={null}
+  />
+  <Portfolio lang={lang} />
+  <Cta lang={lang} />
+</Base>

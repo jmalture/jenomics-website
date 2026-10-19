@@ -1,0 +1,42 @@
+---
+/** Block "refs": short pointer to the project references, one line of text and a button. */
+import Icon from '../ui/Icon.astro';
+import { fill } from '../../i18n';
+import type { Block } from './data';
+const { block: b, id } = Astro.props as { block: Block; id: string };
+---
+
+<section class="jx-refs" id={id}>
+  <div class="jx-wrap">
+    <div class="jx-refs__box" data-reveal>
+      <div>
+        <span class="jx-kicker">{b.kicker}</span>
+        <p>{fill(b.text)}</p>
+      </div>
+      <a class="jx-btn jx-btn--ghost" href={b.href}>{b.cta}<Icon name="arrow" /></a>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .jx-refs {
+    padding-block: clamp(8px, 2vw, 24px) 0;
+  }
+  .jx-refs__box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px 48px;
+    padding: clamp(26px, 3.4vw, 44px);
+    border-radius: 22px;
+    background: linear-gradient(120deg, #f2f8fc, #eefaf3);
+    border: 1px solid rgba(14, 120, 177, 0.1);
+  }
+  .jx-refs__box p {
+    max-width: 66ch;
+    margin-top: 12px;
+    font-size: 1.0625rem;
+    color: var(--jx-ink);
+  }
+</style>

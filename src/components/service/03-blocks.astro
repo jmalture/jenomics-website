@@ -1,0 +1,24 @@
+---
+/**
+ * The service's own sections, in the order of "blocks" in services.json. Each block type has its own
+ * component (block-<type>.astro); add a type there and map it here.
+ */
+import type { Lang } from '../../i18n';
+import { servicePage, type ServiceKey } from './data';
+import Columns from './block-columns.astro';
+import Logos from './block-logos.astro';
+import Cases from './block-cases.astro';
+import Tabs from './block-tabs.astro';
+import Refs from './block-refs.astro';
+import Kit from './block-kit.astro';
+const { lang, service } = Astro.props as { lang: Lang; service: ServiceKey };
+const p = servicePage(service, lang);
+const map = { columns: Columns, logos: Logos, cases: Cases, tabs: Tabs, refs: Refs, kit: Kit } as const;
+---
+
+{
+  p.blocks.map((b, i) => {
+    const C = map[b.type];
+    return <C block={b} id={`${service}-${b.type}-${i}`} />;
+  })
+}

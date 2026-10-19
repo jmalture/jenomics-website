@@ -1,0 +1,1244 @@
+---
+/**
+ * Small animated product-UI vignettes that replace the stock photos in the feature bento (GitHub-style
+ * "show, don't tell"). Pure HTML/CSS, decorative only (aria-hidden): the card text carries the content.
+ * Loops are calm (no bounce), pause off screen ([data-live] in site.ts) and freeze for reduced motion.
+ * Colours come from the page palette --hA/--hB/--hC. Add a scene: name in data.ts (SceneName) + markup + CSS.
+ */
+import type { Lang } from '../../i18n';
+import type { SceneName } from './data';
+
+interface Props {
+  name: SceneName;
+  lang: Lang;
+}
+const { name, lang } = Astro.props;
+
+const T = {
+  de: {
+    req: 'Anforderungen',
+    req_items: ['Arbeitsplätze', 'Lizenzen', 'Budget'],
+    fit: 'Passende Lösung',
+    systems: 'Systeme',
+    live: 'Live',
+    hosts: ['Fileserver', 'Mailserver', 'Backup', 'Firewall'],
+    ok: 'OK',
+    warn: 'Prüfen',
+    toast: 'Frühwarnung · behoben',
+    inbox: 'Posteingang',
+    mails: [
+      ['Team', 'Meeting um 10 Uhr'],
+      ['Buchhaltung?', 'Rechnung_dringend.zip'],
+      ['IT', 'Neues Update verfügbar'],
+    ],
+    phish: 'Phishing erkannt',
+    course: 'Security-Training',
+    swap: 'Komponente getauscht',
+    remote: 'Fernwartung aktiv',
+    dlg: 'Drucker nicht erreichbar',
+    btn: 'Neu verbinden',
+    fixed: 'Verbunden',
+    home: 'Home Office',
+    office: 'Büro',
+    vpn: 'VPN · verschlüsselt',
+  },
+  en: {
+    req: 'Requirements',
+    req_items: ['Workstations', 'Licences', 'Budget'],
+    fit: 'Right solution',
+    systems: 'Systems',
+    live: 'Live',
+    hosts: ['File server', 'Mail server', 'Backup', 'Firewall'],
+    ok: 'OK',
+    warn: 'Check',
+    toast: 'Early warning · resolved',
+    inbox: 'Inbox',
+    mails: [
+      ['Team', 'Meeting at 10 am'],
+      ['Accounting?', 'Invoice_urgent.zip'],
+      ['IT', 'New update available'],
+    ],
+    phish: 'Phishing detected',
+    course: 'Security training',
+    swap: 'Component replaced',
+    remote: 'Remote session active',
+    dlg: 'Printer not reachable',
+    btn: 'Reconnect',
+    fixed: 'Connected',
+    home: 'Home office',
+    office: 'Office',
+    vpn: 'VPN · encrypted',
+  },
+}[lang];
+
+// Sparkline for the monitoring scene: two identical periods, so a -50% shift loops seamlessly.
+const pts = [30, 26, 32, 22, 27, 18, 24, 20, 28, 16, 22, 25];
+const step = 20;
+const line = [...pts, ...pts, pts[0]].map((y, i) => `${i ? 'L' : 'M'}${i * step} ${y}`).join(' ');
+const area = `${line} L${pts.length * 2 * step} 44 L0 44 Z`;
+const spark = { w: pts.length * 2 * step };
+
+const check =
+  '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+---
+
+<div class:list={['jx-scene', `jx-scene--${name}`]} data-live aria-hidden="true">
+  {
+    name === 'procure' && (
+      <div class="sc-win sc-proc">
+        <div class="sc-bar">{T.req}</div>
+        <ul>
+          {T.req_items.map((r, i) => (
+            <li style={`--k:${i}`}>
+              <i set:html={check} />
+              <span>{r}</span>
+              <b />
+            </li>
+          ))}
+        </ul>
+        <span class="sc-chip sc-proc__fit">
+          <i set:html={check} />
+          {T.fit}
+        </span>
+      </div>
+    )
+  }
+
+  {
+    name === 'monitor' && (
+      <>
+        <div class="sc-win sc-mon">
+          <div class="sc-bar">
+            <span class="sc-live" />
+            {T.systems}
+            <em>{T.live}</em>
+          </div>
+          <div class="sc-mon__body">
+            <ul class="sc-mon__rows">
+              {T.hosts.map((h, i) => (
+                <li class:list={{ 'is-flaky': i === 2 }}>
+                  <span class="sc-mon__led" />
+                  <span>{h}</span>
+                  <span class="sc-mon__pill">
+                    <span class="sc-ok">{T.ok}</span>
+                    {i === 2 && <span class="sc-warn">{T.warn}</span>}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <div class="sc-mon__chart">
+              <svg viewBox={`0 0 ${spark.w / 2} 44`} preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="sc-spark-fill" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0" stop-color="var(--hB)" stop-opacity=".35" />
+                    <stop offset="1" stop-color="var(--hB)" stop-opacity="0" />
+                  </linearGradient>
+                </defs>
+                <g class="sc-mon__wave">
+                  <path d={area} fill="url(#sc-spark-fill)" />
+                  <path d={line} fill="none" stroke="var(--hA)" stroke-width="2" vector-effect="non-scaling-stroke" />
+                </g>
+              </svg>
+              <div class="sc-mon__bars">
+                {Array.from({ length: 14 }, (_, i) => (
+                  <i style={`--k:${i}`} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="sc-chip sc-toast">
+          <i set:html={check} />
+          {T.toast}
+        </span>
+      </>
+    )
+  }
+
+  {
+    name === 'train' && (
+      <div class="sc-win sc-train">
+        <div class="sc-bar">{T.inbox}</div>
+        <ul>
+          {T.mails.map(([from, subj], i) => (
+            <li class:list={{ 'is-bad': i === 1 }}>
+              <span class="sc-avatar" />
+              <span class="sc-train__txt">
+                <b>{from}</b>
+                <span>{subj}</span>
+              </span>
+              {i === 1 && <span class="sc-train__flag">{T.phish}</span>}
+            </li>
+          ))}
+        </ul>
+        <div class="sc-train__course">
+          <span>{T.course}</span>
+          <span class="sc-progress">
+            <i />
+          </span>
+        </div>
+      </div>
+    )
+  }
+
+  {
+    name === 'rack' && (
+      <>
+        <div class="sc-rack">
+          {[0, 1, 2, 3].map((i) => (
+            <div class:list={['sc-rack__u', { 'is-swap': i === 2 }]} style={`--k:${i}`}>
+              <span class="sc-rack__tray">
+                <i />
+                <i />
+                <i />
+              </span>
+              <span class="sc-rack__leds">
+                <b />
+                <b />
+              </span>
+            </div>
+          ))}
+        </div>
+        <span class="sc-chip sc-rack__chip">
+          <i set:html={check} />
+          {T.swap}
+        </span>
+      </>
+    )
+  }
+
+  {
+    name === 'apps' && (
+      <div class="sc-apps">
+        <svg class="sc-apps__lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <path d="M50 50 L23 27" />
+          <path d="M50 50 L77 33" />
+          <path d="M50 50 L60 80" />
+        </svg>
+        <span class="sc-apps__hub">
+          <svg
+            viewBox="0 0 24 24"
+            width="26"
+            height="26"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="2" y="4" width="20" height="13" rx="2" />
+            <path d="M8 21h8M12 17v4" />
+            <path d="m9 10.5 2 2 4-4" />
+          </svg>
+        </span>
+        {['datev', 'sfirm', 'starmoney'].map((l, i) => (
+          <span class:list={['sc-apps__chip', `sc-apps__chip--${i}`]}>
+            <img src={`/media/brand-${l}.webp`} alt="" loading="lazy" decoding="async" />
+          </span>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    name === 'remote' && (
+      <div class="sc-win sc-remote">
+        <div class="sc-remote__bar">
+          <span class="sc-live" />
+          {T.remote}
+        </div>
+        <div class="sc-remote__desk">
+          <div class="sc-remote__app">
+            <i />
+            <i />
+            <i />
+          </div>
+          <div class="sc-remote__dlg">
+            <div class="sc-remote__state sc-remote__state--bad">
+              <span class="sc-remote__ico">!</span>
+              <span>{T.dlg}</span>
+            </div>
+            <div class="sc-remote__state sc-remote__state--ok">
+              <span class="sc-remote__ico" set:html={check} />
+              <span>{T.fixed}</span>
+            </div>
+            <span class="sc-remote__btn">{T.btn}</span>
+          </div>
+          <svg class="sc-remote__cursor" viewBox="0 0 24 24" width="20" height="20">
+            <path d="M5 3l14 8-6 1.5L9.5 19z" fill="#0b1a36" stroke="#fff" stroke-width="1.5" stroke-linejoin="round" />
+          </svg>
+        </div>
+      </div>
+    )
+  }
+
+  {
+    name === 'home' && (
+      <div class="sc-home">
+        <div class="sc-win sc-home__end">
+          <svg
+            viewBox="0 0 24 24"
+            width="26"
+            height="26"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M3 10.5 12 3l9 7.5" />
+            <path d="M5 9v11h14V9" />
+            <path d="M10 20v-6h4v6" />
+          </svg>
+          <span>{T.home}</span>
+        </div>
+        <div class="sc-home__tunnel">
+          <i />
+          <i />
+          <i />
+        </div>
+        <div class="sc-win sc-home__end">
+          <svg
+            viewBox="0 0 24 24"
+            width="26"
+            height="26"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="4" y="3" width="16" height="18" rx="1.5" />
+            <path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1M10.5 21v-3h3v3" />
+          </svg>
+          <span>{T.office}</span>
+        </div>
+        <span class="sc-chip sc-home__chip">{T.vpn}</span>
+      </div>
+    )
+  }
+</div>
+
+<style is:global>
+  /* ---------- Scene frame ---------- */
+  .jx-scene {
+    --sc-ok: #2fb35a;
+    --sc-warn: #e8a317;
+    --sc-bad: #e0484f;
+    position: relative;
+    height: 100%;
+    min-height: 230px;
+    display: grid;
+    place-items: center;
+    padding: 22px;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 1.3;
+    color: var(--jx-ink);
+    background:
+      radial-gradient(60% 80% at 85% 10%, color-mix(in oklab, var(--hB) 30%, transparent), transparent 70%),
+      radial-gradient(55% 70% at 8% 100%, color-mix(in oklab, var(--hC) 26%, transparent), transparent 70%),
+      linear-gradient(160deg, color-mix(in oklab, var(--hA) 9%, #fff), #f4f8fb);
+  }
+  /* Off screen: freeze (the animation shorthands below would otherwise reset the play state) */
+  .jx-scene.is-paused *,
+  .jx-scene.is-paused::after,
+  .jx-scene.is-paused *::after {
+    animation-play-state: paused !important;
+  }
+
+  .sc-win {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    box-shadow:
+      0 1px 0 rgba(30, 61, 126, 0.04),
+      0 14px 34px rgba(30, 61, 126, 0.14);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .sc-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(30, 61, 126, 0.08);
+    font-weight: 600;
+    font-size: 11.5px;
+    color: var(--jx-navy);
+  }
+  .sc-bar em {
+    margin-left: auto;
+    font-style: normal;
+    font-weight: 500;
+    color: var(--sc-ok);
+  }
+  .sc-live {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--sc-ok);
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--sc-ok) 50%, transparent);
+    animation: sc-pulse 2s ease-out infinite;
+  }
+  @keyframes sc-pulse {
+    to {
+      box-shadow: 0 0 0 7px transparent;
+    }
+  }
+  .sc-chip {
+    position: absolute;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 12px 7px 8px;
+    border-radius: 999px;
+    background: #fff;
+    font-weight: 500;
+    font-size: 11.5px;
+    white-space: nowrap;
+    box-shadow: 0 10px 26px rgba(30, 61, 126, 0.18);
+  }
+  .sc-chip > i {
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: #fff;
+    background: var(--sc-ok);
+  }
+
+  /* ---------- procure: requirements get checked, then "right solution" ---------- */
+  .sc-proc {
+    width: min(100%, 250px);
+  }
+  .sc-proc ul {
+    margin: 0;
+    padding: 8px 14px 14px;
+    list-style: none;
+  }
+  .sc-proc li {
+    display: grid;
+    grid-template-columns: 18px auto 1fr;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+  }
+  .sc-proc li i {
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    border: 1.5px solid #cfd8e2;
+    color: transparent;
+    animation: sc-tick 7s var(--jx-ease) infinite;
+    animation-delay: calc(var(--k) * 0.55s);
+  }
+  .sc-proc li b {
+    height: 6px;
+    border-radius: 3px;
+    background: #e9eef3;
+    justify-self: end;
+    width: calc(40% + var(--k) * 12%);
+  }
+  @keyframes sc-tick {
+    0%,
+    12% {
+      background: transparent;
+      border-color: #cfd8e2;
+      color: transparent;
+    }
+    18%,
+    88% {
+      background: var(--hA);
+      border-color: var(--hA);
+      color: #fff;
+    }
+    96%,
+    100% {
+      background: transparent;
+      border-color: #cfd8e2;
+      color: transparent;
+    }
+  }
+  .sc-proc__fit {
+    left: 50%;
+    bottom: -16px;
+    translate: -50% 0;
+    animation: sc-pop 7s var(--jx-ease) infinite;
+  }
+  @keyframes sc-pop {
+    0%,
+    40% {
+      opacity: 0;
+      transform: translateY(8px) scale(0.96);
+    }
+    48%,
+    86% {
+      opacity: 1;
+      transform: none;
+    }
+    94%,
+    100% {
+      opacity: 0;
+      transform: translateY(8px) scale(0.96);
+    }
+  }
+
+  /* ---------- monitor: live dashboard, one warning that gets handled ---------- */
+  .sc-mon {
+    width: min(100%, 520px);
+  }
+  .sc-mon__body {
+    display: grid;
+    grid-template-columns: minmax(170px, 0.9fr) 1.1fr;
+    gap: 16px;
+    padding: 12px 14px 14px;
+  }
+  .sc-mon__rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .sc-mon__rows li {
+    display: grid;
+    grid-template-columns: 8px 1fr auto;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 0;
+  }
+  .sc-mon__rows li + li {
+    border-top: 1px solid rgba(30, 61, 126, 0.06);
+  }
+  .sc-mon__led {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sc-ok);
+  }
+  .sc-mon__pill {
+    position: relative;
+    display: grid;
+    min-width: 50px;
+    font-size: 10.5px;
+    font-weight: 600;
+  }
+  .sc-mon__pill > span {
+    grid-area: 1 / 1;
+    padding: 2px 8px;
+    border-radius: 999px;
+    text-align: center;
+  }
+  .sc-ok {
+    color: var(--sc-ok);
+    background: color-mix(in oklab, var(--sc-ok) 13%, #fff);
+  }
+  .sc-warn {
+    color: #a86f00;
+    background: color-mix(in oklab, var(--sc-warn) 20%, #fff);
+    opacity: 0;
+  }
+  .is-flaky .sc-warn {
+    animation: sc-warn 9s var(--jx-ease-io) infinite;
+  }
+  .is-flaky .sc-ok {
+    animation: sc-okflip 9s var(--jx-ease-io) infinite;
+  }
+  .is-flaky .sc-mon__led {
+    animation: sc-led 9s var(--jx-ease-io) infinite;
+  }
+  @keyframes sc-warn {
+    0%,
+    30% {
+      opacity: 0;
+    }
+    34%,
+    62% {
+      opacity: 1;
+    }
+    66%,
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes sc-okflip {
+    0%,
+    30%,
+    66%,
+    100% {
+      opacity: 1;
+    }
+    34%,
+    62% {
+      opacity: 0;
+    }
+  }
+  @keyframes sc-led {
+    0%,
+    30%,
+    66%,
+    100% {
+      background: var(--sc-ok);
+    }
+    34%,
+    62% {
+      background: var(--sc-warn);
+    }
+  }
+  .sc-mon__chart {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    min-width: 0;
+  }
+  .sc-mon__chart svg {
+    width: 100%;
+    height: 64px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #f6f9fc, #fff);
+  }
+  .sc-mon__wave {
+    animation: sc-wave 8s linear infinite;
+  }
+  @keyframes sc-wave {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .sc-mon__bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 46px;
+  }
+  .sc-mon__bars i {
+    flex: 1;
+    height: 100%;
+    border-radius: 3px 3px 1px 1px;
+    background: linear-gradient(180deg, var(--hB), var(--hC));
+    opacity: 0.75;
+    transform-origin: bottom;
+    animation: sc-bar 3.2s var(--jx-ease-io) infinite alternate;
+    animation-delay: calc(var(--k) * -0.37s);
+  }
+  @keyframes sc-bar {
+    from {
+      transform: scaleY(0.25);
+    }
+    to {
+      transform: scaleY(0.9);
+    }
+  }
+  .sc-toast {
+    right: 7%;
+    bottom: 12%;
+    animation: sc-toast 9s var(--jx-ease) infinite;
+  }
+  @keyframes sc-toast {
+    0%,
+    58% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    63%,
+    88% {
+      opacity: 1;
+      transform: none;
+    }
+    93%,
+    100% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+
+  /* ---------- train: inbox, the phishing mail gets flagged, training progresses ---------- */
+  .sc-train {
+    width: min(100%, 270px);
+  }
+  .sc-train ul {
+    margin: 0;
+    padding: 4px 8px;
+    list-style: none;
+  }
+  .sc-train li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 6px;
+    border-radius: 8px;
+  }
+  .sc-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(140deg, var(--hA), var(--hB));
+    opacity: 0.7;
+  }
+  .sc-train__txt {
+    display: grid;
+    min-width: 0;
+  }
+  .sc-train__txt b {
+    font-weight: 600;
+    font-size: 11px;
+  }
+  .sc-train__txt span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--jx-grey);
+    font-size: 11px;
+  }
+  .sc-train li.is-bad {
+    animation: sc-bad 8s var(--jx-ease) infinite;
+  }
+  .is-bad .sc-avatar {
+    background: #c3ccd6;
+  }
+  @keyframes sc-bad {
+    0%,
+    22%,
+    92%,
+    100% {
+      background: transparent;
+      box-shadow: inset 0 0 0 1px transparent;
+    }
+    28%,
+    86% {
+      background: color-mix(in oklab, var(--sc-bad) 8%, #fff);
+      box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--sc-bad) 35%, transparent);
+    }
+  }
+  .sc-train__flag {
+    position: absolute;
+    right: 6px;
+    top: -9px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--sc-bad);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    animation: sc-stamp 8s var(--jx-ease) infinite;
+  }
+  @keyframes sc-stamp {
+    0%,
+    26% {
+      opacity: 0;
+      transform: scale(1.25) rotate(-6deg);
+    }
+    32%,
+    86% {
+      opacity: 1;
+      transform: rotate(-3deg);
+    }
+    92%,
+    100% {
+      opacity: 0;
+      transform: rotate(-3deg);
+    }
+  }
+  .sc-train__course {
+    display: grid;
+    gap: 6px;
+    padding: 10px 14px 14px;
+    border-top: 1px solid rgba(30, 61, 126, 0.08);
+    font-weight: 500;
+    font-size: 11px;
+    color: var(--jx-navy);
+  }
+  .sc-progress {
+    height: 6px;
+    border-radius: 3px;
+    background: #e9eef3;
+    overflow: hidden;
+  }
+  .sc-progress i {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--hA), var(--hC));
+    transform-origin: left;
+    animation: sc-course 8s var(--jx-ease-io) infinite;
+  }
+  @keyframes sc-course {
+    0%,
+    30% {
+      transform: scaleX(0.35);
+    }
+    80%,
+    92% {
+      transform: scaleX(1);
+    }
+    100% {
+      transform: scaleX(0.35);
+    }
+  }
+
+  /* ---------- rack: blinking units, one tray slides out and back, LED red → green ---------- */
+  .sc-rack {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 6px;
+    width: min(100%, 230px);
+    padding: 10px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #13284f, var(--jx-night));
+    box-shadow: 0 18px 38px rgba(11, 26, 54, 0.3);
+  }
+  .sc-rack__u {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+    padding: 0 10px;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #1f3a6b, #182f59);
+  }
+  .sc-rack__tray {
+    display: flex;
+    gap: 4px;
+  }
+  .sc-rack__tray i {
+    width: 26px;
+    height: 12px;
+    border-radius: 2px;
+    background: repeating-linear-gradient(90deg, #2c4c84 0 2px, #22406f 2px 4px);
+  }
+  .sc-rack__leds {
+    display: flex;
+    gap: 5px;
+  }
+  .sc-rack__leds b {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #3ee68a;
+    box-shadow: 0 0 6px #3ee68a;
+    animation: sc-blink 1.6s steps(2, jump-none) infinite;
+    animation-delay: calc(var(--k) * -0.4s);
+  }
+  .sc-rack__leds b + b {
+    background: var(--hB);
+    box-shadow: 0 0 6px var(--hB);
+    animation-duration: 2.3s;
+  }
+  @keyframes sc-blink {
+    50% {
+      opacity: 0.25;
+    }
+  }
+  .is-swap .sc-rack__tray {
+    animation: sc-tray 8s var(--jx-ease-io) infinite;
+  }
+  .is-swap .sc-rack__leds b:first-child {
+    animation: sc-fault 8s steps(1, end) infinite;
+  }
+  @keyframes sc-tray {
+    0%,
+    22% {
+      transform: none;
+    }
+    32%,
+    44% {
+      transform: translateX(-46px);
+      opacity: 0.4;
+    }
+    54%,
+    100% {
+      transform: none;
+      opacity: 1;
+    }
+  }
+  @keyframes sc-fault {
+    0%,
+    50% {
+      background: #ff5a5f;
+      box-shadow: 0 0 8px #ff5a5f;
+    }
+    6%,
+    18%,
+    30% {
+      background: #5a1d22;
+      box-shadow: none;
+    }
+    12%,
+    24% {
+      background: #ff5a5f;
+      box-shadow: 0 0 8px #ff5a5f;
+    }
+    56%,
+    100% {
+      background: #3ee68a;
+      box-shadow: 0 0 6px #3ee68a;
+    }
+  }
+  .sc-rack__chip {
+    right: 8%;
+    bottom: 10%;
+    animation: sc-toast-r 8s var(--jx-ease) infinite;
+  }
+  @keyframes sc-toast-r {
+    0%,
+    56% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    62%,
+    90% {
+      opacity: 1;
+      transform: none;
+    }
+    96%,
+    100% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+
+  /* ---------- apps: hub connected to Datev, SFirm, StarMoney ---------- */
+  .sc-apps {
+    position: absolute;
+    inset: 0;
+  }
+  .sc-apps__lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .sc-apps__lines path {
+    fill: none;
+    stroke: var(--hA);
+    stroke-width: 1.6;
+    stroke-dasharray: 3 6;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.7;
+    animation: sc-flow 1.6s linear infinite;
+  }
+  @keyframes sc-flow {
+    to {
+      stroke-dashoffset: -18;
+    }
+  }
+  .sc-apps__hub {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    color: #fff;
+    background: linear-gradient(140deg, var(--hA), var(--hB));
+    box-shadow:
+      0 0 0 8px color-mix(in oklab, var(--hB) 18%, transparent),
+      0 14px 30px rgba(14, 120, 177, 0.3);
+  }
+  .sc-apps__chip {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 104px;
+    height: 48px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 10px 26px rgba(30, 61, 126, 0.15);
+    /* centred with margins: jx-float animates translate */
+    margin: -24px 0 0 -52px;
+    animation: jx-float 7s ease-in-out infinite;
+  }
+  .sc-apps__chip img {
+    max-width: 100%;
+    max-height: 30px;
+    object-fit: contain;
+  }
+  .sc-apps__chip--0 {
+    left: 23%;
+    top: 27%;
+  }
+  .sc-apps__chip--1 {
+    left: 77%;
+    top: 33%;
+    animation-delay: -2.4s;
+  }
+  .sc-apps__chip--2 {
+    left: 60%;
+    top: 80%;
+    animation-delay: -4.6s;
+  }
+
+  /* ---------- remote: Fernwartung session, cursor fixes the problem ---------- */
+  .sc-remote {
+    width: min(100%, 360px);
+    overflow: hidden;
+  }
+  .sc-remote__bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--jx-orange);
+    color: #fff;
+    font-weight: 600;
+    font-size: 11px;
+  }
+  .sc-remote__bar .sc-live {
+    background: #fff;
+  }
+  .sc-remote__desk {
+    position: relative;
+    height: 150px;
+    background: linear-gradient(160deg, #eef4f9, #e3ecf4);
+  }
+  .sc-remote__app {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    display: grid;
+    gap: 6px;
+    width: 30%;
+  }
+  .sc-remote__app i {
+    height: 8px;
+    border-radius: 4px;
+    background: #d4dee8;
+  }
+  .sc-remote__app i:nth-child(2) {
+    width: 70%;
+  }
+  .sc-remote__dlg {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    display: grid;
+    gap: 10px;
+    width: 58%;
+    padding: 12px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 10px 24px rgba(30, 61, 126, 0.14);
+  }
+  .sc-remote__state {
+    grid-area: 1 / 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    font-size: 11px;
+  }
+  .sc-remote__ico {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: 700;
+    background: var(--sc-warn);
+  }
+  .sc-remote__state--ok .sc-remote__ico {
+    background: var(--sc-ok);
+  }
+  .sc-remote__state--bad {
+    animation: sc-out 8s var(--jx-ease) infinite;
+  }
+  .sc-remote__state--ok {
+    opacity: 0;
+    animation: sc-in 8s var(--jx-ease) infinite;
+  }
+  @keyframes sc-out {
+    0%,
+    50% {
+      opacity: 1;
+    }
+    55%,
+    94% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes sc-in {
+    0%,
+    52% {
+      opacity: 0;
+    }
+    57%,
+    92% {
+      opacity: 1;
+    }
+    97%,
+    100% {
+      opacity: 0;
+    }
+  }
+  .sc-remote__btn {
+    justify-self: start;
+    padding: 5px 10px;
+    border-radius: 6px;
+    background: var(--jx-blue);
+    color: #fff;
+    font-weight: 500;
+    font-size: 10.5px;
+    animation: sc-press 8s var(--jx-ease) infinite;
+  }
+  @keyframes sc-press {
+    0%,
+    44%,
+    52%,
+    100% {
+      transform: none;
+      box-shadow: 0 0 0 0 transparent;
+    }
+    47% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 5px color-mix(in oklab, var(--jx-blue) 25%, transparent);
+    }
+  }
+  .sc-remote__cursor {
+    position: absolute;
+    left: 20%;
+    top: 20%;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.25));
+    animation: sc-cursor 8s var(--jx-ease-io) infinite;
+  }
+  /* Cursor travels from top left to the button (bottom left of the dialog) and back */
+  @keyframes sc-cursor {
+    0%,
+    12% {
+      translate: 0 0;
+    }
+    40%,
+    50% {
+      translate: 105px 92px;
+    }
+    70%,
+    100% {
+      translate: 0 0;
+    }
+  }
+
+  /* ---------- home: home office ↔ office through an encrypted tunnel ---------- */
+  .sc-home {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    width: min(100%, 400px);
+  }
+  .sc-home__end {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    width: 96px;
+    padding: 16px 8px 12px;
+    font-weight: 500;
+    font-size: 11px;
+    color: var(--jx-navy);
+  }
+  .sc-home__end svg {
+    color: var(--hA);
+  }
+  .sc-home__tunnel {
+    position: relative;
+    height: 14px;
+    margin: 0 -2px;
+    border-radius: 7px;
+    background: linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--hA) 22%, #fff),
+      color-mix(in oklab, var(--hC) 30%, #fff)
+    );
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+    overflow: hidden;
+  }
+  .sc-home__tunnel i {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--hA);
+    animation: sc-packet 2.4s linear infinite;
+  }
+  .sc-home__tunnel i:nth-child(2) {
+    animation-delay: -0.8s;
+  }
+  .sc-home__tunnel i:nth-child(3) {
+    animation-delay: -1.6s;
+    animation-direction: reverse;
+    background: var(--hC);
+  }
+  @keyframes sc-packet {
+    from {
+      left: -6px;
+    }
+    to {
+      left: 100%;
+    }
+  }
+  /* Lock badge in the middle of the tunnel */
+  .sc-home::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 36px;
+    height: 36px;
+    translate: -50% -50%;
+    border-radius: 11px;
+    background: var(--jx-navy)
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='11' width='14' height='10' rx='2'/%3E%3Cpath d='M8 11V7a4 4 0 0 1 8 0v4'/%3E%3C/svg%3E")
+      center / 16px no-repeat;
+    box-shadow:
+      0 0 0 6px color-mix(in oklab, var(--hB) 22%, transparent),
+      0 10px 22px rgba(30, 61, 126, 0.3);
+    animation: sc-guard 3s ease-in-out infinite;
+  }
+  @keyframes sc-guard {
+    50% {
+      box-shadow:
+        0 0 0 11px color-mix(in oklab, var(--hB) 8%, transparent),
+        0 10px 22px rgba(30, 61, 126, 0.3);
+    }
+  }
+  .sc-home__chip {
+    left: 50%;
+    top: calc(50% + 34px);
+    translate: -50% 0;
+    padding: 6px 12px;
+    color: var(--jx-navy);
+  }
+
+  @media (max-width: 480px) {
+    .sc-mon__body {
+      grid-template-columns: 1fr;
+    }
+    .sc-mon__chart {
+      display: none;
+    }
+    .sc-home__end {
+      width: 80px;
+    }
+  }
+</style>

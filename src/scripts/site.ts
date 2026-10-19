@@ -114,9 +114,9 @@ function initHeader() {
   }
 }
 
-// 3. Live blobs: they float on their own (CSS); here they only pause while off screen.
+// 3. Live blobs and scenes ([data-live]): they animate on their own (CSS); here they only pause while off screen.
 function initBlobs() {
-  const fields = [...document.querySelectorAll<HTMLElement>('[data-blobs]')];
+  const fields = [...document.querySelectorAll<HTMLElement>('[data-blobs], [data-live]')];
   if (!fields.length || reduceMotion) return;
   const io = new IntersectionObserver((entries) =>
     entries.forEach((e) => e.target.classList.toggle('is-paused', !e.isIntersecting)),
@@ -182,6 +182,7 @@ function initCounters() {
 }
 
 // 7. Tabs ([data-tabs]): ARIA tabs with arrow keys, sliding ink, auto-advance until the visitor picks one.
+//    [data-tabs="manual"] never auto-advances (long texts such as references).
 function initTabs() {
   document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((root) => {
     const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
@@ -190,7 +191,7 @@ function initTabs() {
     const TIME = 8000;
     let idx = 0;
     let timer = 0;
-    let auto = !reduceMotion;
+    let auto = !reduceMotion && root.dataset.tabs !== 'manual';
     let inView = false;
 
     const select = (i: number, focus = false) => {

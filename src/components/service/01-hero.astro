@@ -1,0 +1,252 @@
+---
+/**
+ * Page hero for service pages and the services overview: breadcrumb, title, lead, CTAs and a framed photo
+ * on live blobs in the page's palette (--hA/--hB/--hC). Calmer and lower than the homepage hero.
+ */
+import Icon from '../ui/Icon.astro';
+import Blobs from '../ui/Blobs.astro';
+import { fill, type Lang } from '../../i18n';
+import { serviceUi } from './data';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  lead: string[];
+  /** /media/<img>-1200.webp and -720.webp */
+  img: string;
+  alt: string;
+  pal: [string, string, string];
+  kicker: string;
+  icon?: string;
+  /** Breadcrumb trail after "Start"; the last entry is the current page */
+  crumbs: { label: string; href?: string }[];
+  /** Second button; defaults to "Alle Leistungen" */
+  cta2?: { label: string; href: string } | null;
+}
+const { lang, title, lead, img, alt, pal, kicker, icon, crumbs, cta2 } = Astro.props;
+const u = serviceUi(lang);
+const home = lang === 'de' ? '/' : '/en/';
+const second = cta2 === undefined ? { label: u.hero_cta2, href: u.crumb_services_href } : cta2;
+---
+
+<section class="jx-phero" style={`--hA:${pal[0]};--hB:${pal[1]};--hC:${pal[2]}`}>
+  <Blobs
+    class="jx-phero__bg"
+    blobs={[
+      { x: '60%', y: '-30%', size: 'min(52vw, 700px)', g: 'linear-gradient(140deg, var(--hA), var(--hB))', o: 0.18, soft: true, d: 24 },
+      { x: '-14%', y: '30%', size: 'min(36vw, 480px)', g: 'linear-gradient(140deg, var(--hC), var(--hB))', o: 0.1, soft: true, d: 28, delay: 6 },
+    ]}
+  />
+  <div class="jx-wrap jx-phero__grid">
+    <div class="jx-phero__copy">
+      <nav class="jx-crumbs" aria-label="Breadcrumb" data-reveal>
+        <ol>
+          <li><a href={home}>{u.crumb_home}</a></li>
+          {
+            crumbs.map((c, i) => (
+              <li>
+                <Icon name="right" size={14} />
+                {c.href && i < crumbs.length - 1 ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
+      <p class="jx-phero__kicker" data-reveal style="--i:1">
+        {icon && <span class="jx-phero__ico"><Icon name={icon as any} size={18} /></span>}
+        <span class="jx-kicker">{kicker}</span>
+      </p>
+      <h1 class="jx-phero__title" data-reveal style="--i:2">{title}</h1>
+      {
+        lead.map((l, i) => (
+          <p class:list={['jx-phero__lead', { 'jx-phero__lead--sub': i > 0 }]} data-reveal style={`--i:${3 + i}`}>
+            {fill(l)}
+          </p>
+        ))
+      }
+      <div class="jx-phero__ctas" data-reveal style={`--i:${3 + lead.length}`}>
+        <a class="jx-btn" href={u.hero_cta_href}>{u.hero_cta}<Icon name="arrow" /></a>
+        {second && <a class="jx-btn jx-btn--ghost" href={second.href}>{second.label}</a>}
+      </div>
+    </div>
+
+    <div class="jx-phero__visual" data-tilt>
+      <Blobs
+        class="jx-phero__blobs"
+        blobs={[
+          { x: '38%', y: '-14%', size: '64%', g: 'linear-gradient(135deg, var(--hA) 0%, var(--hB) 100%)', d: 16, dx: '4%', dy: '6%' },
+          { x: '-10%', y: '44%', size: '40%', g: 'linear-gradient(140deg, var(--hB), var(--hC))', d: 19, delay: 5, dx: '-5%', dy: '4%' },
+        ]}
+      />
+      <figure class="jx-phero__frame" data-reveal="clip" style="--i:2">
+        <picture>
+          <source media="(max-width: 700px)" srcset={`/media/${img}-720.webp`} />
+          <img src={`/media/${img}-1200.webp`} alt={alt} width="1200" height="788" fetchpriority="high" decoding="async" />
+        </picture>
+      </figure>
+      <div class="jx-phero__pill" data-reveal="right" style="--i:5">
+        <span class="jx-pill"><i><Icon name="calendar" /></i>{fill(u.hero_pill)}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .jx-phero {
+    position: relative;
+    isolation: isolate;
+    margin-top: calc(var(--jx-header-h) * -1);
+    padding-top: calc(var(--jx-header-h) + clamp(28px, 4.5vw, 64px));
+    padding-bottom: clamp(56px, 7vw, 104px);
+    background: linear-gradient(180deg, #f2f8fc 0%, #fff 82%);
+    overflow: hidden;
+  }
+  .jx-phero__bg {
+    z-index: -1;
+  }
+  .jx-phero__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: clamp(40px, 6vw, 96px);
+  }
+
+  .jx-crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 26px;
+    padding: 0;
+    list-style: none;
+    font-size: 0.8125rem;
+    color: var(--jx-grey);
+  }
+  .jx-crumbs li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .jx-crumbs svg {
+    opacity: 0.5;
+  }
+  .jx-crumbs a {
+    text-decoration: none;
+    transition: color var(--jx-fast) var(--jx-ease);
+  }
+  .jx-crumbs a:hover {
+    color: var(--jx-blue);
+  }
+  .jx-crumbs [aria-current] {
+    color: var(--jx-ink);
+    font-weight: 500;
+  }
+
+  .jx-phero__kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .jx-phero__ico {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    color: #fff;
+    background: linear-gradient(140deg, var(--hA), var(--hB));
+    box-shadow: 0 8px 18px rgba(14, 120, 177, 0.25);
+  }
+  .jx-phero__title {
+    margin: 18px 0 22px;
+    font-size: clamp(2.375rem, 1.6rem + 3.2vw, 4.25rem);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    color: var(--jx-blue);
+  }
+  .jx-phero__lead {
+    max-width: 48ch;
+    font-size: var(--jx-lead);
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--jx-ink);
+  }
+  .jx-phero__lead--sub {
+    margin-top: 14px;
+    font-size: 1.0625rem;
+    font-weight: 400;
+    color: var(--jx-grey);
+  }
+  .jx-phero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 34px;
+  }
+
+  .jx-phero__visual {
+    position: relative;
+    padding: 6% 4% 8%;
+    --rx: 0;
+    --ry: 0;
+  }
+  .jx-phero__blobs {
+    inset: 0;
+  }
+  .jx-phero__frame {
+    position: relative;
+    margin: 0;
+    padding: 8px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: var(--jx-shadow-lg);
+    transform: perspective(1400px) rotateY(calc(var(--rx) * 3deg)) rotateX(calc(var(--ry) * -3deg));
+    transition: transform 1.2s var(--jx-ease);
+  }
+  .jx-phero__frame img {
+    width: 100%;
+    aspect-ratio: 1200 / 788;
+    object-fit: cover;
+    border-radius: 17px;
+  }
+  .jx-phero__pill {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    bottom: 2%;
+  }
+  .jx-phero__pill .jx-pill {
+    animation: jx-float 7s ease-in-out infinite;
+  }
+  .jx-phero__pill i {
+    background: var(--hA);
+  }
+  @keyframes jx-float {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -8px;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .jx-phero__grid {
+      grid-template-columns: 1fr;
+    }
+    .jx-phero__visual {
+      max-width: 640px;
+      width: 100%;
+      margin-inline: auto;
+    }
+  }
+  @media (max-width: 560px) {
+    .jx-phero__pill .jx-pill {
+      font-size: 0.75rem;
+    }
+  }
+</style>

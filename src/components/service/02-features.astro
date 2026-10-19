@@ -1,0 +1,285 @@
+---
+/**
+ * Section "features": Unser Service im Überblick. Numbered photo cards (/media/svc-<key>-<n>.webp).
+ * Grid of 3; with 4 items 2 × 2; when the count leaves a lonely last card, the first (and last) card
+ * goes wide (photo beside text), so rows always close.
+ * Services listed in SERVICE_SCENES get a bento instead: an animated UI scene per card, widths from data.ts.
+ */
+import { fill, type Lang } from '../../i18n';
+import Scene from './Scene.astro';
+import { servicePage, serviceUi, SERVICE_SCENES, SERVICE_VISUALS, type ServiceKey } from './data';
+const { lang, service } = Astro.props as { lang: Lang; service: ServiceKey };
+const p = servicePage(service, lang);
+const u = serviceUi(lang);
+const n = p.features.length;
+const two = n === 4 || n === 2;
+const scenes = SERVICE_SCENES[service];
+const pal = SERVICE_VISUALS[service].pal;
+const wide = (i: number) => !two && n % 3 === 1 && (i === 0 || i === n - 1);
+---
+
+<section class="jx-section jx-feat" id="ueberblick" style={`--hA:${pal[0]};--hB:${pal[1]};--hC:${pal[2]}`}>
+  <div class="jx-wrap">
+    <header class="jx-head jx-feat__head">
+      <div>
+        <span class="jx-kicker" data-reveal>{u.feat_kicker}</span>
+        {
+          p.feat_title && (
+            <h2 class="jx-h2" data-reveal style="--i:1">
+              {fill(p.feat_title)}
+            </h2>
+          )
+        }
+      </div>
+      {
+        p.feat_text && (
+          <p class="jx-lead jx-feat__text" data-reveal style="--i:2">
+            {fill(p.feat_text)}
+          </p>
+        )
+      }
+    </header>
+
+    {
+      scenes && (
+        <ol class="jx-bento">
+          {p.features.map((f, i) => (
+            <li class="jx-bcard" data-reveal style={`--i:${i % 3};--span:${scenes[i].span}`}>
+              <div class="jx-bcard__scene">
+                <Scene name={scenes[i].scene} lang={lang} />
+              </div>
+              <div class="jx-bcard__body">
+                <span class="jx-fcard__num" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3>{fill(f.title)}</h3>
+                <p>{fill(f.text)}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      )
+    }
+
+    {
+      !scenes && (
+        <ol class:list={['jx-feat__grid', { 'jx-feat__grid--two': two }]}>
+          {p.features.map((f, i) => (
+            <li class:list={['jx-fcard', { 'jx-fcard--wide': wide(i) }]} data-reveal style={`--i:${i % 3}`}>
+              <figure class="jx-fcard__media">
+                <img
+                  src={`/media/svc-${service}-${i + 1}.webp`}
+                  alt=""
+                  width="960"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <div class="jx-fcard__body">
+                <span class="jx-fcard__num" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3>{fill(f.title)}</h3>
+                <p>{fill(f.text)}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      )
+    }
+  </div>
+</section>
+
+<style is:global>
+  .jx-feat {
+    background: linear-gradient(180deg, #fff 0%, #f5f8fa 100%);
+  }
+  .jx-feat__head {
+    align-items: flex-end;
+  }
+  .jx-feat__head > div {
+    max-width: 640px;
+  }
+  .jx-feat__text {
+    max-width: 38ch;
+  }
+  .jx-feat__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(16px, 2vw, 28px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-feat__grid--two {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .jx-fcard {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--jx-r-lg);
+    background: #fff;
+    border: 1px solid rgba(30, 61, 126, 0.08);
+    box-shadow: var(--jx-shadow-sm);
+    overflow: hidden;
+    transition:
+      translate var(--jx-med) var(--jx-ease),
+      box-shadow var(--jx-med) var(--jx-ease),
+      border-color var(--jx-med) var(--jx-ease);
+  }
+  .jx-fcard:hover {
+    translate: 0 -4px;
+    box-shadow: var(--jx-shadow);
+    border-color: rgba(14, 120, 177, 0.22);
+  }
+  .jx-fcard__media {
+    margin: 0;
+    overflow: hidden;
+  }
+  .jx-fcard__media img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    transition: scale 1.4s var(--jx-ease);
+  }
+  .jx-fcard:hover .jx-fcard__media img {
+    scale: 1.045;
+  }
+  .jx-fcard__body {
+    position: relative;
+    padding: 26px 26px 30px;
+  }
+  .jx-fcard__num {
+    display: inline-block;
+    margin-bottom: 12px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    background: linear-gradient(90deg, var(--jx-blue-k), var(--jx-green));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .jx-fcard h3 {
+    font-size: 1.1875rem;
+    line-height: 1.3;
+    color: var(--jx-ink);
+  }
+  .jx-fcard p {
+    margin-top: 10px;
+    color: var(--jx-grey);
+    font-size: 0.9688rem;
+  }
+
+  /* Wide card: photo beside the text */
+  .jx-fcard--wide {
+    grid-column: span 2;
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .jx-fcard--wide .jx-fcard__media {
+    flex: 1 1 55%;
+  }
+  .jx-fcard--wide .jx-fcard__media img {
+    height: 100%;
+    aspect-ratio: auto;
+    min-height: 260px;
+  }
+  .jx-fcard--wide .jx-fcard__body {
+    flex: 1 1 45%;
+    align-self: center;
+    padding: clamp(26px, 3vw, 44px);
+  }
+  .jx-fcard--wide h3 {
+    font-size: var(--jx-h3);
+  }
+
+  /* Bento with scenes: 6-column grid, cards span 2, 3 or 4 */
+  .jx-bento {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: clamp(16px, 2vw, 24px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-bcard {
+    grid-column: span var(--span, 2);
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--jx-r-xl);
+    background: #fff;
+    border: 1px solid rgba(30, 61, 126, 0.08);
+    box-shadow: var(--jx-shadow-sm);
+    overflow: hidden;
+    transition:
+      translate var(--jx-med) var(--jx-ease),
+      box-shadow var(--jx-med) var(--jx-ease),
+      border-color var(--jx-med) var(--jx-ease);
+  }
+  .jx-bcard:hover {
+    translate: 0 -4px;
+    box-shadow: var(--jx-shadow);
+    border-color: rgba(14, 120, 177, 0.22);
+  }
+  .jx-bcard__scene {
+    height: 260px;
+    border-bottom: 1px solid rgba(30, 61, 126, 0.06);
+  }
+  .jx-bcard__body {
+    padding: 24px 28px 30px;
+  }
+  .jx-bcard h3 {
+    font-size: 1.1875rem;
+    line-height: 1.3;
+    color: var(--jx-ink);
+  }
+  .jx-bcard p {
+    margin-top: 10px;
+    max-width: 52ch;
+    color: var(--jx-grey);
+    font-size: 0.9688rem;
+  }
+
+  @media (max-width: 1000px) {
+    .jx-bento {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .jx-bcard {
+      grid-column: span 1;
+    }
+    .jx-bcard:nth-child(2) {
+      grid-column: span 2;
+    }
+    .jx-feat__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .jx-fcard--wide {
+      grid-column: auto;
+      flex-direction: column;
+    }
+    .jx-fcard--wide .jx-fcard__media img {
+      aspect-ratio: 3 / 2;
+      min-height: 0;
+    }
+    .jx-fcard--wide .jx-fcard__body {
+      align-self: auto;
+      padding: 26px 26px 30px;
+    }
+    .jx-fcard--wide h3 {
+      font-size: 1.1875rem;
+    }
+  }
+  @media (max-width: 640px) {
+    .jx-feat__grid,
+    .jx-feat__grid--two,
+    .jx-bento {
+      grid-template-columns: 1fr;
+    }
+    .jx-bcard,
+    .jx-bcard:nth-child(2) {
+      grid-column: auto;
+    }
+  }
+</style>
