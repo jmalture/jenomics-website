@@ -1,7 +1,7 @@
 ---
 /**
  * Site header: logo, mega menu "Leistungen" (services, products, company), page links,
- * language switch (hidden for now: SHOW_LANG), Fernzugriff (TeamViewer) and the contact CTA.
+ * language switch (SHOW_LANG), Fernzugriff (TeamViewer) and the contact CTA.
  * Below 1080px the burger opens a full-screen drawer (current page marked, quick call / mail buttons).
  * Behaviour (glass on scroll, hide on scroll down, menu/drawer toggles) is in src/scripts/site.ts.
  */
@@ -25,8 +25,8 @@ const links = [
   [t.h_contact, t.h_contact_href],
 ];
 const remote = 'https://get.teamviewer.com/tnedds2';
-/** Language switch off until the EN translations are reviewed (Honza, 2026-10-19). The /en/ pages still build. */
-const SHOW_LANG = false;
+/** Language switch on/off (kept as a flag; it was briefly hidden by mistake on 2026-10-19). */
+const SHOW_LANG = true;
 const path = Astro.url.pathname;
 const here = (href: string) => (href === path ? 'page' : undefined);
 const phone = '+49 89 2000 337 0';

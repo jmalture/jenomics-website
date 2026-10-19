@@ -44,8 +44,7 @@
   (/en/blog/ lists them with a note). Sample data inside the scenes (customer names, KPIs) is illustrative.
   Contact form needs the SMTP env vars on Hostinger (see `src/pages/api/contact.ts`).
 
-- Header (2026-10-19): language switch hidden (`SHOW_LANG = false` in Header.astro) until the EN texts are
-  reviewed; the /en/ pages still build. Mobile drawer polished: current page marked, staggered entrance,
+- Header (2026-10-19): language switch stays (flag `SHOW_LANG` in Header.astro). Mobile drawer polished: current page marked, staggered entrance,
   quick call / mail buttons, Fernzugriff label.
 
 ## Next
