@@ -1,0 +1,12 @@
+---
+/** Blog posts keep their jenomics.de URLs: /<slug>/ (German only). */
+import Post from '../templates/Post.astro';
+import { allPosts } from '../components/page/posts';
+
+export function getStaticPaths() {
+  return allPosts().map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+const { post } = Astro.props;
+---
+
+<Post post={post} />

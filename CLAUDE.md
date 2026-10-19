@@ -42,10 +42,14 @@ src/templates/Home.astro                          page template
 src/components/home/NN-name.astro                 sections in page order (own CSS + script)
 src/components/home/hero-live.astro               hero visual: live app window (see below)
 src/templates/Service.astro, Services.astro       6 service pages / overview (/leistungen/, /en/services/)
+src/templates/{About,Team,Career,Pricing,Contact,Product,Blog,Post}.astro   menu pages (texts: i18n/pages.json)
+src/components/page/                              Bento (scene cards), Split (copy + scene), data.ts (URLs, palettes), posts.ts
+src/pages/[slug].astro                            blog posts at /<slug>/ like jenomics.de (German only)
 src/components/service/                           page hero, feature bento, blocks (columns/logos/cases/tabs/refs/kit/process/faq), CTA
   Scene.astro                                     animated UI scenes for the feature bento (SERVICE_SCENES in data.ts, all 6 services):
                                                   IT scenes + shared helpers (.sc-s, .sc-c3, .sc-fill, .sc-term); dev/web scenes in
-                                                  SceneBuild.astro, linux/net/host in SceneOps.astro
+                                                  SceneBuild.astro, linux/net/host in SceneOps.astro, company pages in
+                                                  ScenesCompany.astro, IKONA/SDX/GM8 in ScenesProducts.astro
   services.json                                   service page texts (pages.<key>: lead, features, blocks)
 src/components/ui/{Icon,Blobs}.astro              line icons, live blob field
 src/components/{Header,Footer}.astro              mega menu + mobile drawer, dark footer
@@ -114,8 +118,9 @@ frame. Signature: organic gradient blobs (green→teal→cyan, blue→cyan, roya
 5. Commit with a clear message, push to `main`, Hostinger deploys; check the preview URL.
 
 ## Next tasks
-1. Scrape the rest of jenomics.de: IKONA, SDX, Großmarkt, Über uns, Team, Karriere, Pricing, Kontakt, Projekte,
-   Web-Deluxe-Kit, AGB, Datenschutz, Impressum, full blog posts. The EMCP (`emcp-jenomics-de`, local scope) fails
+1. Scrape the rest of jenomics.de: Projekte, Web-Deluxe-Kit, AGB, Datenschutz, Impressum (menu pages and blog
+   done 2026-10-19; the container cannot reach jenomics.de, so fetch through Honza's PC with PowerShell
+   Invoke-WebRequest into Documents\Jenomics\jenomics-scrape and stage the files). The EMCP (`emcp-jenomics-de`, local scope) fails
    OAuth because Mittwald 403s `/.well-known/*`; the public REST API works:
    `/wp-json/wp/v2/pages?slug=<slug>` (old-site photos have baked blobs; crop them like `public/media/svc-*`).
 2. Build those pages on the same template/section pattern, DE + EN (EN slugs in `offer.json`/`chrome.json` are

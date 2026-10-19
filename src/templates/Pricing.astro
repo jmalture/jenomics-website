@@ -1,0 +1,132 @@
+---
+/** Pricing: hero (minute meter), pricing model, 6 principles as scene bento, price list downloads, services band. */
+import Base from '../layouts/Base.astro';
+import Hero from '../components/service/01-hero.astro';
+import Scene from '../components/service/Scene.astro';
+import Bento from '../components/page/Bento.astro';
+import Cta from '../components/service/04-cta.astro';
+import Icon from '../components/ui/Icon.astro';
+import { pageText, pageUi, PAGE_URLS, PAGE_PAL } from '../components/page/data';
+import type { SceneName } from '../components/service/data';
+import type { Lang } from '../i18n';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = pageText('pricing', lang);
+const u = pageUi(lang);
+const scenes: SceneName[] = ['invoice', 'tariff', 'minute', 'clock24', 'skills', 'ondemand'];
+const items = t.features.map((f: any, i: number) => ({ ...f, scene: scenes[i], span: 2 as const }));
+const pal = PAGE_PAL.pricing;
+---
+
+<Base lang={lang} title={t.meta_title} description={t.meta_desc} alternates={PAGE_URLS.pricing}>
+  <Hero
+    lang={lang}
+    title={t.title}
+    lead={t.lead}
+    pal={pal}
+    kicker={t.kicker}
+    icon="clock"
+    crumbs={[{ label: u.crumb_company }, { label: t.title }]}
+    ctas={[
+      { label: t.pdf_2026, href: t.pdf_2026_href, icon: 'download' },
+      { label: t.request, href: u.contact_href, ghost: true },
+    ]}
+    pill={u.pill_since}
+  >
+    <Scene name="meter" lang={lang} slot="visual" />
+  </Hero>
+
+  <section class="jx-section jx-model" style={`--hA:${pal[0]};--hB:${pal[1]};--hC:${pal[2]}`}>
+    <div class="jx-wrap">
+      <div class="jx-model__intro">
+        <div>
+          <span class="jx-kicker" data-reveal>{t.model_kicker}</span>
+          <h2 class="jx-h2" data-reveal style="--i:1">{t.model_title}</h2>
+        </div>
+        <div class="jx-model__text">
+          {
+            t.model_text.map((p: string, i: number) => (
+              <p data-reveal style={`--i:${i + 1}`}>
+                {p}
+              </p>
+            ))
+          }
+        </div>
+      </div>
+      <Bento lang={lang} items={items} />
+    </div>
+  </section>
+
+  <section class="jx-section jx-dl">
+    <div class="jx-wrap jx-dl__box" data-reveal>
+      <span class="jx-dl__ico"><Icon name="file" size={26} /></span>
+      <h2 class="jx-dl__title">{t.dl_title}</h2>
+      <div class="jx-dl__btns">
+        <a class="jx-btn" href={t.pdf_2026_href} target="_blank" rel="noopener">{t.pdf_2026}<Icon name="download" /></a>
+        <a class="jx-btn jx-btn--ghost" href={t.pdf_2025_href} target="_blank" rel="noopener">{t.pdf_2025}<Icon name="download" /></a>
+      </div>
+    </div>
+  </section>
+
+  <Cta lang={lang} />
+</Base>
+
+<style is:global>
+  .jx-model {
+    background: linear-gradient(180deg, #fff 0%, #f5f8fa 100%);
+  }
+  .jx-model__intro {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(28px, 5vw, 80px);
+    margin-bottom: clamp(32px, 4vw, 56px);
+  }
+  .jx-model__text {
+    display: grid;
+    gap: 14px;
+    color: var(--jx-grey);
+  }
+  .jx-model__text p:first-child {
+    font-size: var(--jx-lead);
+    font-weight: 500;
+    color: var(--jx-ink);
+  }
+  .jx-dl {
+    padding-bottom: 0;
+  }
+  .jx-dl__box {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 20px 28px;
+    padding: clamp(24px, 4vw, 44px);
+    border-radius: 28px;
+    background: #fff;
+    border: 1px solid rgba(30, 61, 126, 0.08);
+    box-shadow: var(--jx-shadow);
+  }
+  .jx-dl__ico {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    color: #fff;
+    background: linear-gradient(140deg, var(--jx-navy), var(--jx-blue));
+  }
+  .jx-dl__title {
+    font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+    line-height: 1.35;
+  }
+  .jx-dl__btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  @media (max-width: 900px) {
+    .jx-model__intro,
+    .jx-dl__box {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -540,3 +540,120 @@ a.jx-tag--green:hover {
     display: none;
   }
 }
+
+/* ---------- Breadcrumb (page heroes, blog posts) ---------- */
+.jx-crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 26px;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+  color: var(--jx-grey);
+}
+.jx-crumbs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.jx-crumbs svg {
+  opacity: 0.5;
+}
+.jx-crumbs a {
+  text-decoration: none;
+  transition: color var(--jx-fast) var(--jx-ease);
+}
+.jx-crumbs a:hover {
+  color: var(--jx-blue);
+}
+.jx-crumbs [aria-current] {
+  color: var(--jx-ink);
+  font-weight: 500;
+}
+
+
+/* ---------- Post cards (blog index, related posts) ---------- */
+.jx-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2.4vw, 28px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.jx-cards > li[hidden] {
+  display: none;
+}
+.jx-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: var(--jx-r-lg);
+  background: #fff;
+  border: 1px solid rgba(30, 61, 126, 0.08);
+  box-shadow: var(--jx-shadow-sm);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    translate var(--jx-med) var(--jx-ease),
+    box-shadow var(--jx-med) var(--jx-ease);
+}
+.jx-card:hover {
+  translate: 0 -4px;
+  box-shadow: var(--jx-shadow);
+}
+.jx-card__img {
+  display: block;
+  overflow: hidden;
+}
+.jx-card__img img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  transition: scale 1.4s var(--jx-ease);
+}
+.jx-card:hover .jx-card__img img {
+  scale: 1.04;
+}
+.jx-card__body {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  flex: 1;
+  padding: 22px 24px 26px;
+}
+.jx-card__body strong {
+  font-size: 1.125rem;
+  line-height: 1.35;
+}
+.jx-card__ex {
+  color: var(--jx-grey);
+  font-size: 0.9375rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.jx-card .jx-link {
+  margin-top: 4px;
+}
+.jx-post__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.8125rem;
+  color: var(--jx-grey);
+}
+@media (max-width: 1000px) {
+  .jx-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .jx-cards {
+    grid-template-columns: 1fr;
+  }
+}

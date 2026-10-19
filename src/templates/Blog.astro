@@ -1,0 +1,146 @@
+---
+/**
+ * Blog index (/blog/, /en/blog/): all posts from src/content/blog/*.md, newest first, with category filter
+ * chips (client-side, works without JS as a plain list). Posts are German and keep their jenomics.de URLs.
+ */
+import Base from '../layouts/Base.astro';
+import Hero from '../components/service/01-hero.astro';
+import Icon from '../components/ui/Icon.astro';
+import { pageText, pageUi, PAGE_URLS, PAGE_PAL } from '../components/page/data';
+import { allPosts } from '../components/page/posts';
+import type { Lang } from '../i18n';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = pageText('blog', lang);
+const u = pageUi(lang);
+const posts = allPosts();
+const cats = [...new Set(posts.map((p) => p.category))].sort();
+const fmt = new Intl.DateTimeFormat(lang === 'de' ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Base lang={lang} title={t.meta_title} description={t.meta_desc} alternates={PAGE_URLS.blog}>
+  <Hero
+    lang={lang}
+    title={t.title}
+    lead={t.lead}
+    pal={PAGE_PAL.blog}
+    kicker={t.kicker}
+    icon="file"
+    crumbs={[{ label: u.crumb_company }, { label: t.kicker }]}
+    ctas={[{ label: t.all, href: '#artikel' }]}
+    pill={t.lang_note || null}
+  >
+    <a class="jx-bfeat" href={`/${posts[0].slug}/`} lang="de" slot="visual">
+      <img src={posts[0].image} alt="" width="1200" height="788" fetchpriority="high" decoding="async" />
+      <span class="jx-bfeat__cap">
+        <span class="jx-tag jx-tag--green">{posts[0].category}</span>
+        <strong>{posts[0].title}</strong>
+      </span>
+    </a>
+  </Hero>
+
+  <section class="jx-section jx-bloglist" id="artikel">
+    <div class="jx-wrap">
+      <div class="jx-filter" role="toolbar" aria-label="Filter" data-filter>
+        <button type="button" class="is-on" data-cat="">{t.all}</button>
+        {cats.map((c) => <button type="button" data-cat={c}>{c}</button>)}
+      </div>
+      <ul class="jx-cards">
+        {
+          posts.map((p, i) => (
+            <li data-cat={p.category} data-reveal style={`--i:${i % 3}`}>
+              <a class="jx-card" href={`/${p.slug}/`} lang="de">
+                <span class="jx-card__img">
+                  <img src={p.image} alt="" width="768" height="480" loading={i < 3 ? 'eager' : 'lazy'} decoding="async" />
+                </span>
+                <span class="jx-card__body">
+                  <span class="jx-post__meta">
+                    <span class:list={['jx-tag', { 'jx-tag--green': p.category === 'Produkte' }]}>{p.category}</span>
+                    <time datetime={p.iso}>{fmt.format(p.date)}</time>
+                  </span>
+                  <strong>{p.title}</strong>
+                  <span class="jx-card__ex">{p.excerpt}</span>
+                  <span class="jx-link">
+                    {t.more}
+                    <Icon name="arrow" />
+                  </span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-filter]').forEach((bar) => {
+    const items = [...document.querySelectorAll<HTMLElement>('.jx-cards > li')];
+    bar.addEventListener('click', (e) => {
+      const b = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-cat]');
+      if (!b) return;
+      bar.querySelectorAll('button').forEach((x) => x.classList.toggle('is-on', x === b));
+      const c = b.dataset.cat;
+      items.forEach((li) => (li.hidden = !!c && li.dataset.cat !== c));
+    });
+  });
+</script>
+
+<style is:global>
+  .jx-bfeat {
+    position: relative;
+    display: block;
+    height: 100%;
+    color: #fff;
+  }
+  .jx-bfeat img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .jx-bfeat__cap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    justify-items: start;
+    gap: 8px;
+    padding: 60px 22px 20px;
+    background: linear-gradient(180deg, transparent, rgba(11, 26, 54, 0.82));
+  }
+  .jx-bfeat__cap strong {
+    font-size: 1.125rem;
+    line-height: 1.35;
+  }
+  .jx-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: clamp(24px, 3vw, 40px);
+  }
+  .jx-filter button {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(30, 61, 126, 0.14);
+    background: #fff;
+    font: inherit;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--jx-ink);
+    cursor: pointer;
+    transition:
+      background var(--jx-fast) var(--jx-ease),
+      color var(--jx-fast) var(--jx-ease),
+      border-color var(--jx-fast) var(--jx-ease);
+  }
+  .jx-filter button:hover {
+    border-color: var(--jx-blue);
+  }
+  .jx-filter button.is-on {
+    color: #fff;
+    background: var(--jx-blue);
+    border-color: var(--jx-blue);
+  }
+</style>

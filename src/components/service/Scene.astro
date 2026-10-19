@@ -6,9 +6,11 @@
  * Colours come from the page palette --hA/--hB/--hC. Add a scene: name in data.ts (SceneName) + markup + CSS.
  */
 import type { Lang } from '../../i18n';
-import { BUILD_SCENES, OPS_SCENES, type SceneName } from './data';
+import { BUILD_SCENES, OPS_SCENES, COMPANY_SCENES, PRODUCT_SCENES, type SceneName } from './data';
 import SceneBuild from './SceneBuild.astro';
 import SceneOps from './SceneOps.astro';
+import ScenesCompany from './ScenesCompany.astro';
+import ScenesProducts from './ScenesProducts.astro';
 
 interface Props {
   name: SceneName;
@@ -322,6 +324,8 @@ const check =
 
   {(BUILD_SCENES as readonly string[]).includes(name) && <SceneBuild name={name} lang={lang} />}
   {(OPS_SCENES as readonly string[]).includes(name) && <SceneOps name={name} lang={lang} />}
+  {(COMPANY_SCENES as readonly string[]).includes(name) && <ScenesCompany name={name} lang={lang} />}
+  {(PRODUCT_SCENES as readonly string[]).includes(name) && <ScenesProducts name={name} lang={lang} />}
 </div>
 
 <style is:global>

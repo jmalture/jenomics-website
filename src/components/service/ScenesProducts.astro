@@ -1,0 +1,2096 @@
+---
+/**
+ * Scenes for the product pages: IKONA (shop, helpdesk, editor, backoffice, produce, api, portal),
+ * SDX (sdx, sdxfiles, sdxrights, sdxaudit, sdxnotify, sdxshare, sdxbrand) and Großmarkt GM8
+ * (gm8, gmmail, gmstock, gmbatch, gmin, gmout, gmarchive, gmdeposit, gmmaster).
+ * Rendered inside Scene.astro's .jx-scene frame; shared helpers live there. Generic sample data only.
+ */
+import type { Lang } from '../../i18n';
+
+interface Props {
+  name: string;
+  lang: Lang;
+}
+const { name, lang } = Astro.props;
+
+const T = {
+  de: {
+    shop: 'Fotogeschenke',
+    products: ['Tasse', 'Poster', 'Shirt', 'Kalender'],
+    cart: 'Warenkorb',
+    in_prod: 'Bestellung in Produktion',
+    helpdesk: 'Helpdesk',
+    tickets: [
+      ['#4821', 'Lieferstatus?', 'Versendet'],
+      ['#4822', 'Text ändern', 'In Produktion'],
+      ['#4823', 'Rechnung', 'Erledigt'],
+    ],
+    realtime: 'Echtzeit',
+    editor: 'Editor',
+    mug_text: 'Für Oma',
+    preview: 'Vorschau',
+    templates: 'Vorlagen',
+    dashboard: 'Dashboard',
+    kpis: [
+      ['Umsatz', '+18 %'],
+      ['Bestellungen', '1.284'],
+      ['Gutscheine', '96'],
+    ],
+    voucher: 'Gutschein SOMMER',
+    dunning: 'Mahnwesen · 2 offen',
+    steps: ['Bestellung', 'Proof', 'Druck', 'Versand'],
+    proof_ok: 'Druckdaten geprüft',
+    shipped: 'Unterwegs',
+    portal: 'Portal-Design',
+    pay: ['PayPal', 'Rechnung', 'Klarna'],
+    trusted: 'Trusted Shops',
+    upload: 'Hochladen',
+    drop: 'Dateien hier ablegen',
+    file: 'Angebot_2026.pdf',
+    link: 'Link erstellt',
+    notified: 'Empfänger benachrichtigt',
+    formats: 'Alle Formate',
+    rights: 'Berechtigungen',
+    users: ['Anna', 'Ben', 'Extern'],
+    perms: ['Lesen', 'Schreiben', 'Teilen'],
+    audit: 'Historie',
+    events: [
+      ['Bereich „Projekt“ erstellt', '09:12'],
+      ['Planung.xlsx hochgeladen', '09:20'],
+      ['Freigabe für Ben', '09:31'],
+      ['Vertrag.pdf ersetzt', '10:05'],
+    ],
+    report: 'Änderungsbericht',
+    changes: ['2 neue Dateien', '1 Datei ersetzt', '3 Downloads'],
+    share: 'Teilen',
+    tabs: ['E-Mail', 'Link', 'QR-Code'],
+    brand: 'Dein Logo',
+    gm8: 'GM8 · Rechnungsausgang',
+    rows: [
+      ['RE-2041', 'Obst Huber', '1.240,50 €'],
+      ['RE-2042', 'Gemüse Lang', '386,20 €'],
+      ['RE-2043', 'Markt-Café', '92,80 €'],
+      ['RE-2044', 'Hotel Isar', '2.015,00 €'],
+    ],
+    batch: 'Stapeldruck',
+    sent: 'Rechnungen versendet',
+    stock: 'Lagerbestand',
+    goods: ['Äpfel', 'Tomaten', 'Salat', 'Kartoffeln'],
+    printed: 'Gedruckt',
+    delivery: 'Lieferung',
+    commission: 'Kommissionsrechnung',
+    quote: 'Angebot',
+    invoice: 'Rechnung',
+    letterhead: 'Dein Briefkopf',
+    archive: 'Belegarchiv',
+    closing: 'Jahresabschluss',
+    deposit: 'Pfand',
+    crates: 'Kisten',
+    master: 'Kunde',
+    customer: 'Obst Huber',
+    fields: ['Kundennr. 1047', 'Zahlungsziel', 'Preisgruppe'],
+    terms: 'Individuelle Konditionen',
+  },
+  en: {
+    shop: 'Photo gifts',
+    products: ['Mug', 'Poster', 'Shirt', 'Calendar'],
+    cart: 'Cart',
+    in_prod: 'Order in production',
+    helpdesk: 'Helpdesk',
+    tickets: [
+      ['#4821', 'Delivery status?', 'Shipped'],
+      ['#4822', 'Change text', 'In production'],
+      ['#4823', 'Invoice', 'Done'],
+    ],
+    realtime: 'Real time',
+    editor: 'Editor',
+    mug_text: 'For Grandma',
+    preview: 'Preview',
+    templates: 'Templates',
+    dashboard: 'Dashboard',
+    kpis: [
+      ['Revenue', '+18%'],
+      ['Orders', '1,284'],
+      ['Vouchers', '96'],
+    ],
+    voucher: 'Voucher SUMMER',
+    dunning: 'Dunning · 2 open',
+    steps: ['Order', 'Proof', 'Print', 'Shipping'],
+    proof_ok: 'Print data checked',
+    shipped: 'On its way',
+    portal: 'Portal design',
+    pay: ['PayPal', 'Invoice', 'Klarna'],
+    trusted: 'Trusted Shops',
+    upload: 'Upload',
+    drop: 'Drop files here',
+    file: 'Quote_2026.pdf',
+    link: 'Link created',
+    notified: 'Recipient notified',
+    formats: 'Any format',
+    rights: 'Permissions',
+    users: ['Anna', 'Ben', 'External'],
+    perms: ['Read', 'Write', 'Share'],
+    audit: 'History',
+    events: [
+      ['Area “Project” created', '09:12'],
+      ['Planning.xlsx uploaded', '09:20'],
+      ['Shared with Ben', '09:31'],
+      ['Contract.pdf replaced', '10:05'],
+    ],
+    report: 'Change report',
+    changes: ['2 new files', '1 file replaced', '3 downloads'],
+    share: 'Share',
+    tabs: ['Email', 'Link', 'QR code'],
+    brand: 'Your logo',
+    gm8: 'GM8 · Outgoing invoices',
+    rows: [
+      ['RE-2041', 'Fruit Huber', '€1,240.50'],
+      ['RE-2042', 'Veg Lang', '€386.20'],
+      ['RE-2043', 'Market Café', '€92.80'],
+      ['RE-2044', 'Hotel Isar', '€2,015.00'],
+    ],
+    batch: 'Batch print',
+    sent: 'Invoices sent',
+    stock: 'Stock',
+    goods: ['Apples', 'Tomatoes', 'Lettuce', 'Potatoes'],
+    printed: 'Printed',
+    delivery: 'Delivery',
+    commission: 'Commission invoice',
+    quote: 'Quote',
+    invoice: 'Invoice',
+    letterhead: 'Your letterhead',
+    archive: 'Document archive',
+    closing: 'Annual accounts',
+    deposit: 'Deposit',
+    crates: 'crates',
+    master: 'Customer',
+    customer: 'Fruit Huber',
+    fields: ['Customer no. 1047', 'Payment terms', 'Price group'],
+    terms: 'Individual terms',
+  },
+}[lang];
+
+const check =
+  '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+const svg = (d: string, s = 16) =>
+  `<svg viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+const I = {
+  file: svg('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>'),
+  upload: svg('<path d="M12 15V3"/><path d="m7 8 5-5 5 5"/><path d="M5 21h14"/>', 22),
+  link: svg('<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>'),
+  mail: svg('<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>'),
+  print: svg('<path d="M6 9V2h12v7"/><rect x="2" y="9" width="20" height="9" rx="2"/><path d="M6 14h12v8H6z"/>', 18),
+  truck: svg('<path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>', 20),
+  folder: svg('<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>', 22),
+  cart: svg('<circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 8H6"/>'),
+  shield: svg('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>'),
+};
+// Product mock-ups for the shop / editor (simple shapes, coloured by the page palette)
+const prodShapes = ['mug', 'poster', 'shirt', 'cal'];
+// QR-ish pattern: deterministic 9 × 9 grid
+const qr = Array.from({ length: 81 }, (_, i) => ((i * 7 + (i % 9) * 3) % 5 < 2 ? 1 : 0));
+---
+
+{
+  name === 'shop' && (
+    <div class="sc-win sc-shop">
+      <div class="sc-spa__top">
+        <span class="sc-dots">
+          <i />
+          <i />
+          <i />
+        </span>
+        <span class="sc-spa__addr">www.foto-portal.de</span>
+        <span class="sc-shop__cart">
+          <i set:html={I.cart} />
+          <b>
+            <span class="sc-stack">
+              <em class="sc-shop__n1">2</em>
+              <em class="sc-shop__n2">3</em>
+            </span>
+          </b>
+        </span>
+      </div>
+      <div class="sc-shop__body">
+        <b class="sc-shop__h">{T.shop}</b>
+        <div class="sc-shop__grid">
+          {T.products.map((p, i) => (
+            <span class="sc-card sc-shop__item" style={`--k:${i}`}>
+              <span class={`sc-prod sc-prod--${prodShapes[i]}`}>
+                <i />
+              </span>
+              <small>{p}</small>
+            </span>
+          ))}
+        </div>
+      </div>
+      <span class="sc-chip sc-late sc-shop__chip" style="--dl:.8s">
+        <i set:html={check} />
+        {T.in_prod}
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'helpdesk' && (
+    <div class="sc-win sc-desk">
+      <div class="sc-bar">
+        <span class="sc-live" />
+        {T.helpdesk}
+        <em>{T.realtime}</em>
+      </div>
+      <ul>
+        {T.tickets.map(([n, s, st], i) => (
+          <li style={`--k:${i}`}>
+            <code class="sc-mono">{n}</code>
+            <span>{s}</span>
+            <em class:list={[`is-${i}`]}>{st}</em>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+{
+  name === 'editor' && (
+    <div class="sc-win sc-ed">
+      <div class="sc-bar">
+        {T.editor}
+        <em>{T.preview}</em>
+      </div>
+      <div class="sc-ed__body">
+        <div class="sc-ed__canvas">
+          <span class="sc-ed__mug">
+            <span class="sc-ed__photo" />
+            <span class="sc-ed__txt">
+              <span>{T.mug_text}</span>
+            </span>
+          </span>
+        </div>
+        <aside class="sc-ed__side">
+          <small>{T.templates}</small>
+          {[0, 1, 2].map((k) => (
+            <i style={`--o:${k}`} class:list={[{ 'is-on': k === 1 }]} />
+          ))}
+        </aside>
+      </div>
+    </div>
+  )
+}
+
+{
+  name === 'backoffice' && (
+    <div class="sc-win sc-bo">
+      <div class="sc-bar">{T.dashboard}</div>
+      <div class="sc-bo__kpis">
+        {T.kpis.map(([l, v], i) => (
+          <span class="sc-s" style={`--k:${i};--g:.35s`}>
+            <small>{l}</small>
+            <b>{v}</b>
+          </span>
+        ))}
+      </div>
+      <div class="sc-bo__chart">
+        {[30, 44, 38, 56, 50, 68, 62, 80].map((h, i) => (
+          <i style={`--h:${h}%;--k:${i}`} />
+        ))}
+      </div>
+      <div class="sc-bo__foot">
+        <span class="sc-bo__tag">{T.voucher}</span>
+        <span class="sc-bo__tag sc-bo__tag--warn">{T.dunning}</span>
+      </div>
+    </div>
+  )
+}
+
+{
+  name === 'produce' && (
+    <div class="sc-pipe">
+      <ol>
+        {T.steps.map((s, i) => (
+          <li style={`--k:${i}`}>
+            <span class="sc-ci__dot">
+              <i set:html={check} />
+            </span>
+            <small>{s}</small>
+          </li>
+        ))}
+      </ol>
+      <div class="sc-pipe__road">
+        <span class="sc-pipe__box" set:html={I.truck} />
+      </div>
+      <span class="sc-chip sc-late sc-pipe__chip" style="--dl:-1s">
+        <i set:html={check} />
+        {T.proof_ok}
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'api' && (
+    <div class="sc-api">
+      <div class="sc-term sc-api__req">
+        <div class="sc-bar">
+          <span class="sc-dots">
+            <i />
+            <i />
+            <i />
+          </span>
+          POST /api/orders
+        </div>
+        <div class="sc-mono sc-pre">
+          {[
+            '{',
+            '  <b>"product"</b>: <em>"mug-white"</em>,',
+            '  <b>"template"</b>: <em>"birthday"</em>,',
+            '  <b>"qty"</b>: <em>2</em>',
+            '}',
+          ].map((l, i) => (
+            <span class="sc-s" style={`--k:${i};--g:.3s`} set:html={l} />
+          ))}
+        </div>
+      </div>
+      <div class="sc-card sc-api__res sc-late" style="--dl:.2s">
+        <span class="sc-api__code">201</span>
+        <span>
+          <b>Created</b>
+          <small class="sc-mono">order_id: 58213</small>
+        </span>
+      </div>
+      <span class="sc-chip sc-api__hook">
+        <span class="sc-live" />
+        webhook · order.created
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'portal' && (
+    <div class="sc-win sc-brand sc-portal">
+      <div class="sc-brand__top">
+        <span class="sc-brand__logo" />
+        <b>{T.portal}</b>
+        <span class="sc-brand__menu">
+          <i />
+          <i />
+          <i />
+        </span>
+      </div>
+      <div class="sc-portal__body">
+        <div class="sc-portal__hero">
+          <i class="sc-sk" style="width:60%;height:8px" />
+          <i class="sc-sk" style="width:40%" />
+          <em />
+        </div>
+        <div class="sc-portal__pay">
+          {T.pay.map((p, i) => (
+            <span class="sc-s" style={`--k:${i};--g:.4s`}>
+              {p}
+            </span>
+          ))}
+        </div>
+        <span class="sc-portal__trust">
+          <i set:html={I.shield} />
+          {T.trusted}
+        </span>
+      </div>
+      <aside class="sc-brand__side sc-portal__side">
+        <span class="sc-brand__sw">
+          <i />
+          <i />
+          <i />
+          <b />
+        </span>
+      </aside>
+    </div>
+  )
+}
+
+{
+  name === 'sdx' && (
+    <div class="sc-sdx">
+      <div class="sc-win sc-sdx__drop">
+        <div class="sc-bar">
+          <span class="sc-dc__sdx">SDX</span>
+          {T.upload}
+        </div>
+        <div class="sc-sdx__zone">
+          <i set:html={I.upload} />
+          <span>{T.drop}</span>
+          <span class="sc-card sc-sdx__file">
+            <i set:html={I.file} />
+            {T.file}
+            <span class="sc-fill" style="--k:1;--g:.8s;--d:9s" />
+          </span>
+        </div>
+      </div>
+      <div class="sc-card sc-sdx__link">
+        <i set:html={I.link} />
+        <span>
+          <b>{T.link}</b>
+          <small class="sc-mono">sdx.app/s/7Kq2…</small>
+        </span>
+      </div>
+      <span class="sc-chip sc-sdx__note">
+        <i set:html={check} />
+        {T.notified}
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'sdxfiles' && (
+    <div class="sc-files">
+      {['.xlsx', '.docx', '.pdf', '.html', '.json', '.zip'].map((f, i) => (
+        <span class="sc-card sc-files__f" style={`--k:${i}`}>
+          <i set:html={I.file} />
+          <b>{f}</b>
+          <span class="sc-fill" style={`--k:${i};--g:.45s`} />
+        </span>
+      ))}
+    </div>
+  )
+}
+
+{
+  name === 'sdxrights' && (
+    <div class="sc-win sc-rights">
+      <div class="sc-bar">{T.rights}</div>
+      <table>
+        <thead>
+          <tr>
+            <th />
+            {T.perms.map((p) => (
+              <th>{p}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {T.users.map((u, r) => (
+            <tr>
+              <td>
+                <span class="sc-avatar" />
+                {u}
+              </td>
+              {[0, 1, 2].map((c) => (
+                <td>
+                  <b class:list={['sc-ccfg__tg', { 'is-off': (r === 2 && c > 0) || (r === 1 && c === 2) }]} style={`--k:${r * 3 + c}`} />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+{
+  name === 'sdxaudit' && (
+    <div class="sc-win sc-audit">
+      <div class="sc-bar">{T.audit}</div>
+      <ol>
+        {T.events.map(([e, t], i) => (
+          <li class="sc-s" style={`--k:${i};--g:.6s`}>
+            <i />
+            <span>{e}</span>
+            <time class="sc-mono">{t}</time>
+          </li>
+        ))}
+      </ol>
+    </div>
+  )
+}
+
+{
+  name === 'sdxnotify' && (
+    <div class="sc-notify">
+      <span class="sc-notify__env" set:html={svg('<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>', 28)} />
+      <div class="sc-win sc-notify__mail">
+        <div class="sc-bar">
+          {T.report}
+          <em>SDX</em>
+        </div>
+        <ul>
+          {T.changes.map((c, i) => (
+            <li class="sc-s" style={`--k:${i + 1};--g:.5s`}>
+              <i set:html={check} />
+              {c}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+{
+  name === 'sdxshare' && (
+    <div class="sc-win sc-share">
+      <div class="sc-bar">{T.share}</div>
+      <div class="sc-share__tabs">
+        <b class="sc-share__ind" />
+        {T.tabs.map((t) => (
+          <span>{t}</span>
+        ))}
+      </div>
+      <div class="sc-share__view sc-stack">
+        <div class="sc-c3" style="--k:0">
+          <span class="sc-share__field">kunde@example.de</span>
+        </div>
+        <div class="sc-c3" style="--k:1">
+          <span class="sc-share__field sc-mono">sdx.app/s/7Kq2xP</span>
+        </div>
+        <div class="sc-c3 sc-share__qr" style="--k:2">
+          {qr.map((on) => (
+            <i class:list={[{ on }]} />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+{
+  name === 'sdxbrand' && (
+    <div class="sc-win sc-brand">
+      <div class="sc-brand__top">
+        <span class="sc-brand__logo" />
+        <span class="sc-stack">
+          <b class="sc-c3" style="--k:0">
+            SDX
+          </b>
+          <b class="sc-c3" style="--k:1">
+            {T.brand}
+          </b>
+          <b class="sc-c3" style="--k:2">
+            {T.brand}
+          </b>
+        </span>
+        <span class="sc-brand__menu">
+          <i />
+          <i />
+          <i />
+        </span>
+      </div>
+      <div class="sc-brand__body">
+        <div class="sc-brand__tiles">
+          {[0, 1, 2, 3, 4, 5].map((i) => (
+            <span class="sc-card">
+              <b style={`--o:${i % 3}`} />
+              <i class="sc-sk" style="width:70%" />
+            </span>
+          ))}
+        </div>
+        <aside class="sc-brand__side">
+          <span class="sc-brand__sw">
+            <i />
+            <i />
+            <i />
+            <b />
+          </span>
+          <i class="sc-sk" style="width:80%" />
+          <i class="sc-sk" style="width:60%" />
+        </aside>
+      </div>
+    </div>
+  )
+}
+
+{
+  name === 'gm8' && (
+    <div class="sc-win sc-gm">
+      <div class="sc-bar">
+        <img src="/media/product-grossmarkt.webp" alt="" width="18" height="18" />
+        {T.gm8}
+        <em class="sc-gm__btn">{T.batch}</em>
+      </div>
+      <table>
+        <tbody>
+          {T.rows.map(([n, c, s], i) => (
+            <tr class="sc-s" style={`--k:${i};--g:.4s`}>
+              <td class="sc-mono">{n}</td>
+              <td>{c}</td>
+              <td>{s}</td>
+              <td>
+                <b class="sc-gm__st" style={`--k:${i}`} set:html={check} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+{
+  name === 'gmmail' && (
+    <div class="sc-gmmail">
+      <span class="sc-card sc-gmmail__doc">
+        <i set:html={I.file} />
+        RE-2041 … 2052
+      </span>
+      {[0, 1, 2].map((k) => (
+        <span class="sc-gmmail__env" style={`--k:${k}`} set:html={I.mail} />
+      ))}
+      <span class="sc-chip sc-late sc-gmmail__chip" style="--dl:.4s">
+        <i set:html={check} />
+        12 {T.sent}
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'gmstock' && (
+    <div class="sc-win sc-stock">
+      <div class="sc-bar">{T.stock}</div>
+      <ul>
+        {T.goods.map((g, i) => (
+          <li style={`--k:${i}`}>
+            <span>{g}</span>
+            <span class="sc-stock__bar">
+              <i />
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+{
+  name === 'gmbatch' && (
+    <div class="sc-batch">
+      <div class="sc-batch__stack">
+        {[0, 1, 2, 3, 4].map((k) => (
+          <span style={`--k:${k}`}>
+            <i class="sc-sk" style="width:50%" />
+            <i class="sc-sk" style="width:80%" />
+            <i class="sc-sk" style="width:65%" />
+          </span>
+        ))}
+      </div>
+      <span class="sc-batch__printer" set:html={I.print} />
+      <span class="sc-chip sc-late sc-batch__chip" style="--dl:.6s">
+        <i set:html={check} />
+        {T.printed}: 24
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'gmin' && (
+    <div class="sc-gmin">
+      <div class="sc-card sc-gmin__del">
+        <i set:html={I.truck} />
+        <span>
+          <b>{T.delivery} #318</b>
+          <small>{T.goods[0]} · {T.goods[1]}</small>
+        </span>
+      </div>
+      <span class="sc-gmin__arrow" />
+      <div class="sc-card sc-gmin__doc">
+        <b>{T.commission}</b>
+        <i class="sc-sk" style="width:80%" />
+        <i class="sc-sk" style="width:60%" />
+        <i class="sc-sk sc-sk--a" style="width:40%" />
+      </div>
+    </div>
+  )
+}
+
+{
+  name === 'gmout' && (
+    <div class="sc-gmout">
+      <div class="sc-gmout__page">
+        <div class="sc-gmout__head">
+          <img src="/media/product-grossmarkt.webp" alt="" width="20" height="20" />
+          <small>{T.letterhead}</small>
+        </div>
+        <span class="sc-gmout__title sc-stack">
+          <b class="sc-gmout__q">{T.quote}</b>
+          <b class="sc-gmout__r">{T.invoice}</b>
+        </span>
+        {[85, 70, 78].map((w) => (
+          <i class="sc-sk" style={`width:${w}%`} />
+        ))}
+        <span class="sc-gmout__sum">
+          <i class="sc-sk" style="width:30%" />
+          <b>1.240,50 €</b>
+        </span>
+      </div>
+    </div>
+  )
+}
+
+{
+  name === 'gmarchive' && (
+    <div class="sc-arch2">
+      {['2024', '2025', '2026'].map((y, i) => (
+        <span class="sc-card sc-arch2__f" style={`--k:${i}`}>
+          <i set:html={I.folder} />
+          <b>{y}</b>
+          <small>
+            {T.archive}
+          </small>
+        </span>
+      ))}
+      <span class="sc-arch2__doc" set:html={I.file} />
+      <span class="sc-chip sc-arch2__chip">
+        <i set:html={check} />
+        {T.closing} 2025
+      </span>
+    </div>
+  )
+}
+
+{
+  name === 'gmdeposit' && (
+    <div class="sc-dep">
+      <div class="sc-dep__crates">
+        {[0, 1, 2, 3, 4, 5].map((k) => (
+          <span style={`--k:${k}`}>
+            <i />
+            <i />
+            <i />
+          </span>
+        ))}
+      </div>
+      <div class="sc-card sc-dep__count">
+        <small>{T.deposit} · DSD</small>
+        <b>
+          <span class="sc-stack">
+            <em class="sc-dep__a">142</em>
+            <em class="sc-dep__b">148</em>
+          </span>
+          {T.crates}
+        </b>
+        <span class="sc-dep__bars">
+          {[40, 62, 50, 74, 58].map((h) => (
+            <i style={`height:${h}%`} />
+          ))}
+        </span>
+      </div>
+    </div>
+  )
+}
+
+{
+  name === 'gmmaster' && (
+    <div class="sc-win sc-master">
+      <div class="sc-bar">
+        <span class="sc-avatar" />
+        {T.master}: {T.customer}
+      </div>
+      <ul>
+        {T.fields.map((f, i) => (
+          <li style={`--k:${i}`}>
+            <span>{f}</span>
+            <i class="sc-sk" style={`width:${50 - i * 8}%`} />
+          </li>
+        ))}
+      </ul>
+      <span class="sc-chip sc-late sc-master__chip" style="--dl:.5s">
+        <i set:html={check} />
+        {T.terms}
+      </span>
+    </div>
+  )
+}
+
+<style is:global>
+  /* ---------- shop: IKONA storefront with personalised products ---------- */
+  .sc-shop {
+    width: min(100%, 520px);
+  }
+  .sc-shop__cart {
+    position: relative;
+    display: grid;
+    color: var(--jx-navy);
+  }
+  .sc-shop__cart b {
+    position: absolute;
+    right: -8px;
+    top: -7px;
+    display: grid;
+    place-items: center;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    color: #fff;
+    background: var(--hA);
+    font-size: 9.5px;
+  }
+  .sc-shop__cart em {
+    font-style: normal;
+  }
+  .sc-shop__n1 {
+    animation: sc-v1 9s var(--jx-ease) infinite both;
+    animation-delay: 2.6s;
+  }
+  .sc-shop__n2 {
+    animation: sc-v2 9s var(--jx-ease) infinite both;
+    animation-delay: 2.6s;
+  }
+  .sc-shop__body {
+    padding: 12px 14px 22px;
+  }
+  .sc-shop__h {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--jx-navy);
+  }
+  .sc-shop__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .sc-card.sc-shop__item {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    padding: 12px 6px 10px;
+    font-size: 10.5px;
+    box-shadow: 0 4px 14px rgba(30, 61, 126, 0.09);
+    animation: sc-seq 9s var(--jx-ease) infinite both;
+    animation-delay: calc(var(--k) * 0.3s);
+  }
+  .sc-shop__item:nth-child(3) {
+    animation-name: sc-seq, sc-pick !important;
+  }
+  /* Product shapes with a little personalised "photo" */
+  .sc-prod {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+  }
+  .sc-prod i {
+    display: block;
+    border-radius: 4px;
+    background:
+      radial-gradient(circle at 70% 30%, #fff6d6 0 18%, transparent 19%),
+      linear-gradient(180deg, color-mix(in oklab, var(--hC) 55%, #fff), color-mix(in oklab, var(--hA) 70%, #fff));
+  }
+  .sc-prod--mug i {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px 4px 8px 8px;
+    box-shadow: 9px 0 0 -3px #fff, 10px 0 0 -1px #c8d3df;
+  }
+  .sc-prod--poster i {
+    width: 34px;
+    height: 46px;
+    box-shadow: 0 0 0 3px #fff, 0 0 0 4px #dfe6ee;
+  }
+  .sc-prod--shirt i {
+    width: 44px;
+    height: 44px;
+    clip-path: polygon(25% 0, 40% 8%, 60% 8%, 75% 0, 100% 18%, 88% 36%, 80% 30%, 80% 100%, 20% 100%, 20% 30%, 12% 36%, 0 18%);
+  }
+  .sc-prod--cal i {
+    width: 44px;
+    height: 36px;
+    border-top: 7px solid var(--jx-navy);
+  }
+  .sc-chip.sc-shop__chip {
+    --d: 9s;
+    right: 14px;
+    bottom: -14px;
+  }
+
+  /* ---------- helpdesk: tickets, status updates in real time ---------- */
+  .sc-desk {
+    width: min(100%, 320px);
+  }
+  .sc-desk ul {
+    margin: 0;
+    padding: 6px 14px 12px;
+    list-style: none;
+  }
+  .sc-desk li {
+    display: grid;
+    grid-template-columns: 42px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #eef2f6;
+    font-size: 11px;
+  }
+  .sc-desk code {
+    color: var(--jx-grey);
+    font-size: 10.5px;
+  }
+  .sc-desk em {
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10px;
+    color: var(--hA);
+    background: color-mix(in oklab, var(--hB) 16%, #fff);
+    animation: sc-stflip 8s var(--jx-ease) infinite both;
+    animation-delay: calc(var(--k) * 0.8s);
+  }
+  @keyframes sc-stflip {
+    0%,
+    14% {
+      color: var(--sc-warn);
+      background: color-mix(in oklab, var(--sc-warn) 16%, #fff);
+    }
+    22%,
+    100% {
+      color: #1f8a45;
+      background: color-mix(in oklab, var(--sc-ok) 16%, #fff);
+    }
+  }
+
+  /* ---------- editor: personalise a mug ---------- */
+  .sc-ed {
+    width: min(100%, 320px);
+  }
+  .sc-ed__body {
+    display: grid;
+    grid-template-columns: 1fr 60px;
+    gap: 10px;
+    padding: 12px;
+  }
+  .sc-ed__canvas {
+    display: grid;
+    place-items: center;
+    height: 140px;
+    border-radius: 10px;
+    background:
+      linear-gradient(90deg, rgba(30, 61, 126, 0.05) 1px, transparent 1px) 0 0 / 14px 14px,
+      linear-gradient(0deg, rgba(30, 61, 126, 0.05) 1px, transparent 1px) 0 0 / 14px 14px,
+      #f7f9fb;
+  }
+  .sc-ed__mug {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 110px;
+    height: 100px;
+    border-radius: 8px 8px 16px 16px;
+    background: #fff;
+    box-shadow:
+      22px 0 0 -10px #fff,
+      22px 0 0 -7px #c8d3df,
+      0 10px 22px rgba(30, 61, 126, 0.16);
+  }
+  .sc-ed__photo {
+    position: absolute;
+    inset: 12px 14px 32px;
+    border-radius: 6px;
+    background:
+      radial-gradient(circle at 70% 30%, #fff6d6 0 14%, transparent 15%),
+      linear-gradient(180deg, color-mix(in oklab, var(--hC) 55%, #fff), color-mix(in oklab, var(--hA) 70%, #fff));
+    animation: sc-drop 8s var(--jx-ease) infinite both;
+  }
+  @keyframes sc-drop {
+    0%,
+    8% {
+      opacity: 0;
+      transform: translate(30px, -26px) scale(0.6) rotate(8deg);
+    }
+    22%,
+    88% {
+      opacity: 1;
+      transform: none;
+    }
+    96%,
+    100% {
+      opacity: 0;
+    }
+  }
+  .sc-ed__txt {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--jx-navy);
+  }
+  .sc-ed__txt span {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: bottom;
+    border-right: 2px solid var(--hA);
+    animation: sc-type2 8s steps(10) infinite both;
+  }
+  @keyframes sc-type2 {
+    0%,
+    28% {
+      max-width: 0;
+    }
+    48%,
+    88% {
+      max-width: 10ch;
+    }
+    96%,
+    100% {
+      max-width: 0;
+    }
+  }
+  .sc-ed__side {
+    display: grid;
+    align-content: start;
+    gap: 7px;
+    font-size: 10px;
+    color: var(--jx-grey);
+  }
+  .sc-ed__side i {
+    height: 34px;
+    border-radius: 6px;
+    background: linear-gradient(140deg, color-mix(in oklab, var(--hA) calc(100% - var(--o) * 30%), #fff), var(--hC));
+    opacity: 0.6;
+  }
+  .sc-ed__side i.is-on {
+    opacity: 1;
+    box-shadow: 0 0 0 2px var(--jx-navy);
+  }
+
+  /* ---------- backoffice: KPIs, revenue, vouchers, dunning ---------- */
+  .sc-bo {
+    width: min(100%, 320px);
+    padding-bottom: 12px;
+  }
+  .sc-bo__kpis {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 10px 12px 4px;
+  }
+  .sc-bo__kpis span {
+    display: grid;
+    gap: 2px;
+    padding: 8px;
+    border-radius: 8px;
+    background: #f4f7fa;
+  }
+  .sc-bo__kpis small {
+    color: var(--jx-grey);
+    font-size: 10px;
+  }
+  .sc-bo__kpis b {
+    font-weight: 600;
+    color: var(--jx-navy);
+  }
+  .sc-bo__chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 60px;
+    margin: 8px 12px;
+  }
+  .sc-bo__chart i {
+    flex: 1;
+    height: var(--h);
+    border-radius: 3px 3px 0 0;
+    background: linear-gradient(180deg, var(--hB), var(--hA));
+    transform-origin: bottom;
+    animation: sc-grow8 8s var(--jx-ease) infinite both;
+    animation-delay: calc(var(--k) * 0.12s);
+  }
+  .sc-bo__foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0 12px;
+  }
+  .sc-bo__tag {
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-weight: 500;
+    font-size: 10px;
+    color: var(--hA);
+    background: color-mix(in oklab, var(--hB) 14%, #fff);
+  }
+  .sc-bo__tag--warn {
+    color: #a26a00;
+    background: color-mix(in oklab, var(--sc-warn) 16%, #fff);
+  }
+
+  /* ---------- produce: order → proof → print → shipping ---------- */
+  .sc-pipe {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 320px);
+  }
+  .sc-pipe ol {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .sc-pipe li {
+    display: grid;
+    justify-items: center;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 10.5px;
+    color: var(--jx-navy);
+  }
+  .sc-pipe .sc-ci__dot {
+    animation-delay: calc(var(--k) * 1s);
+  }
+  .sc-pipe__road {
+    position: relative;
+    height: 44px;
+    margin-top: 14px;
+    border-bottom: 2px dashed #c8d3df;
+  }
+  .sc-pipe__box {
+    position: absolute;
+    left: 0;
+    bottom: 4px;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 30px;
+    border-radius: 8px;
+    color: #fff;
+    background: var(--hA);
+    animation: sc-drive 8s var(--jx-ease-io) infinite;
+  }
+  @keyframes sc-drive {
+    0%,
+    10% {
+      left: 0;
+    }
+    48%,
+    88% {
+      left: calc(100% - 36px);
+    }
+    96%,
+    100% {
+      left: calc(100% - 36px);
+      opacity: 0;
+    }
+  }
+  .sc-chip.sc-pipe__chip {
+    left: 50%;
+    top: -40px;
+    translate: -50% 0;
+  }
+
+  /* ---------- api: request, 201, webhook ---------- */
+  .sc-api {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 10px;
+    width: min(100%, 300px);
+  }
+  .sc-term.sc-api__req {
+    width: 100%;
+  }
+  .sc-api__req b {
+    font-weight: 400;
+    color: var(--hC);
+  }
+  .sc-api__req em {
+    font-style: normal;
+    color: #f5c46b;
+  }
+  .sc-card.sc-api__res {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    justify-self: end;
+    width: 70%;
+  }
+  .sc-api__code {
+    padding: 3px 8px;
+    border-radius: 6px;
+    color: #fff;
+    background: var(--sc-ok);
+    font-weight: 600;
+    font-size: 11px;
+  }
+  .sc-api__res span:last-child {
+    display: grid;
+  }
+  .sc-api__res small {
+    color: var(--jx-grey);
+    font-size: 10px;
+  }
+  .sc-chip.sc-api__hook {
+    position: static;
+    justify-self: start;
+    padding: 6px 12px;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 10.5px;
+  }
+
+  /* ---------- portal: white label portal with payments ---------- */
+  .sc-portal {
+    display: grid;
+    grid-template-columns: 1fr 90px;
+  }
+  .sc-portal .sc-brand__top {
+    grid-column: 1 / -1;
+  }
+  .sc-portal__body {
+    display: grid;
+    gap: 10px;
+    padding: 12px;
+  }
+  .sc-portal__hero {
+    display: grid;
+    gap: 6px;
+    padding: 14px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, color-mix(in oklab, var(--sc-br) 25%, #fff), color-mix(in oklab, var(--sc-br) 8%, #fff));
+  }
+  .sc-portal__hero em {
+    width: 56px;
+    height: 16px;
+    margin-top: 4px;
+    border-radius: 5px;
+    background: var(--sc-br);
+  }
+  .sc-portal__pay {
+    display: flex;
+    gap: 6px;
+  }
+  .sc-portal__pay span {
+    padding: 4px 9px;
+    border-radius: 6px;
+    border: 1px solid #dfe6ee;
+    font-weight: 600;
+    font-size: 10px;
+    color: var(--jx-navy);
+  }
+  .sc-portal__trust {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 10.5px;
+    color: #a26a00;
+  }
+  .sc-portal__trust i {
+    display: grid;
+  }
+  .sc-portal__side {
+    padding: 12px 10px;
+  }
+
+  /* ---------- sdx: drop a file, get a link, recipient notified ---------- */
+  .sc-sdx {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 12px;
+    width: min(100%, 380px);
+  }
+  .sc-sdx__zone {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 6px;
+    margin: 12px;
+    padding: 16px 12px 52px;
+    border: 1.5px dashed color-mix(in oklab, var(--hA) 50%, #fff);
+    border-radius: 10px;
+    color: var(--jx-grey);
+    font-size: 11px;
+  }
+  .sc-sdx__zone > i {
+    display: grid;
+    color: var(--hA);
+  }
+  .sc-card.sc-sdx__file {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 10px;
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    align-items: center;
+    gap: 4px 8px;
+    padding: 8px 10px;
+    font-size: 11px;
+    color: var(--jx-navy);
+    animation: sc-drop 9s var(--jx-ease) infinite both;
+  }
+  .sc-sdx__file > i {
+    display: grid;
+    color: var(--hA);
+  }
+  .sc-sdx__file .sc-fill {
+    grid-column: 1 / -1;
+  }
+  .sc-card.sc-sdx__link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    animation: sc-pop 9s var(--jx-ease) infinite both;
+    animation-delay: -0.4s;
+  }
+  .sc-sdx__link > i {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    color: #fff;
+    background: #2a73ff;
+  }
+  .sc-sdx__link span {
+    display: grid;
+  }
+  .sc-sdx__link small {
+    color: var(--jx-grey);
+    font-size: 10.5px;
+  }
+  .sc-chip.sc-sdx__note {
+    right: -6px;
+    bottom: -16px;
+    animation: sc-pop 9s var(--jx-ease) infinite both;
+    animation-delay: 0.6s;
+  }
+
+  /* ---------- sdxfiles: any format uploads ---------- */
+  .sc-files {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width: min(100%, 300px);
+  }
+  .sc-card.sc-files__f {
+    display: grid;
+    justify-items: center;
+    gap: 6px;
+    padding: 12px 8px 10px;
+    font-size: 11px;
+    animation: sc-seq 8s var(--jx-ease) infinite both;
+    animation-delay: calc(var(--k) * 0.3s);
+  }
+  .sc-files__f > i {
+    display: grid;
+    color: var(--hA);
+  }
+  .sc-files__f b {
+    font-weight: 600;
+    color: var(--jx-navy);
+  }
+  .sc-files__f .sc-fill {
+    width: 100%;
+    height: 4px;
+  }
+
+  /* ---------- sdxrights: permission matrix ---------- */
+  .sc-rights {
+    width: min(100%, 300px);
+  }
+  .sc-rights table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 4px 0 8px;
+    font-size: 11px;
+  }
+  .sc-rights th {
+    padding: 6px 4px;
+    font-weight: 500;
+    font-size: 10px;
+    color: var(--jx-grey);
+  }
+  .sc-rights td {
+    padding: 6px 4px;
+    text-align: center;
+    border-top: 1px solid #eef2f6;
+  }
+  .sc-rights td:first-child {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding-left: 12px;
+    text-align: left;
+    font-weight: 500;
+  }
+  .sc-rights .sc-avatar {
+    width: 20px;
+    height: 20px;
+  }
+  .sc-rights .sc-ccfg__tg {
+    display: inline-block;
+    vertical-align: middle;
+    animation-delay: calc(var(--k) * 0.2s);
+  }
+  .sc-rights .sc-ccfg__tg.is-off,
+  .sc-rights .sc-ccfg__tg.is-off::after {
+    animation: none;
+    background-color: #d6dee7;
+  }
+  .sc-rights .sc-ccfg__tg.is-off::after {
+    background: #fff;
+  }
+
+  /* ---------- sdxaudit: history timeline ---------- */
+  .sc-audit {
+    width: min(100%, 300px);
+  }
+  .sc-audit ol {
+    position: relative;
+    margin: 0;
+    padding: 8px 14px 12px 30px;
+    list-style: none;
+  }
+  .sc-audit ol::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 14px;
+    bottom: 18px;
+    width: 2px;
+    background: #e3e9f0;
+  }
+  .sc-audit li {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 7px 0;
+    font-size: 11px;
+  }
+  .sc-audit li > i {
+    position: absolute;
+    left: -15px;
+    top: 11px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--hA);
+    box-shadow: 0 0 0 3px #fff;
+  }
+  .sc-audit time {
+    color: var(--jx-grey);
+    font-size: 10px;
+  }
+
+  /* ---------- sdxnotify: change report by email ---------- */
+  .sc-notify {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 290px);
+  }
+  .sc-notify__env {
+    position: absolute;
+    z-index: 2;
+    left: -14px;
+    top: -18px;
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    color: #fff;
+    background: linear-gradient(140deg, var(--hA), var(--hB));
+    box-shadow: 0 10px 24px rgba(30, 61, 126, 0.25);
+    animation: jx-float 6s ease-in-out infinite;
+  }
+  .sc-notify__mail .sc-bar {
+    padding-left: 48px;
+  }
+  .sc-notify__mail ul {
+    margin: 0;
+    padding: 8px 14px 14px;
+    list-style: none;
+  }
+  .sc-notify__mail li {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 0;
+  }
+  .sc-notify__mail li i {
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    color: #fff;
+    background: var(--sc-ok);
+  }
+
+  /* ---------- sdxshare: email, link, QR ---------- */
+  .sc-share {
+    width: min(100%, 280px);
+  }
+  .sc-share__tabs {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 10px 12px;
+    padding: 3px;
+    border-radius: 9px;
+    background: #f0f4f8;
+    font-weight: 500;
+    font-size: 10.5px;
+    text-align: center;
+  }
+  .sc-share__tabs span {
+    position: relative;
+    z-index: 1;
+    padding: 5px 0;
+  }
+  .sc-share__ind {
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    bottom: 3px;
+    width: calc((100% - 6px) / 3);
+    border-radius: 7px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(30, 61, 126, 0.12);
+    animation: sc-ind3x 9s var(--jx-ease-io) infinite;
+  }
+  @keyframes sc-ind3x {
+    0%,
+    30% {
+      transform: none;
+    }
+    35%,
+    63% {
+      transform: translateX(100%);
+    }
+    68%,
+    96% {
+      transform: translateX(200%);
+    }
+  }
+  .sc-share__view {
+    place-items: center;
+    height: 100px;
+    padding: 0 12px 12px;
+  }
+  .sc-share__field {
+    display: block;
+    width: 220px;
+    max-width: 100%;
+    padding: 9px 12px;
+    border-radius: 8px;
+    border: 1.5px solid color-mix(in oklab, var(--hA) 45%, #fff);
+    font-size: 11px;
+    color: var(--jx-navy);
+  }
+  .sc-share__qr {
+    display: grid;
+    grid-template-columns: repeat(9, 8px);
+    gap: 1px;
+    padding: 6px;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 0 0 1px #e3e9f0;
+  }
+  .sc-share__qr i {
+    width: 8px;
+    height: 8px;
+  }
+  .sc-share__qr i.on {
+    background: var(--jx-navy);
+  }
+
+  /* ---------- gm8: invoice list ---------- */
+  .sc-gm {
+    width: min(100%, 520px);
+  }
+  .sc-gm .sc-bar img {
+    width: 18px;
+    height: 18px;
+  }
+  .sc-gm__btn {
+    padding: 3px 10px;
+    border-radius: 7px;
+    color: #fff !important;
+    background: var(--hA);
+    font-size: 10.5px;
+    animation: sc-press 9s var(--jx-ease) infinite;
+  }
+  .sc-gm table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 8px;
+    font-size: 11.5px;
+  }
+  .sc-gm td {
+    padding: 9px 14px;
+    border-top: 1px solid #eef2f6;
+  }
+  .sc-gm td:nth-child(3) {
+    text-align: right;
+    font-weight: 600;
+    color: var(--jx-navy);
+    font-variant-numeric: tabular-nums;
+  }
+  .sc-gm td:last-child {
+    width: 28px;
+  }
+  .sc-gm__st {
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    color: #fff;
+    background: var(--sc-ok);
+    animation: sc-pop 9s var(--jx-ease) infinite both;
+    animation-delay: calc(0.6s + var(--k) * 0.25s);
+  }
+
+  /* ---------- gmmail: invoices go out by email ---------- */
+  .sc-gmmail {
+    position: relative;
+    z-index: 1;
+    width: 260px;
+    height: 170px;
+  }
+  .sc-card.sc-gmmail__doc {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    translate: 0 -50%;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 11px;
+  }
+  .sc-gmmail__doc i {
+    display: grid;
+    color: var(--hA);
+  }
+  .sc-gmmail__env {
+    position: absolute;
+    left: 120px;
+    top: 50%;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    margin-top: -17px;
+    border-radius: 10px;
+    color: #fff;
+    background: var(--hA);
+    animation: sc-fly 3s var(--jx-ease) infinite both;
+    animation-delay: calc(var(--k) * 1s);
+  }
+  @keyframes sc-fly {
+    0% {
+      opacity: 0;
+      transform: none;
+    }
+    15% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translate(110px, calc((var(--k) - 1) * 50px)) scale(0.8);
+    }
+  }
+  .sc-chip.sc-gmmail__chip {
+    right: 0;
+    bottom: 0;
+  }
+
+  /* ---------- gmstock: levels go up and down ---------- */
+  .sc-stock {
+    width: min(100%, 290px);
+  }
+  .sc-stock ul {
+    display: grid;
+    gap: 9px;
+    margin: 0;
+    padding: 12px 14px 16px;
+    list-style: none;
+  }
+  .sc-stock li {
+    display: grid;
+    grid-template-columns: 74px 1fr;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+  }
+  .sc-stock__bar {
+    height: 10px;
+    border-radius: 5px;
+    background: #e6edf3;
+    overflow: hidden;
+  }
+  .sc-stock__bar i {
+    display: block;
+    height: 100%;
+    border-radius: 5px;
+    background: linear-gradient(90deg, var(--hA), var(--hB));
+    animation: sc-lvl 7s ease-in-out infinite;
+    animation-delay: calc(var(--k) * -1.6s);
+  }
+  @keyframes sc-lvl {
+    0%,
+    100% {
+      width: 70%;
+    }
+    30% {
+      width: 42%;
+    }
+    55% {
+      width: 86%;
+    }
+    80% {
+      width: 58%;
+    }
+  }
+
+  /* ---------- gmbatch: a stack prints ---------- */
+  .sc-batch {
+    position: relative;
+    z-index: 1;
+    width: 240px;
+    height: 170px;
+  }
+  .sc-batch__stack {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+  }
+  .sc-batch__stack span {
+    position: absolute;
+    display: grid;
+    align-content: start;
+    gap: 5px;
+    width: 96px;
+    height: 124px;
+    padding: 12px 10px;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 6px 16px rgba(30, 61, 126, 0.14);
+    transform: translate(calc(var(--k) * 6px), calc(var(--k) * 5px)) rotate(calc((var(--k) - 2) * 2deg));
+    animation: sc-fan 8s var(--jx-ease-io) infinite;
+    animation-delay: calc(var(--k) * 0.15s);
+  }
+  .sc-batch__stack .sc-sk {
+    height: 4px;
+  }
+  @keyframes sc-fan {
+    0%,
+    20%,
+    90%,
+    100% {
+      translate: 0 0;
+    }
+    40%,
+    70% {
+      translate: calc(var(--k) * 16px) 0;
+    }
+  }
+  .sc-batch__printer {
+    position: absolute;
+    right: 6px;
+    bottom: 22px;
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    color: #fff;
+    background: linear-gradient(140deg, var(--hA), var(--hB));
+    box-shadow: 0 10px 22px rgba(30, 61, 126, 0.25);
+  }
+  .sc-chip.sc-batch__chip {
+    right: 0;
+    bottom: -14px;
+  }
+
+  /* ---------- gmin: delivery becomes a commission invoice ---------- */
+  .sc-gmin {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sc-card.sc-gmin__del {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px;
+    font-size: 11px;
+  }
+  .sc-gmin__del > i {
+    display: grid;
+    color: var(--hA);
+  }
+  .sc-gmin__del span {
+    display: grid;
+  }
+  .sc-gmin__del small {
+    color: var(--jx-grey);
+    font-size: 10px;
+  }
+  .sc-gmin__arrow {
+    width: 26px;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, var(--hA) 0 3px, transparent 3px 6px);
+    animation: sc-drip-x 0.8s linear infinite;
+  }
+  .sc-card.sc-gmin__doc {
+    display: grid;
+    gap: 7px;
+    width: 120px;
+    padding: 12px;
+    font-size: 11px;
+    animation: sc-pop 8s var(--jx-ease) infinite both;
+  }
+  .sc-gmin__doc b {
+    font-weight: 600;
+    color: var(--jx-navy);
+  }
+  .sc-gmin__doc .sc-sk {
+    height: 4px;
+  }
+
+  /* ---------- gmout: quote becomes an invoice with your letterhead ---------- */
+  .sc-gmout {
+    position: relative;
+    z-index: 1;
+  }
+  .sc-gmout__page {
+    display: grid;
+    gap: 7px;
+    width: 170px;
+    padding: 14px 16px;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 12px 30px rgba(30, 61, 126, 0.16);
+  }
+  .sc-gmout__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    border-bottom: 2px solid color-mix(in oklab, var(--hA) 60%, #fff);
+    font-size: 9.5px;
+    color: var(--jx-grey);
+  }
+  .sc-gmout__title b {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .sc-gmout__q {
+    color: var(--jx-grey);
+    animation: sc-v1 8s var(--jx-ease) infinite both;
+    animation-delay: 2.4s;
+  }
+  .sc-gmout__r {
+    color: var(--hA);
+    animation: sc-v2 8s var(--jx-ease) infinite both;
+    animation-delay: 2.4s;
+  }
+  .sc-gmout__page > .sc-sk {
+    height: 4px;
+  }
+  .sc-gmout__sum {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+    padding-top: 6px;
+    border-top: 1px solid #eef2f6;
+  }
+  .sc-gmout__sum b {
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--jx-navy);
+  }
+
+  /* ---------- gmarchive: documents file into the year ---------- */
+  .sc-arch2 {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 10px;
+  }
+  .sc-card.sc-arch2__f {
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+    width: 84px;
+    padding: 14px 8px 12px;
+    font-size: 10px;
+    color: var(--jx-grey);
+  }
+  .sc-arch2__f i {
+    display: grid;
+    color: var(--hA);
+  }
+  .sc-arch2__f b {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--jx-navy);
+  }
+  .sc-arch2__f:nth-child(2) {
+    box-shadow:
+      0 0 0 2px var(--hA),
+      0 8px 22px rgba(30, 61, 126, 0.13);
+  }
+  .sc-arch2__doc {
+    position: absolute;
+    left: 50%;
+    top: -40px;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    margin-left: -15px;
+    border-radius: 8px;
+    color: var(--hA);
+    background: #fff;
+    box-shadow: 0 6px 14px rgba(30, 61, 126, 0.16);
+    animation: sc-file 3s var(--jx-ease) infinite;
+  }
+  @keyframes sc-file {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    20% {
+      opacity: 1;
+    }
+    70% {
+      opacity: 1;
+      transform: translateY(46px) scale(0.8);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(56px) scale(0.6);
+    }
+  }
+  .sc-chip.sc-arch2__chip {
+    left: 50%;
+    bottom: -44px;
+    translate: -50% 0;
+  }
+
+  /* ---------- gmdeposit: crates and counter ---------- */
+  .sc-dep {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .sc-dep__crates {
+    display: grid;
+    grid-template-columns: repeat(2, 54px);
+    gap: 6px;
+  }
+  .sc-dep__crates span {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    height: 34px;
+    padding: 5px;
+    border-radius: 5px;
+    background: color-mix(in oklab, var(--hA) 75%, #0b1a36);
+    animation: sc-seq 8s var(--jx-ease) infinite both;
+    animation-delay: calc(var(--k) * 0.25s);
+  }
+  .sc-dep__crates i {
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+  }
+  .sc-card.sc-dep__count {
+    display: grid;
+    gap: 6px;
+    padding: 12px 14px;
+    font-size: 11px;
+  }
+  .sc-dep__count small {
+    color: var(--jx-grey);
+    font-size: 10px;
+  }
+  .sc-dep__count b {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    font-weight: 500;
+    color: var(--jx-grey);
+  }
+  .sc-dep__count em {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--jx-navy);
+  }
+  .sc-dep__a {
+    animation: sc-v1 8s var(--jx-ease) infinite both;
+    animation-delay: 1.8s;
+  }
+  .sc-dep__b {
+    animation: sc-v2 8s var(--jx-ease) infinite both;
+    animation-delay: 1.8s;
+  }
+  .sc-dep__bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 34px;
+  }
+  .sc-dep__bars i {
+    width: 10px;
+    border-radius: 2px 2px 0 0;
+    background: var(--hB);
+  }
+
+  /* ---------- gmmaster: customer record with individual terms ---------- */
+  .sc-master {
+    width: min(100%, 280px);
+  }
+  .sc-master .sc-avatar {
+    width: 20px;
+    height: 20px;
+  }
+  .sc-master ul {
+    margin: 0;
+    padding: 8px 14px 20px;
+    list-style: none;
+  }
+  .sc-master li {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid #eef2f6;
+    font-size: 11px;
+  }
+  .sc-chip.sc-master__chip {
+    right: 12px;
+    bottom: -14px;
+  }
+</style>

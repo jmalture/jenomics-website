@@ -31,13 +31,25 @@
   already on jenomics.de (no SLAs, numbers or new claims); scene labels are generic (Anbieter A/B/C, web-01 …).
 - Homepage hero: carousel replaced by a live app window (`hero-live.astro`), awaiting review.
 
+- Service heroes (2026-10-19): the photo is replaced by that service's live pane from the homepage hero
+  window (`hero-live.astro` with `only=<key>`), replaying its story every 7.5 s.
+- Menu pages DE + EN (2026-10-19, awaiting review), scraped from jenomics.de via the public WP REST API:
+  Über uns, Team, Karriere, Pricing, Kontakt, IKONA, SDX, Großmarkt (GM8), Blog index + all 16 posts.
+  Stock photos replaced by animated scenes (`ScenesCompany.astro`, `ScenesProducts.astro`); people photos,
+  product logos and the IHK seal kept. PDFs (job ads, price lists 2025/2026) in `public/files/`.
+  Notes for Jenomics: the old Karriere page had 3 empty job ads (Assistenz Backoffice, Vertriebsinnendienst,
+  Kaufmännischer Mitarbeiter: placeholder or wrong text), so they are left out; the application address was
+  shown as job@ but linked to jobs@jenomics.de (we use jobs@, please confirm). SDX feature texts come from the
+  SDX blog post. Kontakt map loads Google Maps only after a click (privacy). Blog posts stay German
+  (/en/blog/ lists them with a note). Sample data inside the scenes (customer names, KPIs) is illustrative.
+  Contact form needs the SMTP env vars on Hostinger (see `src/pages/api/contact.ts`).
+
 ## Next
 - Jenomics EMCP: OAuth discovery fails because Mittwald answers every `/.well-known/*` URL with 403, so Claude
   Code can't find the authorization server. Needs `/.well-known/oauth-authorization-server` and
   `/.well-known/oauth-protected-resource` passed through to WordPress on the server. Until then scrape via
   `https://www.jenomics.de/wp-json/wp/v2/pages?slug=<slug>` (public).
-- Remaining pages: products (IKONA, SDX, Großmarkt), Über uns, Team, Karriere, Pricing, Kontakt
-  (form → `/api/contact`), Projekte, Web-Deluxe-Kit, legal pages, full blog articles.
+- Remaining pages: Projekte, Web-Deluxe-Kit, legal pages (AGB, Datenschutz, Impressum).
 - Links in header/footer already use the jenomics.de slugs, so they work once those pages exist.
   EN slugs (`/en/...`) are placeholders until the EN pages are built.
 - Switch the jenomics.de domain to the Hostinger app once the subpages exist.

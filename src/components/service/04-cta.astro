@@ -7,8 +7,14 @@ import Icon from '../ui/Icon.astro';
 import Blobs from '../ui/Blobs.astro';
 import type { Lang } from '../../i18n';
 import { serviceUi, offerServices, type ServiceKey } from './data';
-const { lang, current } = Astro.props as { lang: Lang; current?: ServiceKey };
+const { lang, current, band } = Astro.props as {
+  lang: Lang;
+  current?: ServiceKey;
+  /** Overrides the band texts (product pages: "Interesse an unseren Produkten?") */
+  band?: { kicker: string; title: string; text: string; btn: string; href: string };
+};
 const u = serviceUi(lang);
+const b = band ?? { kicker: u.cta_kicker, title: u.cta_title, text: u.cta_text, btn: u.cta_btn, href: u.cta_btn_href };
 const others = current ? offerServices(lang).filter((s) => s.key !== current) : [];
 ---
 
@@ -23,11 +29,11 @@ const others = current ? offerServices(lang).filter((s) => s.key !== current) : 
         ]}
       />
       <div class="jx-scta__copy">
-        <span class="jx-kicker jx-kicker--light">{u.cta_kicker}</span>
-        <h2 class="jx-h2">{u.cta_title}</h2>
-        <p>{u.cta_text}</p>
+        <span class="jx-kicker jx-kicker--light">{b.kicker}</span>
+        <h2 class="jx-h2">{b.title}</h2>
+        <p>{b.text}</p>
       </div>
-      <a class="jx-btn jx-btn--white" href={u.cta_btn_href}>{u.cta_btn}<Icon name="arrow" /></a>
+      <a class="jx-btn jx-btn--white" href={b.href}>{b.btn}<Icon name="arrow" /></a>
     </div>
 
     {

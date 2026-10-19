@@ -52,6 +52,17 @@ export const OPS_SCENES = [
   'resell',
   'webhost',
 ] as const;
+/** Scenes for Über uns, Team, Karriere, Pricing, Kontakt (ScenesCompany.astro). */
+export const COMPANY_SCENES = [
+  'story', 'values', 'commit', 'crew', 'globe', 'apply',
+  'meter', 'invoice', 'tariff', 'minute', 'clock24', 'skills', 'ondemand', 'channels', 'map',
+] as const;
+/** Scenes for IKONA, SDX, Großmarkt (ScenesProducts.astro). */
+export const PRODUCT_SCENES = [
+  'shop', 'helpdesk', 'editor', 'backoffice', 'produce', 'api', 'portal',
+  'sdx', 'sdxfiles', 'sdxrights', 'sdxaudit', 'sdxnotify', 'sdxshare', 'sdxbrand',
+  'gm8', 'gmmail', 'gmstock', 'gmbatch', 'gmin', 'gmout', 'gmarchive', 'gmdeposit', 'gmmaster',
+] as const;
 export type SceneName =
   | 'procure'
   | 'monitor'
@@ -61,7 +72,9 @@ export type SceneName =
   | 'remote'
   | 'home'
   | (typeof BUILD_SCENES)[number]
-  | (typeof OPS_SCENES)[number];
+  | (typeof OPS_SCENES)[number]
+  | (typeof COMPANY_SCENES)[number]
+  | (typeof PRODUCT_SCENES)[number];
 
 /**
  * Feature bento with animated scenes (components/service/Scene.astro) instead of photos, one entry per

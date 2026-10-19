@@ -1,0 +1,399 @@
+---
+/**
+ * Product pages: IKONA, SDX (Secure Data eXchange) and Großmarkt GM8. Hero with product logo and a live
+ * product scene, features as scene bento, then per product: IKONA at a glance + CEO quote, SDX link-out,
+ * GM8 price cards. Ends with the "Interesse an unseren Produkten?" band.
+ */
+import Base from '../layouts/Base.astro';
+import Hero from '../components/service/01-hero.astro';
+import Scene from '../components/service/Scene.astro';
+import Bento from '../components/page/Bento.astro';
+import Cta from '../components/service/04-cta.astro';
+import Icon from '../components/ui/Icon.astro';
+import { pageText, pageUi, PAGE_URLS, PAGE_PAL } from '../components/page/data';
+import type { SceneName } from '../components/service/data';
+import { pick, type Lang } from '../i18n';
+import offer from '../i18n/offer.json';
+
+interface Props {
+  lang: Lang;
+  product: 'ikona' | 'sdx' | 'gm8';
+}
+const { lang, product } = Astro.props;
+const t = pageText(product, lang);
+const u = pageUi(lang);
+const pal = PAGE_PAL[product];
+const o = pick(offer, lang);
+const name = o.products.find((p: any) => p.key === (product === 'gm8' ? 'gm' : product))!.name;
+
+const cfg = {
+  ikona: {
+    logo: { src: '/media/logo-ikona.webp', alt: 'IKONA', w: 720, h: 110 },
+    hero: 'shop',
+    scenes: ['helpdesk', 'editor', 'backoffice', 'produce', 'api', 'portal'],
+    spans: [3, 3, 3, 3, 3, 3],
+  },
+  sdx: {
+    logo: { src: '/media/logo-sdx.webp', alt: 'Secure Data eXchange', w: 720, h: 72 },
+    hero: 'sdx',
+    scenes: ['sdxfiles', 'sdxrights', 'sdxaudit', 'sdxnotify', 'sdxshare', 'sdxbrand'],
+    spans: [2, 2, 2, 2, 2, 2],
+  },
+  gm8: {
+    logo: { src: '/media/logo-gm8.webp', alt: 'Großmarkt 8', w: 720, h: 110 },
+    hero: 'gm8',
+    scenes: ['gmmail', 'gmstock', 'gmbatch', 'gmin', 'gmout', 'gmarchive', 'gmdeposit', 'gmmaster'],
+    spans: [3, 3, 2, 2, 2, 2, 2, 2],
+  },
+}[product];
+const items = t.features.map((f: any, i: number) => ({ ...f, scene: cfg.scenes[i] as SceneName, span: cfg.spans[i] as 2 | 3 | 4 }));
+const ctas =
+  product === 'sdx'
+    ? [
+        { label: t.cta1, href: t.cta1_href, ext: true },
+        { label: t.cta2, href: u.contact_href, ghost: true },
+      ]
+    : [
+        { label: t.cta1, href: u.contact_href },
+        { label: t.cta2, href: product === 'gm8' ? '#preise' : u.pricing_href, ghost: true },
+      ];
+---
+
+<Base lang={lang} title={t.meta_title} description={t.meta_desc} alternates={PAGE_URLS[product]}>
+  <Hero
+    lang={lang}
+    title={t.title}
+    lead={t.lead}
+    pal={pal}
+    kicker={t.kicker}
+    crumbs={[{ label: u.crumb_products, href: u.crumb_products_href }, { label: name }]}
+    ctas={ctas}
+    logo={cfg.logo}
+    pill={u.pill_since}
+  >
+    <Scene name={cfg.hero as SceneName} lang={lang} slot="visual" />
+  </Hero>
+
+  <section class="jx-section jx-feat jx-pfeat" style={`--hA:${pal[0]};--hB:${pal[1]};--hC:${pal[2]}`}>
+    <div class="jx-wrap">
+      <header class="jx-head">
+        <div>
+          <span class="jx-kicker" data-reveal>{t.feat_kicker}</span>
+          <h2 class="jx-h2" data-reveal style="--i:1">{t.feat_title}</h2>
+        </div>
+      </header>
+      <Bento lang={lang} items={items} />
+    </div>
+  </section>
+
+  {
+    product === 'ikona' && (
+      <section class="jx-section jx-glance">
+        <div class="jx-wrap">
+          <header class="jx-head jx-head--center">
+            <span class="jx-kicker" data-reveal>{t.glance_kicker}</span>
+            <h2 class="jx-h2" data-reveal style="--i:1">{t.glance_title}</h2>
+          </header>
+          <ul class="jx-glance__chips" data-reveal style="--i:2">
+            {t.glance.map((g: string) => (
+              <li>
+                <Icon name="check" size={16} />
+                {g}
+              </li>
+            ))}
+          </ul>
+          <ul class="jx-glance__pillars">
+            {t.pillars.map(([h, p]: [string, string], i: number) => (
+              <li data-reveal style={`--i:${i}`}>
+                <span>{String(i + 1).padStart(2, '0')}</span>
+                <h3>{h}</h3>
+                <p>{p}</p>
+              </li>
+            ))}
+          </ul>
+          <figure class="jx-pquote" data-reveal>
+            <img src="/media/team-ceo.webp" alt={t.quote_name} width="560" height="560" loading="lazy" decoding="async" />
+            <div>
+              <Icon name="quote" size={30} />
+              <blockquote>{t.quote}</blockquote>
+              <figcaption>
+                <strong>{t.quote_name}</strong>, {t.quote_role}
+              </figcaption>
+            </div>
+          </figure>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    product === 'sdx' && (
+      <section class="jx-section jx-sdxmore">
+        <div class="jx-wrap jx-sdxmore__box" data-reveal>
+          <img src="/media/logo-sdx.webp" alt="Secure Data eXchange" width="720" height="72" loading="lazy" />
+          <h2 class="jx-h2">{t.more_title}</h2>
+          <p>{t.more_text}</p>
+          <a class="jx-btn" href={t.cta1_href} target="_blank" rel="noopener">
+            {t.more_btn}
+            <Icon name="external" />
+          </a>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    product === 'gm8' && (
+      <section class="jx-section jx-plans" id="preise">
+        <div class="jx-wrap">
+          <header class="jx-head jx-head--center">
+            <span class="jx-kicker" data-reveal>{t.price_kicker}</span>
+            <h2 class="jx-h2" data-reveal style="--i:1">{t.price_title}</h2>
+            <p class="jx-lead jx-plans__lead" data-reveal style="--i:2">{t.price_text}</p>
+          </header>
+          <ul class="jx-plans__grid">
+            {t.plans.map((p: any, i: number) => (
+              <li class:list={['jx-plan', { 'jx-plan--best': p.best }]} data-reveal style={`--i:${i}`}>
+                {p.best && <span class="jx-plan__badge">{t.best}</span>}
+                <h3>{p.name}</h3>
+                <p class="jx-plan__sub">{p.sub}</p>
+                <p class="jx-plan__price">
+                  <small>{t.per}</small>
+                  <b>{p.price} €</b>
+                </p>
+                <ul>
+                  {p.items.map((x: string) => (
+                    <li>
+                      <Icon name="check" size={15} />
+                      {x}
+                    </li>
+                  ))}
+                </ul>
+                <a class:list={['jx-btn', { 'jx-btn--ghost': !p.best }]} href={u.contact_href}>
+                  {t.ask}
+                  <Icon name="arrow" />
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p class="jx-plans__note">{t.price_note}</p>
+        </div>
+      </section>
+    )
+  }
+
+  <Cta lang={lang} band={{ kicker: u.products_kicker, title: u.products_title, text: u.products_text, btn: u.products_btn, href: u.contact_href }} />
+</Base>
+
+<style is:global>
+  .jx-pfeat .jx-head > div {
+    max-width: 720px;
+  }
+  .jx-glance__chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 0 clamp(28px, 4vw, 48px);
+    padding: 0;
+    list-style: none;
+  }
+  .jx-glance__chips li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px 9px 12px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid rgba(30, 61, 126, 0.1);
+    font-weight: 500;
+    font-size: 0.9375rem;
+  }
+  .jx-glance__chips svg {
+    color: var(--jx-green);
+  }
+  .jx-glance__pillars {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(14px, 2vw, 24px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-glance__pillars li {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    padding: 24px;
+    border-radius: var(--jx-r-lg);
+    background: linear-gradient(160deg, #fff, #f4f8fb);
+    border: 1px solid rgba(30, 61, 126, 0.08);
+  }
+  .jx-glance__pillars span {
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    color: var(--jx-blue-k);
+  }
+  .jx-glance__pillars h3 {
+    font-size: 1.1875rem;
+  }
+  .jx-glance__pillars p {
+    color: var(--jx-grey);
+    font-size: 0.9375rem;
+  }
+  .jx-pquote {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: clamp(20px, 4vw, 48px);
+    align-items: center;
+    margin: clamp(36px, 5vw, 64px) auto 0;
+    max-width: 900px;
+  }
+  .jx-pquote img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: var(--jx-shadow);
+  }
+  .jx-pquote > div {
+    display: grid;
+    gap: 12px;
+  }
+  .jx-pquote svg {
+    color: var(--jx-green);
+  }
+  .jx-pquote blockquote {
+    margin: 0;
+    font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+    font-weight: 500;
+    line-height: 1.45;
+  }
+  .jx-pquote figcaption {
+    color: var(--jx-grey);
+  }
+  .jx-sdxmore__box {
+    display: grid;
+    justify-items: center;
+    gap: 16px;
+    max-width: 760px;
+    text-align: center;
+  }
+  .jx-sdxmore__box img {
+    width: auto;
+    height: 36px;
+  }
+  .jx-sdxmore__box p {
+    color: var(--jx-grey);
+  }
+  .jx-plans {
+    background: linear-gradient(180deg, #fff, #f5f8fa);
+  }
+  .jx-plans__lead {
+    max-width: 62ch;
+  }
+  .jx-plans__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(16px, 2.4vw, 28px);
+    align-items: stretch;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-plan {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto auto auto 1fr auto;
+    gap: 12px;
+    padding: clamp(24px, 3vw, 36px);
+    border-radius: var(--jx-r-xl);
+    background: #fff;
+    border: 1px solid rgba(30, 61, 126, 0.08);
+    box-shadow: var(--jx-shadow-sm);
+  }
+  .jx-plan--best {
+    border-color: transparent;
+    box-shadow:
+      0 0 0 2px var(--jx-green),
+      var(--jx-shadow);
+  }
+  .jx-plan__badge {
+    position: absolute;
+    right: 20px;
+    top: -12px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    color: #fff;
+    background: var(--jx-green);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .jx-plan h3 {
+    font-size: 1.25rem;
+  }
+  .jx-plan__sub {
+    color: var(--jx-grey);
+    font-size: 0.9375rem;
+  }
+  .jx-plan__price {
+    display: grid;
+    padding: 14px 0;
+    border-block: 1px solid #eef2f6;
+  }
+  .jx-plan__price small {
+    color: var(--jx-grey);
+    font-size: 0.8125rem;
+  }
+  .jx-plan__price b {
+    font-weight: 600;
+    font-size: 2.5rem;
+    line-height: 1.1;
+    color: var(--jx-navy);
+  }
+  .jx-plan ul {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.9375rem;
+  }
+  .jx-plan li {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .jx-plan li svg {
+    color: var(--jx-green);
+  }
+  .jx-plan .jx-btn {
+    justify-self: start;
+  }
+  .jx-plans__note {
+    margin-top: 20px;
+    text-align: center;
+    color: var(--jx-grey);
+    font-size: 0.875rem;
+  }
+  @media (max-width: 1000px) {
+    .jx-glance__pillars {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .jx-plans__grid {
+      grid-template-columns: 1fr;
+      max-width: 520px;
+      margin-inline: auto;
+    }
+  }
+  @media (max-width: 560px) {
+    .jx-glance__pillars,
+    .jx-pquote {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

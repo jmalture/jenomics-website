@@ -1,0 +1,389 @@
+---
+/**
+ * Kontakt / Contact: hero (channels), contact cards, enquiry form (POST /api/contact, honeypot, no CAPTCHA)
+ * and a map that only loads Google Maps after a click (privacy: no Google request on page load).
+ */
+import Base from '../layouts/Base.astro';
+import Hero from '../components/service/01-hero.astro';
+import Scene from '../components/service/Scene.astro';
+import Icon from '../components/ui/Icon.astro';
+import { pageText, pageUi, PAGE_URLS, PAGE_PAL } from '../components/page/data';
+import type { Lang } from '../i18n';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = pageText('contact', lang);
+const u = pageUi(lang);
+const tel = (p: string) => `tel:${p.replace(/\s/g, '')}`;
+const mapQ = encodeURIComponent('Jenomics GmbH Thalkirchnerstr. 55 80337 München');
+const mapSrc = `https://maps.google.com/maps?q=${mapQ}&t=m&z=16&output=embed&iwloc=near`;
+const mapLink = `https://www.google.com/maps/search/?api=1&query=${mapQ}`;
+---
+
+<Base lang={lang} title={t.meta_title} description={t.meta_desc} alternates={PAGE_URLS.contact}>
+  <Hero
+    lang={lang}
+    title={t.title}
+    lead={t.lead}
+    pal={PAGE_PAL.contact}
+    kicker={t.kicker}
+    icon="phone"
+    crumbs={[{ label: u.crumb_company }, { label: t.title }]}
+    ctas={[
+      { label: t.phones[0][1], href: tel(t.phones[0][1]), icon: 'phone' },
+      { label: t.mail, href: `mailto:${t.mail}`, ghost: true, icon: 'mail' },
+    ]}
+    pill={null}
+  >
+    <Scene name="channels" lang={lang} slot="visual" />
+  </Hero>
+
+  <section class="jx-section jx-cinfo">
+    <div class="jx-wrap">
+      <ul class="jx-cinfo__grid">
+        <li data-reveal style="--i:0">
+          <span class="jx-cinfo__ico"><Icon name="clock" size={20} /></span>
+          <small>{t.hours_label}</small>
+          <strong>{t.hours}</strong>
+        </li>
+        <li data-reveal style="--i:1">
+          <span class="jx-cinfo__ico"><Icon name="phone" size={20} /></span>
+          {
+            t.phones.map(([l, p]: [string, string]) => (
+              <span class="jx-cinfo__row">
+                <small>{l}</small>
+                <a href={tel(p)}>{p}</a>
+              </span>
+            ))
+          }
+        </li>
+        <li data-reveal style="--i:2">
+          <span class="jx-cinfo__ico"><Icon name="mail" size={20} /></span>
+          <small>{t.mail_label}</small>
+          <a href={`mailto:${t.mail}`}>{t.mail}</a>
+          <small class="jx-cinfo__gap">{t.social_label}</small>
+          <a href="https://www.linkedin.com/company/jenomics" target="_blank" rel="noopener">LinkedIn <Icon name="external" size={14} /></a>
+        </li>
+        <li data-reveal style="--i:3">
+          <span class="jx-cinfo__ico"><Icon name="pin" size={20} /></span>
+          <small>{t.address_label}</small>
+          <address>{t.address.map((l: string) => <span>{l}</span>)}</address>
+          <small class="jx-cinfo__gap">{t.customers_label}</small>
+          <a href="https://get.teamviewer.com/tnedds2" target="_blank" rel="noopener">{t.remote} <Icon name="external" size={14} /></a>
+          <a href="https://icsde.jenomics.de/login.jsp" target="_blank" rel="noopener">{t.exchange} <Icon name="external" size={14} /></a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="jx-section jx-cform" id="anfrage">
+    <div class="jx-wrap jx-cform__grid">
+      <div class="jx-cform__copy">
+        <span class="jx-kicker" data-reveal>{t.form_kicker}</span>
+        <h2 class="jx-h2" data-reveal style="--i:1">{t.form_title}</h2>
+        <p data-reveal style="--i:2">{t.form_text}</p>
+        <form class="jx-form" action="/api/contact" method="post" data-contact-form data-reveal style="--i:3" novalidate>
+          <input type="hidden" name="lang" value={lang} />
+          <div class="jx-form__hp" aria-hidden="true">
+            <label>Website <input type="text" name="form_fields[website_hp]" tabindex="-1" autocomplete="off" /></label>
+          </div>
+          <div class="jx-form__row">
+            <label class="jx-field">
+              <span>{t.f_email} *</span>
+              <input type="email" name="form_fields[email]" required autocomplete="email" />
+            </label>
+            <label class="jx-field">
+              <span>{t.f_phone}</span>
+              <input type="tel" name="form_fields[phone]" autocomplete="tel" />
+            </label>
+          </div>
+          <label class="jx-field">
+            <span>{t.f_message}</span>
+            <textarea name="form_fields[message]" rows="5"></textarea>
+          </label>
+          <label class="jx-check">
+            <input type="checkbox" name="form_fields[consent]" required />
+            <span set:html={t.f_consent} />
+          </label>
+          <div class="jx-form__foot">
+            <button class="jx-btn" type="submit" data-label={t.f_send} data-busy={t.f_sending}>{t.f_send}<Icon name="arrow" /></button>
+            <p class="jx-form__msg" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+      <div class="jx-cmap" data-reveal="scale" style="--i:2">
+        <div class="jx-cmap__frame" data-map={mapSrc}>
+          <Scene name="map" lang={lang} />
+          <div class="jx-cmap__overlay">
+            <strong>{t.map_title}</strong>
+            <span>{t.address.slice(1).join(', ')}</span>
+            <button class="jx-btn jx-btn--sm" type="button" data-map-load>{t.map_btn}</button>
+            <small>{t.map_note}</small>
+            <a class="jx-link" href={mapLink} target="_blank" rel="noopener">{t.map_open}<Icon name="external" size={14} /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form) => {
+    const btn = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+    const msg = form.querySelector<HTMLElement>('.jx-form__msg')!;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      btn.disabled = true;
+      btn.firstChild!.textContent = btn.dataset.busy ?? '';
+      msg.className = 'jx-form__msg';
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+        const data = await res.json().catch(() => ({ ok: false, message: '' }));
+        msg.textContent = data.message || '';
+        msg.classList.add(data.ok ? 'is-ok' : 'is-bad');
+        if (data.ok) form.reset();
+      } catch {
+        msg.textContent = document.documentElement.lang.startsWith('de')
+          ? 'Leider ist ein Fehler aufgetreten. Bitte versuche es erneut.'
+          : 'Sorry, something went wrong. Please try again.';
+        msg.classList.add('is-bad');
+      }
+      btn.disabled = false;
+      btn.firstChild!.textContent = btn.dataset.label ?? '';
+    });
+  });
+  // Map: load Google Maps only after a click
+  document.querySelectorAll<HTMLButtonElement>('[data-map-load]').forEach((b) =>
+    b.addEventListener('click', () => {
+      const frame = b.closest<HTMLElement>('[data-map]')!;
+      const ifr = document.createElement('iframe');
+      ifr.src = frame.dataset.map!;
+      ifr.title = 'Google Maps';
+      ifr.loading = 'lazy';
+      ifr.referrerPolicy = 'no-referrer-when-downgrade';
+      frame.replaceChildren(ifr);
+    }),
+  );
+</script>
+
+<style is:global>
+  .jx-cinfo {
+    padding-top: 0;
+  }
+  .jx-cinfo__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(14px, 2vw, 24px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-cinfo__grid > li {
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: 6px;
+    padding: 24px;
+    border-radius: var(--jx-r-lg);
+    background: #fff;
+    border: 1px solid rgba(30, 61, 126, 0.08);
+    box-shadow: var(--jx-shadow-sm);
+  }
+  .jx-cinfo__ico {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    color: #fff;
+    background: linear-gradient(140deg, var(--jx-blue), #20d3c2);
+  }
+  .jx-cinfo small {
+    color: var(--jx-grey);
+    font-size: 0.8125rem;
+  }
+  .jx-cinfo__gap {
+    margin-top: 10px;
+  }
+  .jx-cinfo a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--jx-blue);
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .jx-cinfo a:hover {
+    text-decoration: underline;
+  }
+  .jx-cinfo__row {
+    display: grid;
+  }
+  .jx-cinfo address {
+    display: grid;
+    font-style: normal;
+    font-weight: 500;
+  }
+  .jx-cform {
+    background: linear-gradient(180deg, #f5f8fa, #fff);
+  }
+  .jx-cform__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: stretch;
+  }
+  .jx-cform__copy {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+  }
+  .jx-cform__copy > p {
+    color: var(--jx-grey);
+  }
+  .jx-form {
+    display: grid;
+    gap: 16px;
+    margin-top: 10px;
+    padding: clamp(22px, 3vw, 36px);
+    border-radius: var(--jx-r-xl);
+    background: #fff;
+    border: 1px solid rgba(30, 61, 126, 0.08);
+    box-shadow: var(--jx-shadow);
+  }
+  .jx-form__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .jx-form__hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .jx-field {
+    display: grid;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+  .jx-field input,
+  .jx-field textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #d6dee7;
+    background: #fbfcfd;
+    font: inherit;
+    font-weight: 400;
+    font-size: 1rem;
+    color: var(--jx-ink);
+    transition:
+      border-color var(--jx-fast) var(--jx-ease),
+      box-shadow var(--jx-fast) var(--jx-ease);
+  }
+  .jx-field textarea {
+    resize: vertical;
+  }
+  .jx-field input:focus,
+  .jx-field textarea:focus {
+    outline: none;
+    border-color: var(--jx-blue);
+    box-shadow: 0 0 0 4px rgba(14, 120, 177, 0.14);
+    background: #fff;
+  }
+  .jx-check {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: 10px;
+    align-items: start;
+    font-size: 0.875rem;
+    color: var(--jx-grey);
+  }
+  .jx-check input {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: var(--jx-blue);
+  }
+  .jx-check a {
+    color: var(--jx-blue);
+  }
+  .jx-form__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+  }
+  .jx-form__msg {
+    font-weight: 500;
+    font-size: 0.9375rem;
+  }
+  .jx-form__msg.is-ok {
+    color: #1f8a45;
+  }
+  .jx-form__msg.is-bad {
+    color: #c0392b;
+  }
+  .jx-cmap {
+    position: relative;
+    min-height: 420px;
+    border-radius: var(--jx-r-xl);
+    overflow: hidden;
+    border: 1px solid rgba(30, 61, 126, 0.08);
+    box-shadow: var(--jx-shadow);
+  }
+  .jx-cmap__frame,
+  .jx-cmap__frame .jx-scene,
+  .jx-cmap__frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .jx-cmap__overlay {
+    position: absolute;
+    z-index: 3;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    display: grid;
+    justify-items: start;
+    gap: 6px;
+    padding: 20px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    box-shadow: var(--jx-shadow);
+  }
+  .jx-cmap__overlay span {
+    color: var(--jx-grey);
+  }
+  .jx-cmap__overlay .jx-btn {
+    margin-top: 8px;
+  }
+  .jx-cmap__overlay small {
+    color: var(--jx-grey);
+    font-size: 0.75rem;
+  }
+  @media (max-width: 1000px) {
+    .jx-cinfo__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 900px) {
+    .jx-cform__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .jx-cinfo__grid,
+    .jx-form__row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

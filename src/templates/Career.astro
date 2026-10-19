@@ -1,0 +1,393 @@
+---
+/** Karriere / Careers: hero (apply flow), team teaser, perks, open positions (accordion), how to apply, initiative band. */
+import Base from '../layouts/Base.astro';
+import Hero from '../components/service/01-hero.astro';
+import Scene from '../components/service/Scene.astro';
+import Split from '../components/page/Split.astro';
+import Cta from '../components/service/04-cta.astro';
+import Icon from '../components/ui/Icon.astro';
+import { pageText, pageUi, PAGE_URLS, PAGE_PAL } from '../components/page/data';
+import { pick, type Lang } from '../i18n';
+import home from '../i18n/home.json';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = pageText('career', lang);
+const u = pageUi(lang);
+const h = pick(home, lang) as Record<string, any>;
+const team = pageText('team', lang);
+const mail = `mailto:${t.apply_mail}`;
+const cp = t.contact_person;
+---
+
+<Base lang={lang} title={t.meta_title} description={t.meta_desc} alternates={PAGE_URLS.career}>
+  <Hero
+    lang={lang}
+    title={t.title}
+    lead={t.lead}
+    pal={PAGE_PAL.career}
+    kicker={t.kicker}
+    icon="briefcase"
+    crumbs={[{ label: u.crumb_company }, { label: t.kicker }]}
+    ctas={[
+      { label: t.cta1, href: '#stellen' },
+      { label: t.cta2, href: u.team_href, ghost: true },
+    ]}
+    pill={u.pill_since}
+  >
+    <Scene name="apply" lang={lang} slot="visual" />
+  </Hero>
+
+  <Split
+    lang={lang}
+    pal={PAGE_PAL.career}
+    kicker={team.kicker}
+    title={team.lead[0]}
+    paras={[team.lead[1]]}
+    cta={{ label: t.cta2, href: u.team_href }}
+    scene="crew"
+    tint
+  />
+
+  <section class="jx-section jx-perks">
+    <div class="jx-wrap">
+      <header class="jx-head jx-head--center">
+        <span class="jx-kicker" data-reveal>{t.perks_kicker}</span>
+        <h2 class="jx-h2" data-reveal style="--i:1">{t.perks_title}</h2>
+      </header>
+      <ul class="jx-perks__grid">
+        {
+          t.perks.map(([icon, text]: [string, string], i: number) => (
+            <li data-reveal style={`--i:${i % 4}`}>
+              <span class="jx-perks__ico">
+                <Icon name={icon as any} size={20} />
+              </span>
+              {text}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="jx-section jx-jobs" id="stellen">
+    <div class="jx-wrap jx-jobs__grid">
+      <header class="jx-jobs__head">
+        <span class="jx-kicker" data-reveal>{t.jobs_kicker}</span>
+        <h2 class="jx-h2" data-reveal style="--i:1">{t.jobs_title}</h2>
+        <div class="jx-jobs__person" data-reveal style="--i:2">
+          <img src={cp.img} alt={cp.name} width="64" height="64" loading="lazy" decoding="async" />
+          <span>
+            <small>{t.contact}</small>
+            <strong>{cp.name}</strong>
+            <span>{cp.role}</span>
+            <a href={`tel:${cp.phone.replace(/\s/g, '')}`}>{cp.phone}</a>
+          </span>
+        </div>
+      </header>
+      <div class="jx-jobs__list" data-reveal style="--i:1">
+        {
+          t.jobs.map((j: any, i: number) => (
+            <details name="jobs" open={i === 0}>
+              <summary>
+                <span>
+                  <span class="jx-tag">{j.tag}</span>
+                  <strong>{j.title}</strong>
+                </span>
+                <i aria-hidden="true">
+                  <Icon name="chevron" size={18} />
+                </i>
+              </summary>
+              <div class="jx-jobs__body">
+                <div>
+                  <h3>{t.tasks}</h3>
+                  <ul>
+                    {j.tasks.map((x: string) => (
+                      <li>
+                        <Icon name="check" size={15} />
+                        {x}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h3>{t.profile}</h3>
+                  <ul>
+                    {j.profile.map((x: string) => (
+                      <li>
+                        <Icon name="check" size={15} />
+                        {x}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <p class="jx-jobs__actions">
+                  <a class="jx-btn jx-btn--sm" href={mail}>
+                    {t.cta1}
+                    <Icon name="mail" />
+                  </a>
+                  <a class="jx-link" href={j.pdf} target="_blank" rel="noopener">
+                    <Icon name="download" size={16} />
+                    {t.pdf}
+                  </a>
+                </p>
+              </div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="jx-section jx-applyhow">
+    <div class="jx-wrap jx-applyhow__box" data-reveal>
+      <div>
+        <span class="jx-kicker">{t.apply_kicker}</span>
+        <h2 class="jx-h2">{t.apply_title}</h2>
+        <p>
+          {t.apply_text} <a href={mail}>{t.apply_mail}</a>.
+        </p>
+        {t.apply_note.map((n: string) => <p class="jx-applyhow__note">{n}</p>)}
+      </div>
+      <img src="/media/ihk-ausbildung-2025.webp" alt={t.ihk_alt} width="645" height="475" loading="lazy" decoding="async" />
+    </div>
+  </section>
+
+  <Cta lang={lang} band={{ kicker: t.init_kicker, title: t.init_title, text: t.init_text, btn: t.init_btn, href: mail }} />
+</Base>
+
+<style is:global>
+  .jx-perks__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(14px, 2vw, 24px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-perks__grid li {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    padding: 22px;
+    border-radius: var(--jx-r-lg);
+    background: #fff;
+    border: 1px solid rgba(30, 61, 126, 0.08);
+    box-shadow: var(--jx-shadow-sm);
+    font-weight: 500;
+    line-height: 1.45;
+  }
+  .jx-perks__ico {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    color: #fff;
+    background: linear-gradient(140deg, var(--jx-blue), #56c657);
+  }
+  .jx-jobs {
+    background: linear-gradient(180deg, #f5f8fa, #fff);
+  }
+  .jx-jobs__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: clamp(32px, 5vw, 80px);
+    align-items: start;
+  }
+  .jx-jobs__head {
+    position: sticky;
+    top: 110px;
+    display: grid;
+    justify-items: start;
+    gap: 16px;
+  }
+  .jx-jobs__person {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-top: 12px;
+    padding: 16px;
+    border-radius: var(--jx-r-lg);
+    background: #fff;
+    box-shadow: var(--jx-shadow-sm);
+  }
+  .jx-jobs__person img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .jx-jobs__person > span {
+    display: grid;
+    font-size: 0.9375rem;
+  }
+  .jx-jobs__person small {
+    color: var(--jx-blue-k);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .jx-jobs__person span span {
+    color: var(--jx-grey);
+    font-size: 0.875rem;
+  }
+  .jx-jobs__person a {
+    color: var(--jx-blue);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .jx-jobs__list {
+    display: grid;
+    gap: 12px;
+  }
+  .jx-jobs details {
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(30, 61, 126, 0.08);
+    transition: box-shadow var(--jx-med) var(--jx-ease);
+  }
+  .jx-jobs details[open] {
+    box-shadow:
+      0 0 0 1px rgba(14, 120, 177, 0.2),
+      0 18px 40px rgba(30, 61, 126, 0.08);
+  }
+  .jx-jobs details::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size var(--jx-med) var(--jx-ease),
+      content-visibility var(--jx-med) allow-discrete;
+  }
+  .jx-jobs details[open]::details-content {
+    block-size: auto;
+  }
+  @supports (interpolate-size: allow-keywords) {
+    .jx-jobs {
+      interpolate-size: allow-keywords;
+    }
+  }
+  .jx-jobs summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 22px;
+    cursor: pointer;
+    list-style: none;
+  }
+  .jx-jobs summary::-webkit-details-marker {
+    display: none;
+  }
+  .jx-jobs summary > span {
+    display: grid;
+    justify-items: start;
+    gap: 8px;
+  }
+  .jx-jobs summary strong {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+  .jx-jobs summary i {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    color: var(--jx-blue);
+    background: rgba(14, 120, 177, 0.08);
+    transition:
+      transform var(--jx-med) var(--jx-ease),
+      background var(--jx-med) var(--jx-ease),
+      color var(--jx-med) var(--jx-ease);
+  }
+  .jx-jobs details[open] summary i {
+    transform: rotate(180deg);
+    color: #fff;
+    background: var(--jx-blue);
+  }
+  .jx-jobs__body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 32px;
+    padding: 4px 22px 24px;
+  }
+  .jx-jobs__body h3 {
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+  .jx-jobs__body ul {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.9375rem;
+    color: var(--jx-grey);
+  }
+  .jx-jobs__body li {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: 8px;
+  }
+  .jx-jobs__body li svg {
+    margin-top: 4px;
+    color: var(--jx-green);
+  }
+  .jx-jobs__actions {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 24px;
+  }
+  .jx-applyhow__box {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: clamp(24px, 5vw, 72px);
+    align-items: center;
+  }
+  .jx-applyhow__box > div {
+    display: grid;
+    justify-items: start;
+    gap: 14px;
+  }
+  .jx-applyhow__box p {
+    max-width: 60ch;
+    color: var(--jx-grey);
+  }
+  .jx-applyhow__box p a {
+    color: var(--jx-blue);
+    font-weight: 600;
+  }
+  .jx-applyhow__note {
+    font-size: 0.9375rem;
+  }
+  .jx-applyhow__box img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--jx-r-lg);
+    box-shadow: var(--jx-shadow);
+  }
+  @media (max-width: 1000px) {
+    .jx-perks__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 900px) {
+    .jx-jobs__grid,
+    .jx-applyhow__box {
+      grid-template-columns: 1fr;
+    }
+    .jx-jobs__head {
+      position: static;
+    }
+  }
+  @media (max-width: 640px) {
+    .jx-perks__grid,
+    .jx-jobs__body {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

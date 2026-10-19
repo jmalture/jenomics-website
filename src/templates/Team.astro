@@ -1,0 +1,229 @@
+---
+/** Team: hero (team network), colleagues' voices, international team, management, careers band. */
+import Base from '../layouts/Base.astro';
+import Hero from '../components/service/01-hero.astro';
+import Scene from '../components/service/Scene.astro';
+import Split from '../components/page/Split.astro';
+import Careers from '../components/home/08-careers.astro';
+import Icon from '../components/ui/Icon.astro';
+import { pageText, pageUi, PAGE_URLS, PAGE_PAL } from '../components/page/data';
+import { fill, type Lang } from '../i18n';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = pageText('team', lang);
+const u = pageUi(lang);
+const ceo = t.management[0];
+const board = t.management.slice(1);
+---
+
+<Base lang={lang} title={t.meta_title} description={t.meta_desc} alternates={PAGE_URLS.team}>
+  <Hero
+    lang={lang}
+    title={t.title}
+    lead={t.lead}
+    pal={PAGE_PAL.team}
+    kicker={t.kicker}
+    icon="users"
+    crumbs={[{ label: u.crumb_company }, { label: t.title }]}
+    ctas={[{ label: t.cta1, href: u.career_href }]}
+    pill={u.pill_since}
+  >
+    <Scene name="crew" lang={lang} slot="visual" />
+  </Hero>
+
+  <section class="jx-section jx-voices">
+    <div class="jx-wrap">
+      <header class="jx-head jx-head--center">
+        <span class="jx-kicker" data-reveal>{t.coll_kicker}</span>
+        <h2 class="jx-h2" data-reveal style="--i:1">{t.coll_title}</h2>
+      </header>
+      <ul class="jx-voices__grid">
+        {
+          t.colleagues.map((c: any, i: number) => (
+            <li data-reveal style={`--i:${i}`}>
+              <figure class="jx-voice">
+                <Icon name="quote" size={28} class="jx-voice__q" />
+                <blockquote>{c.quote}</blockquote>
+                <figcaption>
+                  <img src={c.img} alt={c.name} width="56" height="56" loading="lazy" decoding="async" />
+                  <span>
+                    <strong>{c.name}</strong>
+                    <small>{c.role}</small>
+                  </span>
+                </figcaption>
+              </figure>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <Split lang={lang} pal={PAGE_PAL.team} kicker={t.intl_kicker} title={t.intl_title} paras={[t.intl_text]} cta={{ label: t.intl_cta, href: `${u.career_href}#stellen` }} scene="globe" tint />
+
+  <section class="jx-section jx-mgmt">
+    <div class="jx-wrap">
+      <header class="jx-head jx-head--center">
+        <span class="jx-kicker" data-reveal>{t.mgmt_kicker}</span>
+        <h2 class="jx-h2" data-reveal style="--i:1">{t.mgmt_title}</h2>
+      </header>
+      <div class="jx-mgmt__ceo" data-reveal>
+        <img src={ceo.img} alt={ceo.name} width="560" height="560" loading="lazy" decoding="async" />
+        <div>
+          <Icon name="quote" size={32} class="jx-voice__q" />
+          <blockquote>{fill(ceo.quote)}</blockquote>
+          <p class="jx-mgmt__name">
+            <strong>{ceo.name}</strong>
+            <span>{ceo.role}</span>
+          </p>
+          <p class="jx-mgmt__links">
+            {
+              ceo.links.map(([l, h]: [string, string]) => (
+                <a class="jx-link" href={h} target="_blank" rel="noopener">
+                  {l}
+                  <Icon name="external" size={14} />
+                </a>
+              ))
+            }
+          </p>
+        </div>
+      </div>
+      <ul class="jx-mgmt__grid">
+        {
+          board.map((m: any, i: number) => (
+            <li data-reveal style={`--i:${i}`}>
+              <img src={m.img} alt={m.name} width="560" height="560" loading="lazy" decoding="async" />
+              <strong>{m.name}</strong>
+              <span>{m.role}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <Careers lang={lang} />
+</Base>
+
+<style is:global>
+  .jx-voices__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(16px, 2.4vw, 32px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-voice {
+    position: relative;
+    display: grid;
+    gap: 22px;
+    height: 100%;
+    margin: 0;
+    padding: clamp(26px, 3vw, 40px);
+    border-radius: var(--jx-r-xl);
+    background: #fff;
+    border: 1px solid rgba(30, 61, 126, 0.08);
+    box-shadow: var(--jx-shadow-sm);
+  }
+  .jx-voice__q {
+    color: var(--jx-green);
+  }
+  .jx-voice blockquote,
+  .jx-mgmt__ceo blockquote {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--jx-ink);
+  }
+  .jx-voice figcaption {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    align-self: end;
+  }
+  .jx-voice img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .jx-voice figcaption span,
+  .jx-mgmt__name {
+    display: grid;
+  }
+  .jx-voice small,
+  .jx-mgmt__name span,
+  .jx-mgmt__grid span {
+    color: var(--jx-grey);
+    font-size: 0.875rem;
+  }
+  .jx-mgmt {
+    background: linear-gradient(180deg, #fff, #f5f8fa);
+  }
+  .jx-mgmt__ceo {
+    display: grid;
+    grid-template-columns: minmax(200px, 320px) 1fr;
+    gap: clamp(24px, 4vw, 56px);
+    align-items: center;
+    margin-bottom: clamp(28px, 4vw, 48px);
+    padding: clamp(20px, 3vw, 36px);
+    border-radius: var(--jx-r-xl);
+    background: #fff;
+    border: 1px solid rgba(30, 61, 126, 0.08);
+    box-shadow: var(--jx-shadow);
+  }
+  .jx-mgmt__ceo > img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: var(--jx-r-lg);
+  }
+  .jx-mgmt__ceo > div {
+    display: grid;
+    gap: 18px;
+  }
+  .jx-mgmt__ceo blockquote {
+    font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+    font-weight: 500;
+    line-height: 1.45;
+  }
+  .jx-mgmt__links {
+    display: flex;
+    gap: 22px;
+  }
+  .jx-mgmt__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(16px, 2.4vw, 32px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-mgmt__grid li {
+    display: grid;
+    gap: 4px;
+  }
+  .jx-mgmt__grid img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    margin-bottom: 12px;
+    border-radius: var(--jx-r-lg);
+    box-shadow: var(--jx-shadow-sm);
+  }
+  .jx-mgmt__grid strong {
+    font-size: 1.0625rem;
+  }
+  @media (max-width: 760px) {
+    .jx-voices__grid,
+    .jx-mgmt__ceo {
+      grid-template-columns: 1fr;
+    }
+    .jx-mgmt__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

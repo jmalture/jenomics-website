@@ -1,0 +1,37 @@
+---
+/** Über uns / About us: hero (growth since 2001), story, why we are different, responsibility, careers band. */
+import Base from '../layouts/Base.astro';
+import Hero from '../components/service/01-hero.astro';
+import Scene from '../components/service/Scene.astro';
+import Split from '../components/page/Split.astro';
+import Careers from '../components/home/08-careers.astro';
+import { pageText, pageUi, PAGE_URLS, PAGE_PAL } from '../components/page/data';
+import type { Lang } from '../i18n';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = pageText('about', lang);
+const u = pageUi(lang);
+---
+
+<Base lang={lang} title={t.meta_title} description={t.meta_desc} alternates={PAGE_URLS.about}>
+  <Hero
+    lang={lang}
+    title={t.title}
+    lead={t.lead}
+    pal={PAGE_PAL.about}
+    kicker={t.kicker}
+    icon="heart"
+    crumbs={[{ label: u.crumb_company }, { label: t.title }]}
+    ctas={[
+      { label: t.cta1, href: u.team_href },
+      { label: t.cta2, href: u.career_href, ghost: true },
+    ]}
+    pill={u.pill_since}
+  >
+    <Scene name="story" lang={lang} slot="visual" />
+  </Hero>
+  <Split lang={lang} pal={PAGE_PAL.about} kicker={t.story_kicker} title={t.story_title} sub={t.story_sub} paras={t.story_text} scene="skills" tint />
+  <Split lang={lang} pal={PAGE_PAL.about} kicker={t.diff_kicker} title={t.diff_title} sub={t.diff_lead} paras={t.diff_text} points={t.diff_points} scene="values" reverse />
+  <Split lang={lang} pal={PAGE_PAL.about} kicker={t.resp_kicker} title={t.resp_title} paras={t.resp_text} scene="commit" tint />
+  <Careers lang={lang} />
+</Base>

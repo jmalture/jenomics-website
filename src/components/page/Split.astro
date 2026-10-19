@@ -1,0 +1,151 @@
+---
+/**
+ * Two columns: copy (kicker, title, sub, paragraphs, check points, CTA) next to an animated scene or a
+ * framed photo. reverse puts the visual left. tint gives the section the soft grey background.
+ */
+import Icon from '../ui/Icon.astro';
+import Scene from '../service/Scene.astro';
+import { fill, type Lang } from '../../i18n';
+import type { SceneName } from '../service/data';
+
+interface Props {
+  lang: Lang;
+  id?: string;
+  kicker?: string;
+  title: string;
+  sub?: string;
+  paras?: string[];
+  points?: string[];
+  cta?: { label: string; href: string; ext?: boolean };
+  scene?: SceneName;
+  img?: { src: string; alt: string; w: number; h: number };
+  reverse?: boolean;
+  tint?: boolean;
+  /** Scene palette A, B, C (defaults to the brand blue → cyan → green) */
+  pal?: [string, string, string];
+}
+const { lang, id, kicker, title, sub, paras = [], points, cta, scene, img, reverse, tint, pal = ['#0e78b1', '#3fc6f2', '#56c657'] } = Astro.props;
+---
+
+<section
+  class:list={['jx-section jx-split', { 'jx-split--rev': reverse, 'jx-split--tint': tint }]}
+  id={id}
+  style={`--hA:${pal[0]};--hB:${pal[1]};--hC:${pal[2]}`}
+>
+  <div class="jx-wrap jx-split__grid">
+    <div class="jx-split__copy">
+      {kicker && <span class="jx-kicker" data-reveal>{kicker}</span>}
+      <h2 class="jx-h2" data-reveal style="--i:1">{fill(title)}</h2>
+      {sub && <p class="jx-split__sub" data-reveal style="--i:2">{fill(sub)}</p>}
+      {
+        paras.map((p, i) => (
+          <p class="jx-split__p" data-reveal style={`--i:${3 + i}`}>
+            {fill(p)}
+          </p>
+        ))
+      }
+      {
+        points && (
+          <ul class="jx-split__points" data-reveal style="--i:4">
+            {points.map((p) => (
+              <li>
+                <Icon name="check" size={16} />
+                {p}
+              </li>
+            ))}
+          </ul>
+        )
+      }
+      {
+        cta && (
+          <a class="jx-btn jx-btn--ghost" href={cta.href} data-reveal style="--i:5" {...(cta.ext ? { target: '_blank', rel: 'noopener' } : {})}>
+            {cta.label}
+            <Icon name={cta.ext ? 'external' : 'arrow'} />
+          </a>
+        )
+      }
+    </div>
+    <div class="jx-split__visual" data-reveal="scale" style="--i:2">
+      {scene && <Scene name={scene} lang={lang} />}
+      {img && <img src={img.src} alt={img.alt} width={img.w} height={img.h} loading="lazy" decoding="async" />}
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .jx-split--tint {
+    background: linear-gradient(180deg, #f5f8fa 0%, #fff 100%);
+  }
+  .jx-split__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(36px, 6vw, 96px);
+    align-items: center;
+  }
+  .jx-split--rev .jx-split__copy {
+    order: 2;
+  }
+  .jx-split__copy {
+    display: grid;
+    justify-items: start;
+    gap: 16px;
+  }
+  .jx-split__sub {
+    font-size: var(--jx-lead);
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--jx-ink);
+  }
+  .jx-split__p {
+    color: var(--jx-grey);
+    max-width: 60ch;
+  }
+  .jx-split__points {
+    display: grid;
+    gap: 10px;
+    margin: 4px 0 6px;
+    padding: 0;
+    list-style: none;
+    font-weight: 500;
+  }
+  .jx-split__points li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .jx-split__points svg {
+    flex: none;
+    padding: 4px;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    color: #fff;
+    background: var(--jx-green);
+  }
+  .jx-split__visual {
+    position: relative;
+    border-radius: var(--jx-r-xl);
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid rgba(30, 61, 126, 0.08);
+    box-shadow: var(--jx-shadow);
+  }
+  .jx-split__visual .jx-scene {
+    min-height: clamp(300px, 30vw, 400px);
+    font-size: 12.5px;
+  }
+  .jx-split__visual > img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  @media (max-width: 900px) {
+    .jx-split__grid {
+      grid-template-columns: 1fr;
+    }
+    .jx-split--rev .jx-split__copy {
+      order: 0;
+    }
+  }
+</style>

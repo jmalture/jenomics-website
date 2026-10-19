@@ -1,0 +1,202 @@
+---
+/** One blog post (German, URL /<slug>/ like on jenomics.de): header, cover, article, related posts, contact band. */
+import Base from '../layouts/Base.astro';
+import Icon from '../components/ui/Icon.astro';
+import Blobs from '../components/ui/Blobs.astro';
+import Cta from '../components/service/04-cta.astro';
+import { pageText, PAGE_URLS } from '../components/page/data';
+import { allPosts, type Post } from '../components/page/posts';
+
+const { post } = Astro.props as { post: Post };
+const lang = 'de' as const;
+const t = pageText('blog', lang);
+const Content = post.Content;
+const others = allPosts().filter((p) => p.slug !== post.slug);
+const related = [...others.filter((p) => p.category === post.category), ...others.filter((p) => p.category !== post.category)].slice(0, 3);
+const fmt = new Intl.DateTimeFormat('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Base lang={lang} title={`${post.title} - Jenomics GmbH`} description={post.excerpt} alternates={{ de: `/${post.slug}/` }} ogImage={post.image}>
+  <article class="jx-article">
+    <header class="jx-article__head">
+      <Blobs
+        class="jx-article__blobs"
+        blobs={[
+          { x: '62%', y: '-40%', size: 'min(52vw, 680px)', g: 'linear-gradient(140deg, #0e78b1, #3fc6f2)', o: 0.16, soft: true, d: 24 },
+          { x: '-12%', y: '30%', size: 'min(34vw, 440px)', g: 'linear-gradient(140deg, #56c657, #20d3c2)', o: 0.1, soft: true, d: 28, delay: 6 },
+        ]}
+      />
+      <div class="jx-wrap jx-article__wrap">
+        <nav class="jx-crumbs" aria-label="Breadcrumb" data-reveal>
+          <ol>
+            <li><a href="/">Start</a></li>
+            <li><Icon name="right" size={14} /><a href={PAGE_URLS.blog.de}>Blog</a></li>
+            <li><Icon name="right" size={14} /><span aria-current="page">{post.title}</span></li>
+          </ol>
+        </nav>
+        <p class="jx-post__meta" data-reveal style="--i:1">
+          <span class:list={['jx-tag', { 'jx-tag--green': post.category === 'Produkte' }]}>{post.category}</span>
+          <time datetime={post.iso}>{fmt.format(post.date)}</time>
+          <span>· {post.minutes} {t.read}</span>
+        </p>
+        <h1 class="jx-article__title" data-reveal style="--i:2">{post.title}</h1>
+        <p class="jx-article__lead" data-reveal style="--i:3">{post.excerpt}</p>
+      </div>
+    </header>
+    <div class="jx-wrap jx-article__wrap">
+      <figure class:list={['jx-article__cover', { 'jx-article__cover--sm': (post.image_w ?? 1200) < 700 }]} data-reveal="clip" style={`--w:${post.image_w ?? 1200}px`}>
+        <img src={post.image} alt="" width={post.image_w ?? 1200} height="760" fetchpriority="high" decoding="async" />
+      </figure>
+      <div class="jx-prose">
+        <Content />
+      </div>
+      <p class="jx-article__back">
+        <a class="jx-btn jx-btn--ghost" href={PAGE_URLS.blog.de}><Icon name="left" />{t.back}</a>
+      </p>
+    </div>
+  </article>
+
+  <section class="jx-section jx-related">
+    <div class="jx-wrap">
+      <h2 class="jx-h2 jx-related__title">{t.related}</h2>
+      <ul class="jx-cards">
+        {
+          related.map((p, i) => (
+            <li data-reveal style={`--i:${i}`}>
+              <a class="jx-card" href={`/${p.slug}/`}>
+                <span class="jx-card__img">
+                  <img src={p.image} alt="" width="768" height="480" loading="lazy" decoding="async" />
+                </span>
+                <span class="jx-card__body">
+                  <span class="jx-post__meta">
+                    <span class="jx-tag">{p.category}</span>
+                    <time datetime={p.iso}>{fmt.format(p.date)}</time>
+                  </span>
+                  <strong>{p.title}</strong>
+                  <span class="jx-link">
+                    {t.more}
+                    <Icon name="arrow" />
+                  </span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+  <Cta lang={lang} />
+</Base>
+
+<style is:global>
+  .jx-article__head {
+    position: relative;
+    isolation: isolate;
+    margin-top: calc(var(--jx-header-h) * -1);
+    padding-top: calc(var(--jx-header-h) + clamp(28px, 4.5vw, 64px));
+    padding-bottom: clamp(28px, 4vw, 48px);
+    background: linear-gradient(180deg, #f2f8fc 0%, #fff 90%);
+    overflow: hidden;
+  }
+  .jx-article__blobs {
+    z-index: -1;
+  }
+  .jx-article__wrap {
+    max-width: 860px;
+  }
+  .jx-article__title {
+    margin: 16px 0;
+    font-size: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--jx-blue);
+  }
+  .jx-article__lead {
+    font-size: var(--jx-lead);
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .jx-article__cover {
+    margin: 0 0 clamp(28px, 4vw, 48px);
+    border-radius: var(--jx-r-xl);
+    overflow: hidden;
+    box-shadow: var(--jx-shadow-lg);
+  }
+  .jx-article__cover img {
+    width: 100%;
+    max-height: 520px;
+    object-fit: cover;
+  }
+  .jx-article__cover--sm {
+    width: min(100%, calc(var(--w) * 1.6));
+    margin-inline: auto;
+  }
+  .jx-prose {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: #2b2b2b;
+  }
+  .jx-prose > * + * {
+    margin-top: 1.1em;
+  }
+  .jx-prose h2 {
+    margin-top: 1.8em;
+    font-size: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+    line-height: 1.25;
+    color: var(--jx-ink);
+  }
+  .jx-prose h3 {
+    margin-top: 1.5em;
+    font-size: 1.25rem;
+    color: var(--jx-ink);
+  }
+  .jx-prose h4 {
+    margin-top: 1.3em;
+    font-size: 1.0625rem;
+  }
+  .jx-prose a {
+    color: var(--jx-blue);
+    text-underline-offset: 3px;
+  }
+  .jx-prose ul,
+  .jx-prose ol {
+    padding-left: 1.3em;
+  }
+  .jx-prose li + li {
+    margin-top: 0.35em;
+  }
+  .jx-prose img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    margin-inline: auto;
+    height: auto;
+    border-radius: var(--jx-r-lg);
+    box-shadow: var(--jx-shadow-sm);
+  }
+  .jx-prose p:has(> img:only-child) {
+    margin-block: 1.6em;
+  }
+  .jx-prose blockquote {
+    margin-inline: 0;
+    padding: 4px 0 4px 20px;
+    border-left: 3px solid var(--jx-green);
+    font-weight: 500;
+    color: var(--jx-ink);
+  }
+  .jx-prose iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    border-radius: var(--jx-r-lg);
+  }
+  .jx-article__back {
+    margin-top: clamp(32px, 4vw, 56px);
+  }
+  .jx-related {
+    background: linear-gradient(180deg, #fff, #f5f8fa);
+  }
+  .jx-related__title {
+    margin-bottom: clamp(20px, 3vw, 36px);
+  }
+</style>
