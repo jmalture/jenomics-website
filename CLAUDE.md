@@ -9,7 +9,8 @@ Replaces the WordPress/Elementor site. Built by Alture (Honza / Jan Matyáš) on
 self-hosted fonts, no CMS (content is edited in code).
 
 - Repo: https://github.com/jmalture/jenomics-website (branch `main`, public; MrBeardman is a collaborator)
-- Local clone on Honza's PC: `C:\Users\honza\Documents\Jenomics\jenomics-website`
+- Local clone on Honza's PC: `C:\Data\Work\Jenomics\JenomicsWebsite` (work here; the older copy in
+  `Documents\Jenomics\jenomics-website` is retired)
 - Hosting: Hostinger Node.js app, auto-deploys from `main`. Preview URL: https://aqua-fox-287761.hostingersite.com
 - Status: **homepage approved by Honza** (DE + EN). Everything else is next (see "Next tasks").
 
