@@ -94,7 +94,7 @@ frame. Signature: organic gradient blobs (green→teal→cyan, blue→cyan, roya
 - Key-figures band runs full width, edge to edge.
 - Project panels: open/close must be smooth with **no text reflow** (body has the fixed open width via container
   units; a separate label shows in collapsed panels; they cross-fade). Hover intent 160 ms.
-- Careers photo tilt: subtle (1°, 1.6 s).
+- Careers photo: no tilt, straight (tilt removed by Honza 2026-10-19).
 - Content stays the same as jenomics.de; only typo fixes, lowercase "dein", the years placeholder, and the
   Christian Sulser testimonial tagged "IT Administration" (old site said "Großmarkt").
 
