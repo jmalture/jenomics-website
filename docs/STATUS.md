@@ -67,6 +67,10 @@
   MAIL_TO=anfrage@jenomics.de (SMTP_USER/SMTP_PASS optional). mx01 must accept mail from the Hostinger
   server (old WP host relayed without auth); if not, Jenomics provides an SMTP login. Enquiries are also
   stored in data/submissions/*.jsonl, so nothing is lost if mail fails. No reCAPTCHA (honeypot + rate limit).
+- Contact mail (2026-10-23): the first live test timed out after 2 min ("Connection timeout" to mx01:25 from
+  Hostinger; port 25 is most likely blocked outbound). The form now answers at once and sends the mail in the
+  background (10 s connect timeout); the result is logged ("[contact] mail sent/failed") and noted in the jsonl.
+  Waiting for an SMTP login (port 587/465) for anfrage@jenomics.de from Jenomics; then only the env vars change.
 
 ## Next
 - Jenomics EMCP: OAuth discovery fails because Mittwald answers every `/.well-known/*` URL with 403, so Claude

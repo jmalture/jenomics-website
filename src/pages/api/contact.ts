@@ -84,31 +84,43 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     console.error('[contact] store failed', e);
   }
 
-  try {
-    const port = Number(env('SMTP_PORT') || 465);
-    const user = env('SMTP_USER');
-    const fromAddr = env('MAIL_FROM') || user;
-    const transport = nodemailer.createTransport({
+  // Send the mail in the background: the visitor gets the answer at once (the enquiry is already stored),
+  // so a slow or blocked SMTP server can never leave the form hanging. Short timeouts; the result goes to the log.
+  const port = Number(env('SMTP_PORT') || 465);
+  const user = env('SMTP_USER');
+  const fromAddr = env('MAIL_FROM') || user;
+  const started = Date.now();
+  const note = (extra: Record<string, string>) =>
+    appendFile(
+      path.join(dir, `${entry.at.slice(0, 7)}.jsonl`),
+      JSON.stringify({ at: entry.at, ...extra }) + '\n',
+    ).catch(() => {});
+  nodemailer
+    .createTransport({
       host: env('SMTP_HOST'),
       port,
       secure: port === 465,
       ignoreTLS: String(env('SMTP_AUTO_TLS')).toLowerCase() === 'false',
+      connectionTimeout: 10_000,
+      greetingTimeout: 10_000,
+      socketTimeout: 20_000,
       ...(user ? { auth: { user, pass: env('SMTP_PASS') } } : {}),
-    });
-    await transport.sendMail({
+    })
+    .sendMail({
       from: env('MAIL_FROM_NAME') ? { name: env('MAIL_FROM_NAME'), address: fromAddr } : fromAddr,
       to: env('MAIL_TO') || fromAddr,
       replyTo: email,
       subject: `Neue Anfrage über jenomics.de (${lang.toUpperCase()})`,
       text: `E-Mail: ${email}\nTelefon: ${phone || '-'}\nSprache: ${lang}\nSeite: ${entry.page}\n\n${message || '(keine Nachricht)'}\n`,
+    })
+    .then((info) => {
+      console.log(`[contact] mail sent via ${env('SMTP_HOST')}:${port} in ${Date.now() - started} ms`, info.response);
+      return note({ mail: 'sent' });
+    })
+    .catch((e) => {
+      console.error(`[contact] mail failed via ${env('SMTP_HOST')}:${port} after ${Date.now() - started} ms:`, e?.code, e?.message);
+      return note({ mail: 'failed', error: `${e?.code ?? ''} ${e?.message ?? ''}`.trim() });
     });
-    await appendFile(
-      path.join(dir, `${entry.at.slice(0, 7)}.jsonl`),
-      JSON.stringify({ at: entry.at, mail: 'sent' }) + '\n',
-    ).catch(() => {});
-  } catch (e) {
-    console.error('[contact] mail failed', e);
-    // the enquiry is stored; still tell the visitor it arrived
-  }
+
   return json({ ok: true, message: msg('form_ok', lang) });
 };
