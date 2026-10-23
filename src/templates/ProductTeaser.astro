@@ -1,0 +1,155 @@
+---
+/**
+ * Product teaser pages for products that have their own website (Amaze Genius, SDX): one screen-high hero with
+ * logo, claim, three facts and a link to the product site. Texts in i18n/pages.json (ag, sdx).
+ */
+import Base from '../layouts/Base.astro';
+import Hero from '../components/service/01-hero.astro';
+import Scene from '../components/service/Scene.astro';
+import { pageText, pageUi, PAGE_URLS, PAGE_PAL } from '../components/page/data';
+import { pick, type Lang } from '../i18n';
+import offer from '../i18n/offer.json';
+
+interface Props {
+  lang: Lang;
+  product: 'ag' | 'sdx';
+}
+const { lang, product } = Astro.props;
+const t = pageText(product, lang);
+const u = pageUi(lang);
+const pal = PAGE_PAL[product];
+const o = pick(offer, lang);
+const name = o.products.find((p: any) => p.key === product)!.name;
+const logo =
+  product === 'ag'
+    ? { src: '/media/logo-ag.webp', alt: 'Amaze Genius', w: 440, h: 66 }
+    : { src: '/media/logo-sdx.webp', alt: 'Secure Data eXchange', w: 720, h: 72 };
+---
+
+<Base lang={lang} title={t.meta_title} description={t.meta_desc} alternates={PAGE_URLS[product]}>
+  <Hero
+    lang={lang}
+    title={t.title}
+    lead={t.lead}
+    facts={t.facts}
+    pal={pal}
+    kicker={t.kicker}
+    crumbs={[{ label: u.crumb_products, href: u.crumb_products_href }, { label: name }]}
+    ctas={[
+      { label: t.cta1, href: t.cta1_href, ext: true },
+      { label: t.cta2, href: u.contact_href, ghost: true },
+    ]}
+    logo={logo}
+    pill={null}
+    full
+  >
+    {
+      product === 'ag' ? (
+        <div class="jx-agvis" slot="visual">
+          <img
+            class="jx-agvis__ribbon"
+            src="/media/ag-ribbon.webp"
+            alt=""
+            width="1600"
+            height="900"
+            fetchpriority="high"
+            decoding="async"
+          />
+          <div class="jx-agvis__win">
+            <div class="jx-agvis__bar">
+              <>
+                <i />
+                <i />
+                <i />
+                <span>amaze-genius.io</span>
+              </>
+            </div>
+            <img
+              src="/media/ag-editor.webp"
+              alt={lang === 'de' ? 'Der Amaze-Genius-Editor' : 'The Amaze Genius editor'}
+              width="960"
+              height="514"
+              decoding="async"
+            />
+          </div>
+        </div>
+      ) : (
+        <Scene name="sdx" lang={lang} slot="visual" />
+      )
+    }
+  </Hero>
+</Base>
+
+<style is:global>
+  .jx-agvis {
+    position: relative;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    background: #0b0b14;
+    overflow: hidden;
+  }
+  .jx-agvis__ribbon {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+    animation: jx-agvis-drift 18s ease-in-out infinite alternate;
+  }
+  @keyframes jx-agvis-drift {
+    from {
+      transform: scale(1.04) translate(-1%, 0);
+    }
+    to {
+      transform: scale(1.12) translate(1.5%, -1%);
+    }
+  }
+  .jx-agvis__win {
+    position: relative;
+    width: 78%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #14141f;
+    box-shadow:
+      0 30px 60px rgba(0, 0, 0, 0.45),
+      0 0 0 1px rgba(255, 255, 255, 0.08);
+    animation: jx-agvis-rise 1s var(--jx-ease) both 0.3s;
+  }
+  @keyframes jx-agvis-rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px) scale(0.97);
+    }
+  }
+  .jx-agvis__bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: #1c1c2a;
+  }
+  .jx-agvis__bar i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+  }
+  .jx-agvis__bar span {
+    margin-left: 10px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .jx-agvis__win > img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .jx-agvis__ribbon,
+    .jx-agvis__win {
+      animation: none;
+    }
+  }
+</style>

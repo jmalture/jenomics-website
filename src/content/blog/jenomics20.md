@@ -16,7 +16,7 @@ Ein bisschen wie im Film: Zwei Personen sitzen in der elterlichen Garage zwische
 
 Von hier aus haben wir nicht nur eine weitere Etage bezogen, sondern auch unser Support- und Development Team kontinuierlich erweitert. Erste eigene Produktlinien wie IKONA oder der Invest Commander sind entstanden. Wir sind ein von der IHK anerkannter Ausbildungsbetrieb geworden und bilden seitdem langfristig Azubis in den Bereichen Anwendungsentwicklung und Systemintegration aus. Von Anfang an waren wir uns unserer gesellschaftlichen Verantwortung bewusst und haben uns immer wieder am Sponsoring von Sport- und Kulturveranstaltungen beteiligt.
 
-![](/media/blog/jenomics20-2.webp)
+![](/media/blog/jenomics20-2.webp#cut)
 
 Was sich am Standort München doch sehr zentral angesiedelt hat, wollte schon bald in die ganze Welt ausziehen. An diesem Punkt haben wir die Remotearbeit als festes Arbeitsmodell bei uns etabliert und verschiedene Vertragsformen, von der Freelancertätigkeiten über Voll- und Teilzeit in Festanstellung bis zum Minijob, eingerichtet. Heute haben wir Kolleg:innen unter anderem in Regensburg, Berlin, Tschechien und sogar Japan.
 

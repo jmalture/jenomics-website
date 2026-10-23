@@ -18,7 +18,7 @@
       "more_kicker": "Weitere Leistungen",
       "more_title": "Was wir sonst noch für dich tun",
       "overview_meta_title": "Leistungen - Jenomics GmbH",
-      "overview_meta_desc": "Unsere Leistungen für deine starke IT: IT Administration, Softwareentwicklung, Website & Branding, Betrieb Linux & Unix, Infrastruktur & Netzwerk, Hosting und unsere Produkte IKONA, SDX und Großmarkt.",
+      "overview_meta_desc": "Unsere Leistungen für deine starke IT: IT Administration, Softwareentwicklung, Website & Branding, Betrieb Linux & Unix, Infrastruktur & Netzwerk, Hosting und unsere Produkte Amaze Genius, SDX und Großmarkt.",
       "overview_kicker": "Leistungen",
       "overview_title": "Unsere Leistungen für deine starke IT!",
       "overview_lead": "Sechs Services und drei eigene Produkte, seit {founded} aus München. Wir planen und realisieren Lösungen, die unsere Kund:innen brauchen und schätzen.",
@@ -78,7 +78,7 @@
           { "title": "Data Driven Design", "text": "Wir sind davon überzeugt, dass moderne Anwendungen datengetrieben sein sollten. Das erlaubt eine flexible und modulare Entwicklung und Integration in vorhandene Toolings." },
           { "title": "Ruby on Rails", "text": "Seit über 10 Jahren entwickeln wir professionelle Ruby on Rails Anwendungen. Von Management Frontends bis hin zu ganzen Single Page Applications (SPA)." },
           { "title": "CI und SCM", "text": "Für alle unsere Projekte nutzen wir Source Code Management (SCM) und Continuous Integration (CI). Vor allem Git und GitLab sind dabei unsere präferierten Tools." },
-          { "title": "Anpassungsleistungen unserer eigenen Produkte", "text": "Für unsere Produkte bieten wir dir natürlich die Möglichkeit, diese individuell auf deine Bedürfnisse anzupassen und zu erweitern. Portale in IKONA, Brandingmöglichkeiten in SDX, neue Reports in GM8 und vieles mehr." }
+          { "title": "Anpassungsleistungen unserer eigenen Produkte", "text": "Für unsere Produkte bieten wir dir natürlich die Möglichkeit, diese individuell auf deine Bedürfnisse anzupassen und zu erweitern. Theming in Amaze Genius, Brandingmöglichkeiten in SDX, neue Reports in GM8 und vieles mehr." }
         ],
         "blocks": [
           {
@@ -124,7 +124,7 @@
             "items": [
               { "q": "Mit welchen Technologien arbeitet ihr?", "a": "Schwerpunkte sind Java (von Swing und JavaFX bis zu JEE-Backends), Ruby on Rails sowie Web-Frontends von HTML5 bis zu Single Page Applications. Für Quellcode und Builds setzen wir auf Git, GitLab und Continuous Integration." },
               { "q": "Könnt ihr eine bestehende Anwendung weiterentwickeln?", "a": "Sprich uns an: Wir schauen uns deine Anwendung gemeinsam an und besprechen, wie wir dich bei Weiterentwicklung und Wartung unterstützen können." },
-              { "q": "Passt ihr auch eure eigenen Produkte an?", "a": "Ja. IKONA, SDX und GM8 passen wir individuell an deine Bedürfnisse an, zum Beispiel mit Portalen in IKONA, Branding in SDX oder neuen Reports in GM8." },
+              { "q": "Passt ihr auch eure eigenen Produkte an?", "a": "Ja. Amaze Genius, SDX und GM8 passen wir individuell an deine Bedürfnisse an, zum Beispiel mit Theming in Amaze Genius, Branding in SDX oder neuen Reports in GM8." },
               { "q": "Was passiert nach dem Go-live?", "a": "Wir begleiten dich von der ersten Idee bis zur Wartung im Arbeitsalltag. Auf Wunsch betreiben wir die Anwendung auch für dich." }
             ]
           }
@@ -378,7 +378,7 @@
       "more_kicker": "More services",
       "more_title": "What else we do for you",
       "overview_meta_title": "Services - Jenomics GmbH",
-      "overview_meta_desc": "Our services for your strong IT: IT administration, software development, website & branding, Linux & Unix operations, infrastructure & network, hosting and our products IKONA, SDX and Großmarkt.",
+      "overview_meta_desc": "Our services for your strong IT: IT administration, software development, website & branding, Linux & Unix operations, infrastructure & network, hosting and our products Amaze Genius, SDX and Großmarkt.",
       "overview_kicker": "Services",
       "overview_title": "Our services for your strong IT!",
       "overview_lead": "Six services and three products of our own, from Munich since {founded}. We plan and build the solutions our customers need and value.",
@@ -438,7 +438,7 @@
           { "title": "Data driven design", "text": "We believe modern applications should be data driven. That allows flexible, modular development and integration into existing tooling." },
           { "title": "Ruby on Rails", "text": "For more than 10 years we have been building professional Ruby on Rails applications. From management frontends to complete single page applications (SPAs)." },
           { "title": "CI and SCM", "text": "All our projects use source code management (SCM) and continuous integration (CI). Git and GitLab are our preferred tools." },
-          { "title": "Customising our own products", "text": "Of course you can have our products customised and extended to fit your needs. Portals in IKONA, branding options in SDX, new reports in GM8 and much more." }
+          { "title": "Customising our own products", "text": "Of course you can have our products customised and extended to fit your needs. Theming in Amaze Genius, branding options in SDX, new reports in GM8 and much more." }
         ],
         "blocks": [
           {
@@ -484,7 +484,7 @@
             "items": [
               { "q": "Which technologies do you work with?", "a": "Our focus is Java (from Swing and JavaFX to JEE back ends), Ruby on Rails and web front ends from HTML5 to single page applications. For source code and builds we rely on Git, GitLab and continuous integration." },
               { "q": "Can you develop an existing application further?", "a": "Talk to us: we look at your application together and discuss how we can support you with further development and maintenance." },
-              { "q": "Do you also customise your own products?", "a": "Yes. We adapt IKONA, SDX and GM8 to your needs, for example with portals in IKONA, branding in SDX or new reports in GM8." },
+              { "q": "Do you also customise your own products?", "a": "Yes. We adapt Amaze Genius, SDX and GM8 to your needs, for example with theming in Amaze Genius, branding in SDX or new reports in GM8." },
               { "q": "What happens after go-live?", "a": "We support you from the first idea to maintenance in your daily work. If you like, we also operate the application for you." }
             ]
           }

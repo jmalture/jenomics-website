@@ -60,7 +60,7 @@
         { "name": "Benjamin Schiller", "role": "CEO", "img": "/media/team-ceo.webp", "quote": "Auch wenn es Jenomics schon {years} Jahre gibt, ist jeder Tag ein Abenteuer. Gemeinsam arbeiten wir an einer besseren Welt für heute und morgen!", "links": [["LinkedIn", "https://www.linkedin.com/in/benjamin-schiller-305a968/"], ["Xing", "https://www.xing.com/profile/Benjamin_Schiller"]] },
         { "name": "Selina Ehlermann", "role": "COO", "img": "/media/team-coo.webp" },
         { "name": "Blandyna Wenzel", "role": "CFO", "img": "/media/team-cfo.webp" },
-        { "name": "Felix Ehlermann", "role": "CTO", "img": "/media/team-cto.webp" }
+        { "name": "", "name_img": ["/media/team-cto-name.webp", 137, 26], "role": "CTO", "img": "/media/team-cto.webp" }
       ]
     },
     "career": {
@@ -171,59 +171,27 @@
       "map_open": "In Google Maps öffnen",
       "map_route": "Route planen"
     },
-    "ikona": {
-      "meta_title": "IKONA - Jenomics GmbH",
-      "meta_desc": "IKONA ist die Web2Product E-Commerce-Plattform für individualisierbare Markenprodukte: Editor, Portal, Backoffice, Produktionsintegration, APIs und Helpdesk in einem System.",
-      "kicker": "Produkt",
-      "title": "Die Web2Product E-Commerce-Plattform",
-      "lead": ["IKONA ist die Web2Product E-Commerce-Plattform, auf der du dein Geschäft aufbauen kannst.", "IKONA ist modular und erweiterbar und seit Jahren im Markt als Plattform für sehr große Portale im DACH-Markt erfolgreich."],
-      "cta1": "IKONA Angebot einholen",
-      "cta2": "Pricing",
-      "feat_kicker": "Features im Überblick",
-      "feat_title": "Alles, was ein Web2Print-Portal braucht.",
-      "features": [
-        { "title": "Helpdesk-Funktionen", "text": "Integriertes Monitoring-System für umfassenden Kundensupport per Telefon und E-Mail. Bestelldaten und Auftragsstatus in Echtzeit.", "list": ["Auf Endkundenwünsche optimal abgestimmt", "Smarte Verknüpfung mit Produktion", "Einfache Kundenhinweise", "Historisierung von Änderungen", "Echtzeitanalyse der Supportanfragen"] },
-        { "title": "Editor-Technologie", "text": "Flexibel anpassbare Online-Editor-Technologie mit vielfältigen Designmöglichkeiten.", "list": ["Viele Gestaltungsfunktionen", "Mehrere Benutzerbilder", "Mehrere Benutzertexte", "Viele Designs pro Vorlage", "Saisonale Themenvorlagen", "Echtzeitvorschau"] },
-        { "title": "Backoffice-Tools", "text": "Übersichtliche Tools für den Betrieb und die Abwicklung deines Portal-Managements auf einen Blick.", "list": ["Finanzmanagement mit Mahnwesen", "Gutscheinverwaltung", "Benutzerverwaltung", "Anpassbares Echtzeit-Dashboard", "Import- und Exportfunktionen"] },
-        { "title": "Produktionsintegration", "text": "Nutze die vorhandene Produktvielfalt oder integriere deine eigenen Produkte.", "list": ["Ca. 400 Produkte namhafter deutscher Hersteller jederzeit nutzbar für die DACH-Region", "Flexible Druckdatenverarbeitung für Digitaldruck mit Proofing", "Hersteller mit individuellen Schnittstellen integrierbar", "Neue Hersteller und Produkte ohne Downtime integrieren"] },
-        { "title": "Integration, APIs und SDK", "text": "Umfangreiche Tools und Funktionen für die Umsetzung und den Betrieb von B2C-Webshops, 100 % online.", "list": ["Standardisierter, hocheffizienter Integrationsablauf", "Auf saisonale Hochlastzeiten optimiert", "Im flexiblen Online-CMS Portale komplett gestalten und pflegen", "Tools für Designer:innen, um Produktvorlagen ohne Webtechnologiekenntnisse zu gestalten", "Inhalte per Drag and Drop erstellen, verknüpfen und hinzufügen mit dem Powereditor", "Schnelles Kopieren und Verschieben von Contents", "Kollaborationssystem und Historisierung (Integration in Git)"] },
-        { "title": "Portal-System", "text": "Individuell gestaltbares Web2Print-E-Commerce-System für den Handel mit Endkund:innen.", "list": ["Komplett anpassbar, Whitelabel", "100 % Trusted-Shops-konform", "Vorintegrierte Zahlsysteme (PayPal, Rechnung, Klarna)", "Voller Produktkatalog pro Portal", "Kundenkommunikation integriert", "Internationalisiert", "100 % Webtechnologien: HTML5, CSS3 und JS", "Google Analytics mit E-Commerce integriert", "Eigene Seiten und Contents", "Auftragsstatus und Nachbestellen"] }
-      ],
-      "glance_kicker": "IKONA auf einen Blick",
-      "glance_title": "Das flexible Komplettpaket zur Vermarktung individualisierbarer Markenprodukte",
-      "glance": ["100 % webbasiert", "Alle Werkzeuge und Funktionen in einem System", "Flexibel erweiterbar durch eigene Entwicklungen", "Konzipiert für High-Volume-Portale", "Schnelle Time to Market", "Markterprobt seit 10 Jahren"],
-      "pillars": [
-        ["Komplett", "Alles, was du für die Vermarktung und Produktion individualisierter Produkte brauchst."],
-        ["Flexibel", "Als White-Label-Shop an dein Corporate Design vollständig anpassbar."],
-        ["Umfassend", "Optimierte Abwicklung, von der Herstellung bis zum Versand an die Endkund:innen."],
-        ["Serviceorientiert", "Helpdesk- und Order-Management-Tools integriert für 100 % Kundenzufriedenheit."]
-      ],
-      "quote": "IKONA macht Erlebnisse und Ideen begreifbar, individuell gestaltet auf hochwertigen Produkten. Wir verstehen IKONA als Werkzeug für Kreativität und Freude.",
-      "quote_name": "Benjamin Schiller",
-      "quote_role": "CEO"
+    "ag": {
+      "meta_title": "Amaze Genius - Jenomics GmbH",
+      "meta_desc": "Amaze Genius ist der White-Label-Web2Print-Editor von Jenomics für Fotobücher, Kalender, Tassen, Puzzles und Drucke: in deinem Branding, in deinem Shop, angebunden an deine Produktion.",
+      "kicker": "Produkt · Web2Print-Editor",
+      "title": "Gestalten, das begeistert.",
+      "lead": ["Amaze Genius ist der Online-Editor für Fotobücher, Kalender, Tassen, Puzzles und Drucke. In deinem Branding, in deinem Shop und angebunden an deine Produktion."],
+      "facts": ["Responsive bis aufs Smartphone", "Theming in deinen Farben", "Produktionsanbindung inklusive"],
+      "cta1": "Zur Amaze-Genius-Website",
+      "cta1_href": "https://amaze-genius.io/",
+      "cta2": "Demo anfragen"
     },
     "sdx": {
       "meta_title": "SDX Secure Data eXchange - Jenomics GmbH",
       "meta_desc": "Der Secure Data eXchange (SDX) ist dein Tool für sicheres File Sharing: sichere Speicherung, Zugriffsrechte, Audits, Benachrichtigungen und eigenes Branding.",
-      "kicker": "Produkt",
+      "kicker": "Produkt · Secure Data eXchange",
       "title": "Sicheres File Sharing für dein Unternehmen",
-      "lead": ["Der Secure Data eXchange ist dein Tool für sicheres File Sharing. Er ermöglicht dir einen effizienten Austausch und einen reibungslosen Workflow.", "Er bietet dir unter anderem eine sichere Speicherung, benutzerdefinierte Zugriffsrechte, Sicherheitsprüfungen, automatische Benachrichtigungen und eine anpassbare Benutzeroberfläche. Aber das ist natürlich lange noch nicht alles."],
+      "lead": ["Der Secure Data eXchange ist dein Tool für sicheres File Sharing. Er ermöglicht dir einen effizienten Austausch und einen reibungslosen Workflow."],
+      "facts": ["Detaillierte Berechtigungen", "Vollständige Audits", "Individuelles Branding"],
       "cta1": "Zur SDX-Website",
-      "cta1_href": "https://www.sdx-app.com/",
-      "cta2": "Jetzt anfragen",
-      "feat_kicker": "Features",
-      "feat_title": "Dateien teilen, ohne die Kontrolle abzugeben.",
-      "features": [
-        { "title": "Flexible Inhalte", "text": "Lade Inhalte in jeder Größe und jedem Format (.xlsx, .docx, .pdf, .html, .json und viele weitere) hoch." },
-        { "title": "Detaillierte Berechtigungen", "text": "Richte spezifische Berechtigungen für individuelle Benutzer:innen und sogar Ordner und Inhalte ein." },
-        { "title": "Vollständige Audits", "text": "Es gibt eine Historie mit allen Anpassungen: vom Erstellen von Bereichen bis zum Hochladen von Inhalten." },
-        { "title": "Intelligente Nachrichten", "text": "Bleibe auf dem Laufenden mit automatisierten und intelligenten Änderungsberichten per E-Mail." },
-        { "title": "Externe Freigabe", "text": "Teile beliebige Inhalte (Bereiche, Container und Dateien) per E-Mail, Direktlink oder QR-Code mit anderen." },
-        { "title": "Individuelles Branding", "text": "Passe die Benutzeroberfläche deiner eigenen Corporate Identity an und vermittle ein vertrautes Gefühl." }
-      ],
-      "more_title": "Das reicht dir noch nicht?",
-      "more_text": "Falls du noch mehr über SDX erfahren willst oder es sogar mal ausprobieren möchtest, dann schau gerne auf unserer SDX-Website vorbei und erlebe, was SDX alles kann!",
-      "more_btn": "Erfahre mehr über SDX"
+      "cta1_href": "https://sdx-app.com/",
+      "cta2": "Jetzt anfragen"
     },
     "gm8": {
       "meta_title": "Großmarkt GM8 - Jenomics GmbH",
@@ -334,7 +302,7 @@
         { "name": "Benjamin Schiller", "role": "CEO", "img": "/media/team-ceo.webp", "quote": "Even though Jenomics has been around for {years} years, every day is an adventure. Together we work on a better world for today and tomorrow!", "links": [["LinkedIn", "https://www.linkedin.com/in/benjamin-schiller-305a968/"], ["Xing", "https://www.xing.com/profile/Benjamin_Schiller"]] },
         { "name": "Selina Ehlermann", "role": "COO", "img": "/media/team-coo.webp" },
         { "name": "Blandyna Wenzel", "role": "CFO", "img": "/media/team-cfo.webp" },
-        { "name": "Felix Ehlermann", "role": "CTO", "img": "/media/team-cto.webp" }
+        { "name": "", "name_img": ["/media/team-cto-name.webp", 137, 26], "role": "CTO", "img": "/media/team-cto.webp" }
       ]
     },
     "career": {
@@ -445,59 +413,25 @@
       "map_open": "Open in Google Maps",
       "map_route": "Get directions"
     },
-    "ikona": {
-      "meta_title": "IKONA - Jenomics GmbH",
-      "meta_desc": "IKONA is the Web2Product e-commerce platform for personalised branded products: editor, portal, back office, production integration, APIs and helpdesk in one system.",
-      "kicker": "Product",
-      "title": "The Web2Product e-commerce platform",
-      "lead": ["IKONA is the Web2Product e-commerce platform on which you can build your business.", "IKONA is modular and extensible and has been successful for years as the platform behind very large portals in the DACH market."],
-      "cta1": "Get an IKONA quote",
-      "cta2": "Pricing",
-      "feat_kicker": "Features at a glance",
-      "feat_title": "Everything a Web2Print portal needs.",
-      "features": [
-        { "title": "Helpdesk functions", "text": "Integrated monitoring system for comprehensive customer support by phone and email. Order data and order status in real time.", "list": ["Tailored to end customer requests", "Smart link to production", "Simple customer notes", "History of all changes", "Real-time analysis of support requests"] },
-        { "title": "Editor technology", "text": "Flexibly customisable online editor technology with many design options.", "list": ["Many design functions", "Multiple user images", "Multiple user texts", "Many designs per template", "Seasonal theme templates", "Real-time preview"] },
-        { "title": "Back office tools", "text": "Clear tools for running and handling your portal management at a glance.", "list": ["Financial management with dunning", "Voucher management", "User management", "Customisable real-time dashboard", "Import and export functions"] },
-        { "title": "Production integration", "text": "Use the existing product range or integrate your own products.", "list": ["Around 400 products from well-known German manufacturers available for the DACH region", "Flexible print data processing for digital printing with proofing", "Manufacturers can be integrated with individual interfaces", "Add new manufacturers and products without downtime"] },
-        { "title": "Integration, APIs and SDK", "text": "Comprehensive tools and functions for building and running B2C web shops, 100% online.", "list": ["Standardised, highly efficient integration process", "Optimised for seasonal peak loads", "Design and maintain portals entirely in the flexible online CMS", "Tools that let designers create product templates without web skills", "Create, link and add content by drag and drop with the power editor", "Quickly copy and move content", "Collaboration system and history (Git integration)"] },
-        { "title": "Portal system", "text": "Individually designable Web2Print e-commerce system for selling to end customers.", "list": ["Fully customisable, white label", "100% Trusted Shops compliant", "Pre-integrated payment systems (PayPal, invoice, Klarna)", "Full product catalogue per portal", "Integrated customer communication", "Internationalised", "100% web technologies: HTML5, CSS3 and JS", "Google Analytics with e-commerce integrated", "Own pages and content", "Order status and reordering"] }
-      ],
-      "glance_kicker": "IKONA at a glance",
-      "glance_title": "The flexible complete package for marketing personalised branded products",
-      "glance": ["100% web-based", "All tools and functions in one system", "Flexibly extensible with your own developments", "Designed for high-volume portals", "Fast time to market", "Proven in the market for 10 years"],
-      "pillars": [
-        ["Complete", "Everything you need to market and produce personalised products."],
-        ["Flexible", "A white-label shop that adapts fully to your corporate design."],
-        ["Comprehensive", "Optimised processing, from production to shipping to the end customer."],
-        ["Service-oriented", "Integrated helpdesk and order management tools for 100% customer satisfaction."]
-      ],
-      "quote": "IKONA makes experiences and ideas tangible, individually designed on high-quality products. We see IKONA as a tool for creativity and joy.",
-      "quote_name": "Benjamin Schiller",
-      "quote_role": "CEO"
+    "ag": {
+      "meta_title": "Amaze Genius - Jenomics GmbH",
+      "meta_desc": "Amaze Genius is the white-label Web2Print editor by Jenomics for photo books, calendars, mugs, puzzles and prints: in your branding, in your shop, connected to your production.",
+      "kicker": "Product · Web2Print editor",
+      "title": "Design that delights.",
+      "lead": ["Amaze Genius is the online editor for photo books, calendars, mugs, puzzles and prints. In your branding, in your shop and connected to your production."],
+      "facts": ["Responsive down to the smartphone", "Theming in your colours", "Production connection included"],
+      "cta1": "Visit the Amaze Genius website",
+      "cta2": "Request a demo"
     },
     "sdx": {
       "meta_title": "SDX Secure Data eXchange - Jenomics GmbH",
       "meta_desc": "The Secure Data eXchange (SDX) is your tool for secure file sharing: secure storage, access rights, audits, notifications and your own branding.",
-      "kicker": "Product",
+      "kicker": "Product · Secure Data eXchange",
       "title": "Secure file sharing for your company",
-      "lead": ["The Secure Data eXchange is your tool for secure file sharing. It gives you efficient exchange and a smooth workflow.", "Among other things it offers secure storage, custom access rights, security checks, automatic notifications and a customisable user interface. And of course that is far from everything."],
+      "lead": ["The Secure Data eXchange is your tool for secure file sharing. It gives you efficient exchange and a smooth workflow."],
+      "facts": ["Detailed permissions", "Complete audits", "Your own branding"],
       "cta1": "Visit the SDX website",
-      "cta1_href": "https://www.sdx-app.com/en/",
-      "cta2": "Get in touch",
-      "feat_kicker": "Features",
-      "feat_title": "Share files without giving up control.",
-      "features": [
-        { "title": "Flexible content", "text": "Upload content of any size and format (.xlsx, .docx, .pdf, .html, .json and many more)." },
-        { "title": "Detailed permissions", "text": "Set specific permissions for individual users and even for folders and content." },
-        { "title": "Complete audits", "text": "A history of every change: from creating areas to uploading content." },
-        { "title": "Smart notifications", "text": "Stay up to date with automated, smart change reports by email." },
-        { "title": "External sharing", "text": "Share any content (areas, containers and files) by email, direct link or QR code." },
-        { "title": "Your own branding", "text": "Adapt the user interface to your corporate identity and give users a familiar feel." }
-      ],
-      "more_title": "Want to know more?",
-      "more_text": "If you would like to learn more about SDX or even try it out, visit our SDX website and see everything SDX can do!",
-      "more_btn": "Learn more about SDX"
+      "cta2": "Get in touch"
     },
     "gm8": {
       "meta_title": "Großmarkt GM8 - Jenomics GmbH",

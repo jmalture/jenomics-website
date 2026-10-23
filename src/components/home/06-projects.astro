@@ -9,7 +9,7 @@ import data from '../../i18n/home.json';
 const { lang } = Astro.props as { lang: Lang };
 const t = pick(data, lang) as Record<string, any>;
 const list = t.projects as { title: string; text: string; tags: [string, string][]; img: string }[];
-const green = ['IKONA', 'Großmarkt'];
+const green = ['Amaze Genius', 'Großmarkt'];
 ---
 
 <section class="jx-section jx-proj" id="projekte">

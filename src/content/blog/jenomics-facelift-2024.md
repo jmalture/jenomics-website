@@ -3,6 +3,7 @@ title: 'Ein frisches Gesicht für Jenomics:  Unsere neue Webseite ist da!'
 date: 2024-07-31
 category: Jenomics
 image: /media/blog/jenomics-facelift-2024.webp
+image_cut: true
 image_w: 1200
 excerpt: 'Jenomics hat ein kleines Upgrade bekommen – zumindest was die Website angeht. Anfang diesen Jahres haben wir diese aktualisiert und nun erstrahlt sie in neuem Glanz!'
 source: https://www.jenomics.de/jenomics-facelift-2024/

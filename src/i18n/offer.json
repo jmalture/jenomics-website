@@ -9,7 +9,7 @@
       { "key": "host", "name": "Hosting", "desc": "Wir vermieten dir IT-Infrastruktur für eine flexible Planung", "href": "/hosting/" }
     ],
     "products": [
-      { "key": "ikona", "name": "IKONA", "desc": "E-Commerce mit der vielseitigsten Auslegung", "href": "/ikona/", "icon": "/media/product-ikona.webp" },
+      { "key": "ag", "name": "Amaze Genius", "desc": "Web2Print-Editor für Fotoprodukte, White Label", "href": "/amaze-genius/", "icon": "/media/product-ag.webp" },
       { "key": "sdx", "name": "Secure Data eXchange", "desc": "Dein Datenraum 100 % in Deutschland in deinem CI-Design", "href": "/sdx/", "icon": "/media/product-sdx.webp" },
       { "key": "gm", "name": "Großmarkt", "desc": "Deine Warenwirtschaftssoftware für Obst und Gemüse", "href": "/grosmarkt/", "icon": "/media/product-grossmarkt.webp" }
     ]
@@ -24,7 +24,7 @@
       { "key": "host", "name": "Hosting", "desc": "We rent you IT infrastructure for flexible planning", "href": "/en/hosting/" }
     ],
     "products": [
-      { "key": "ikona", "name": "IKONA", "desc": "E-commerce with the most versatile design", "href": "/en/ikona/", "icon": "/media/product-ikona.webp" },
+      { "key": "ag", "name": "Amaze Genius", "desc": "White-label Web2Print editor for photo products", "href": "/en/amaze-genius/", "icon": "/media/product-ag.webp" },
       { "key": "sdx", "name": "Secure Data eXchange", "desc": "Your data room, 100% in Germany, in your corporate design", "href": "/en/sdx/", "icon": "/media/product-sdx.webp" },
       { "key": "gm", "name": "Großmarkt", "desc": "Your inventory management software for fruit and vegetables", "href": "/en/grossmarkt/", "icon": "/media/product-grossmarkt.webp" }
     ]

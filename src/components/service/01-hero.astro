@@ -30,15 +30,19 @@ interface Props {
   pill?: string | null;
   /** Slot "visual" brings its own window (homepage live pane): no glass frame around it */
   bare?: boolean;
+  /** Short check-mark facts under the lead (product teasers) */
+  facts?: string[];
+  /** Fill the first screen (product teaser pages) */
+  full?: boolean;
 }
-const { lang, title, lead, img, alt = '', pal, kicker, icon, crumbs, cta2, ctas, logo, pill, bare = false } = Astro.props;
+const { lang, title, lead, img, alt = '', pal, kicker, icon, crumbs, cta2, ctas, logo, pill, bare = false, facts, full = false } = Astro.props;
 const hasScene = Astro.slots.has('visual');
 const u = serviceUi(lang);
 const home = lang === 'de' ? '/' : '/en/';
 const second = cta2 === undefined ? { label: u.hero_cta2, href: u.crumb_services_href } : cta2;
 ---
 
-<section class="jx-phero" style={`--hA:${pal[0]};--hB:${pal[1]};--hC:${pal[2]}`}>
+<section class:list={['jx-phero', { 'jx-phero--full': full }]} style={`--hA:${pal[0]};--hB:${pal[1]};--hC:${pal[2]}`}>
   <Blobs
     class="jx-phero__bg"
     blobs={[
@@ -73,6 +77,18 @@ const second = cta2 === undefined ? { label: u.hero_cta2, href: u.crumb_services
             {fill(l)}
           </p>
         ))
+      }
+      {
+        facts && (
+          <ul class="jx-phero__facts" data-reveal style={`--i:${3 + lead.length}`}>
+            {facts.map((f) => (
+              <li>
+                <Icon name="check" size={16} />
+                {f}
+              </li>
+            ))}
+          </ul>
+        )
       }
       <div class="jx-phero__ctas" data-reveal style={`--i:${3 + lead.length}`}>
         {
@@ -142,6 +158,34 @@ const second = cta2 === undefined ? { label: u.hero_cta2, href: u.crumb_services
     padding-bottom: clamp(56px, 7vw, 104px);
     background: linear-gradient(180deg, #f2f8fc 0%, #fff 82%);
     overflow: hidden;
+  }
+  .jx-phero--full {
+    display: grid;
+    align-content: center;
+    min-height: 100svh;
+  }
+  .jx-phero__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+    margin: 24px 0 32px;
+    padding: 0;
+    list-style: none;
+  }
+  .jx-phero__facts li {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 13px 7px 10px;
+    border-radius: 999px;
+    background: #fff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--jx-ink);
+    box-shadow: 0 4px 14px rgba(30, 61, 126, 0.08);
+  }
+  .jx-phero__facts svg {
+    color: var(--hA);
   }
   .jx-phero__bg {
     z-index: -1;

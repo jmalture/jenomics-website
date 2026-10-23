@@ -10,7 +10,7 @@ source: https://www.jenomics.de/amaze-genius-die-web2print-revolution/
 
 Stolz dürfen wir dir Amaze Genius vorstellen – den revolutionären Web2Print Editor für deine Fotoprojekte und -geschenke! In unserem letzten Blogbeitrag ging es um die Brand Identity, hier lernst du den Editor richtig kennen.
 
-![](/media/blog/amaze-genius-die-web2print-revolution-1.webp)
+![](/media/blog/amaze-genius-die-web2print-revolution-1.webp#cut)
 
 Willkommen zur Einführung unseres neuesten Produktes „Amaze Genius“!
 
@@ -26,15 +26,15 @@ Jenomics übernimmt die komplette Personalisierung und Produktionsanbindung, ma�
 
 Egal, ob B2B oder B2C, ob Hersteller oder Verkäufer – Amaze Genius ist der perfekte Editor für Dein Business!
 
-![](/media/blog/amaze-genius-die-web2print-revolution-2.webp)
+![](/media/blog/amaze-genius-die-web2print-revolution-2.webp#cut)
 
-![](/media/blog/amaze-genius-die-web2print-revolution-3.webp)
+![](/media/blog/amaze-genius-die-web2print-revolution-3.webp#cut)
 
 Natürlich ist der Editor responsive – je nach dem, ob du am Computer bist oder das Handy in der Hand hast.
 
 Mit unserer Mobile-Version kannst du in wenig Zeit hochwertige Kalender, Fotobücher und vieles mehr ganz einfach entwerfen und bestellen. Speichere dein Projekt in deinem Kundenkonto ab, um an einem anderen Tag von einem anderen Gerät aus weiterzuarbeiten.
 
-![](/media/blog/amaze-genius-die-web2print-revolution-4.webp)
+![](/media/blog/amaze-genius-die-web2print-revolution-4.webp#cut)
 
 Dich erwartet eine große Auswahl an Features, under anderem
 

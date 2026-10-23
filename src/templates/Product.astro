@@ -1,8 +1,8 @@
 ---
 /**
- * Product pages: IKONA, SDX (Secure Data eXchange) and Großmarkt GM8. Hero with product logo and a live
- * product scene, features as scene bento, then per product: IKONA at a glance + CEO quote, SDX link-out,
- * GM8 price cards. Ends with the "Interesse an unseren Produkten?" band.
+ * Product page for Großmarkt GM8: hero with product logo and a live product scene, features as scene bento,
+ * price cards, then the "Interesse an unseren Produkten?" band. Amaze Genius and SDX have their own websites
+ * and only get a one-screen teaser (ProductTeaser.astro).
  */
 import Base from '../layouts/Base.astro';
 import Hero from '../components/service/01-hero.astro';
@@ -17,7 +17,7 @@ import offer from '../i18n/offer.json';
 
 interface Props {
   lang: Lang;
-  product: 'ikona' | 'sdx' | 'gm8';
+  product: 'gm8';
 }
 const { lang, product } = Astro.props;
 const t = pageText(product, lang);
@@ -27,18 +27,6 @@ const o = pick(offer, lang);
 const name = o.products.find((p: any) => p.key === (product === 'gm8' ? 'gm' : product))!.name;
 
 const cfg = {
-  ikona: {
-    logo: { src: '/media/logo-ikona.webp', alt: 'IKONA', w: 720, h: 110 },
-    hero: 'shop',
-    scenes: ['helpdesk', 'editor', 'backoffice', 'produce', 'api', 'portal'],
-    spans: [3, 3, 3, 3, 3, 3],
-  },
-  sdx: {
-    logo: { src: '/media/logo-sdx.webp', alt: 'Secure Data eXchange', w: 720, h: 72 },
-    hero: 'sdx',
-    scenes: ['sdxfiles', 'sdxrights', 'sdxaudit', 'sdxnotify', 'sdxshare', 'sdxbrand'],
-    spans: [2, 2, 2, 2, 2, 2],
-  },
   gm8: {
     logo: { src: '/media/logo-gm8.webp', alt: 'Großmarkt 8', w: 720, h: 110 },
     hero: 'gm8',
@@ -47,16 +35,10 @@ const cfg = {
   },
 }[product];
 const items = t.features.map((f: any, i: number) => ({ ...f, scene: cfg.scenes[i] as SceneName, span: cfg.spans[i] as 2 | 3 | 4 }));
-const ctas =
-  product === 'sdx'
-    ? [
-        { label: t.cta1, href: t.cta1_href, ext: true },
-        { label: t.cta2, href: u.contact_href, ghost: true },
-      ]
-    : [
-        { label: t.cta1, href: u.contact_href },
-        { label: t.cta2, href: product === 'gm8' ? '#preise' : u.pricing_href, ghost: true },
-      ];
+const ctas = [
+  { label: t.cta1, href: u.contact_href },
+  { label: t.cta2, href: '#preise', ghost: true },
+];
 ---
 
 <Base lang={lang} title={t.meta_title} description={t.meta_desc} alternates={PAGE_URLS[product]}>
@@ -85,62 +67,6 @@ const ctas =
       <Bento lang={lang} items={items} />
     </div>
   </section>
-
-  {
-    product === 'ikona' && (
-      <section class="jx-section jx-glance">
-        <div class="jx-wrap">
-          <header class="jx-head jx-head--center">
-            <span class="jx-kicker" data-reveal>{t.glance_kicker}</span>
-            <h2 class="jx-h2" data-reveal style="--i:1">{t.glance_title}</h2>
-          </header>
-          <ul class="jx-glance__chips" data-reveal style="--i:2">
-            {t.glance.map((g: string) => (
-              <li>
-                <Icon name="check" size={16} />
-                {g}
-              </li>
-            ))}
-          </ul>
-          <ul class="jx-glance__pillars">
-            {t.pillars.map(([h, p]: [string, string], i: number) => (
-              <li data-reveal style={`--i:${i}`}>
-                <span>{String(i + 1).padStart(2, '0')}</span>
-                <h3>{h}</h3>
-                <p>{p}</p>
-              </li>
-            ))}
-          </ul>
-          <figure class="jx-pquote" data-reveal>
-            <img src="/media/team-ceo.webp" alt={t.quote_name} width="560" height="560" loading="lazy" decoding="async" />
-            <div>
-              <Icon name="quote" size={30} />
-              <blockquote>{t.quote}</blockquote>
-              <figcaption>
-                <strong>{t.quote_name}</strong>, {t.quote_role}
-              </figcaption>
-            </div>
-          </figure>
-        </div>
-      </section>
-    )
-  }
-
-  {
-    product === 'sdx' && (
-      <section class="jx-section jx-sdxmore">
-        <div class="jx-wrap jx-sdxmore__box" data-reveal>
-          <img src="/media/logo-sdx.webp" alt="Secure Data eXchange" width="720" height="72" loading="lazy" />
-          <h2 class="jx-h2">{t.more_title}</h2>
-          <p>{t.more_text}</p>
-          <a class="jx-btn" href={t.cta1_href} target="_blank" rel="noopener">
-            {t.more_btn}
-            <Icon name="external" />
-          </a>
-        </div>
-      </section>
-    )
-  }
 
   {
     product === 'gm8' && (

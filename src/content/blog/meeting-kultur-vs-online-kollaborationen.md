@@ -18,7 +18,7 @@ Aber auch wenn die Nutzung dieser Tools rasant angestiegen ist, es werden auch k
 
 [In einer Studie fand das Unternehmen Staufen](https://www.staufen.ag/wp-content/uploads/STAUFEN-Studie-Kollaboration-2021-1.pdf) heraus, dass für die Lösung dieser Probleme vor allem die Führungskräfte gefragt sind. Sie sind verantwortlich für Kultur- und Wertewandel in ihren Unternehmen und damit auch für das passende Mindset im Bereich Online Kollaboration. Erfolgsfaktoren können Schulungen im Umgang mit den Programmen sein, klare Kommunikationsregeln oder auch regelmäßige persönliche Workshops, damit man sich nicht aus den Augen verliert. Gemeinsame Online-Teamrunden oder Mittagspausen können den sonst eher unpersönlichen Remotealltag um eine soziale Komponente ergänzen.
 
-![](/media/blog/meeting-kultur-vs-online-kollaborationen-2.webp)
+![](/media/blog/meeting-kultur-vs-online-kollaborationen-2.webp#cut)
 
 Wichtig ist hier vor allem die richtige Mischung aus realen Begegnungen und Onlinezusammenarbeit. Wie diese Mischung aussieht ist sehr individuell und das soll sie auch sein: Abgestimmt auf die Bedürfnisse und Ansprüche von Mitarbeiter:innen und Kund:innen.
 

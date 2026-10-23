@@ -20,6 +20,6 @@ Wenn der neue Standort ausgewählt wurde, geht es an die technische Detailarbeit
 
 Durch eine ausführliche Dokumentation stellen wir sicher, dass am Tag des Umzugs auch wieder alles dort landet, wo es hingehört. Wir stimmen uns eng mit dem von dir beauftragten Logistikunternehmen ab. So können wir dafür sorgen, dass die Hardware sachgemäß verpackt und transportiert wird und können am Umzugstag sofort loslegen, deine Infrastruktur wieder in Betrieb zu nehmen.
 
-![](/media/blog/ready-to-move-it-umzuge-mit-jenomics-2.webp)
+![](/media/blog/ready-to-move-it-umzuge-mit-jenomics-2.webp#cut)
 
 Unser Supportteam hat jahrelange Erfahrung mit IT Umzügen in fast allen Größenordnungen und steht dir nicht nur mit Fachwissen zur Seite sondern auch mit der nötigen Manpower. Gemeinsam erarbeiten wir deine persönliche Umzugs-Strategie, damit ihr ab dem ersten Tag an an eurem neuen Standort produktiv arbeiten könnt!

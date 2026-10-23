@@ -3,6 +3,7 @@ title: 'Jenomics meets Cosplay – Kultursponsoring II'
 date: 2023-06-26
 category: Sponsoring
 image: /media/blog/jenomics-meets-cosplay-kultursponsoring-ii.webp
+image_cut: true
 image_w: 590
 excerpt: 'Dieses Jahr steht “Japan & Cosplay” auf der Kultur Sponsoring Liste! Im April haben wir das Team der “aniMUC” Cosplay Convention mit Preisen für Cosplay-Wettbewerbe unterstützt und mit unseren Freund:innen auf der Kaizoku Party gefeiert!'
 source: https://www.jenomics.de/jenomics-meets-cosplay-kultursponsoring-ii/

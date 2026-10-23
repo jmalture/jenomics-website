@@ -744,6 +744,19 @@ a.jx-tag--green:hover {
   border-radius: var(--jx-r-lg);
   box-shadow: var(--jx-shadow-sm);
 }
+/* Cut-out graphics (transparent PNGs, marked with #cut in the Markdown): no frame, radius or shadow */
+.jx-prose img[src$='#cut'] {
+  border-radius: 0;
+  box-shadow: none;
+}
+.jx-article__cover--cut {
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+.jx-article__cover--cut img {
+  object-fit: contain;
+}
 .jx-prose p:has(> img:only-child) {
   margin-block: 1.6em;
 }

@@ -35,7 +35,9 @@ const legal = [
   />
   <div class="jx-wrap jx-ft__top">
     <div class="jx-ft__brand">
-      <img src="/media/jenomics-logo-white.webp" alt="Jenomics" width="180" height="38" loading="lazy" />
+      <a class="jx-ft__logo" href={lang === 'en' ? '/en/' : '/'} aria-label={lang === 'en' ? 'Jenomics: home' : 'Jenomics: Startseite'}>
+        <img src="/media/jenomics-logo-white.webp" alt="Jenomics" width="180" height="38" loading="lazy" />
+      </a>
       <p>{fill(t.f_claim)}</p>
       <a class="jx-ft__green" href="https://www.thegreenwebfoundation.org/green-web-check/?url=https%3A%2F%2Fwww.jenomics.de" target="_blank" rel="noopener">
         <Icon name="leaf" size={18} />
@@ -158,6 +160,10 @@ const legal = [
     color: #fff;
     translate: 3px 0;
   }
+  .jx-ft__logo {
+    display: inline-block;
+    border-radius: 6px;
+  }
   .jx-ft__mark {
     margin-top: clamp(48px, 7vw, 96px);
     font-size: clamp(2.4rem, 9.6vw, 9rem);
@@ -178,7 +184,6 @@ const legal = [
     align-items: center;
     gap: 12px 28px;
     padding-block: 22px 28px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
     font-size: 0.8125rem;
   }
   .jx-ft__since {

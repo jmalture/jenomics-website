@@ -10,7 +10,7 @@ source: https://www.jenomics.de/success-story-mmb/
 
 Wir durften unserem tollen Kunden Mügelner Maschinenbau zu einem neuen Internetauftritt verhelfen und ihre Seite in einem neuen Glanz erstrahlen lassen.
 
-![](/media/blog/success-story-mmb-1.webp)
+![](/media/blog/success-story-mmb-1.webp#cut)
 
 In enger Absprache haben wir mit unserem Kunden eine moderne Website mit klarer Struktur erstellt. Für uns lag der Fokus darauf, die Informationen und Leistungsangebote klar strukturiert darzustellen, sodass alles Wichtige schnell zu finden ist. Wir haben mit Farbblöcken als Kontrast gearbeitet, um wichtige Informationen klar erkennbar zu machen. Die abgerundeten Ecken erwecken einen freundlichen Eindruck und lädt zum Weiterscrollen ein. Die klare Bildsprache hilft dem Benutzer, sich einfacher auf der Website zurechtzufinden.
 

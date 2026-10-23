@@ -72,6 +72,14 @@
   background (10 s connect timeout); the result is logged ("[contact] mail sent/failed") and noted in the jsonl.
   Waiting for an SMTP login (port 587/465) for anfrage@jenomics.de from Jenomics; then only the env vars change.
 
+- Feedback round 2026-10-23: footer logo links home, no hairline under the footer claim; transparent blog
+  graphics without frame (`#cut` on the image URL, `image_cut: true` for covers); IKONA replaced by Amaze Genius
+  everywhere (product key `ag`, `/amaze-genius/`, 301 from `/ikona/`; the homepage project "IKONA Technologie" keeps
+  its title, its tag now links to Amaze Genius); Amaze Genius and SDX pages are one-screen teasers
+  (`templates/ProductTeaser.astro`) linking to amaze-genius.io and sdx-app.com; the CTO's name on /team/ is an
+  image (`team-cto-name.webp`, alt empty) at his request; Kontakt map scene is a generated street map
+  (`service/map-office.svg.txt`, generator kept outside the repo, shapely). Worklog for time entries: `docs/WORKLOG.md`.
+
 ## Next
 - Jenomics EMCP: OAuth discovery fails because Mittwald answers every `/.well-known/*` URL with 403, so Claude
   Code can't find the authorization server. Needs `/.well-known/oauth-authorization-server` and

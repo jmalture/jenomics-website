@@ -18,6 +18,6 @@ Aber ist die Cloud auch für dein Business interessant? Ohne eine stabile Intern
 
 Und hier kommen unsere Jenomics Cloud Services ins Spiel! Hier können wir dir neben der klassischen Cloud auch eine sogenannte Hybrid Cloud anbieten: Eine Mischung aus Rechenzentrum bzw. Rechner vor Ort und einer Cloud. Dafür ermitteln wir gemeinsam, welche Services in die Cloud passen und was aus Sicherheits- oder Sicherungsgründen vor Ort bleiben sollte. Wir stellen dir Services zur Verfügung, die deine Back-ups redundant machen, sollte die Cloud einmal nicht erreichbar sein und verfügen außerdem über jederzeit erweiterbare Infrastruktur. Das bedeutet: Maximale Flexibilität und Sicherheit für dein Unternehmen!
 
-![](/media/blog/heiter-weil-wolkig-jenomics-cloud-1.webp)
+![](/media/blog/heiter-weil-wolkig-jenomics-cloud-1.webp#cut)
 
 Kontaktiere uns einfach, wir helfen dir, deine ganz individuellen Lösung für deine Ansprüche an eine Cloud zu finden!

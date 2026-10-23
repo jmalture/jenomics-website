@@ -1,5 +1,5 @@
 /** Blog posts from src/content/blog/*.md (frontmatter: title, date, category, image, excerpt, source). */
-type Front = { title: string; date: Date | string; category: string; image: string; image_w?: number; excerpt: string; source?: string };
+type Front = { title: string; date: Date | string; category: string; image: string; image_w?: number; image_cut?: boolean; excerpt: string; source?: string };
 type Mod = { frontmatter: Front; Content: any };
 
 const files = import.meta.glob<Mod>('../../content/blog/*.md', { eager: true });

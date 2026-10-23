@@ -44,7 +44,7 @@ const fmt = new Intl.DateTimeFormat('de-DE', { day: 'numeric', month: 'long', ye
       </div>
     </header>
     <div class="jx-wrap jx-article__wrap">
-      <figure class:list={['jx-article__cover', { 'jx-article__cover--sm': (post.image_w ?? 1200) < 700 }]} data-reveal="clip" style={`--w:${post.image_w ?? 1200}px`}>
+      <figure class:list={['jx-article__cover', { 'jx-article__cover--sm': (post.image_w ?? 1200) < 700, 'jx-article__cover--cut': post.image_cut }]} data-reveal="clip" style={`--w:${post.image_w ?? 1200}px`}>
         <img src={post.image} alt="" width={post.image_w ?? 1200} height="760" fetchpriority="high" decoding="async" />
       </figure>
       <div class="jx-prose">

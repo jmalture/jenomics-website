@@ -163,6 +163,7 @@ const pins = [
   [36, 66, ''],
   [80, 30, ''],
 ];
+import mapOffice from './map-office.svg.txt?raw';
 ---
 
 {
@@ -532,20 +533,7 @@ const pins = [
 
 {
   name === 'map' && (
-    <div class="sc-map">
-      <span class="sc-map__river" />
-      <span class="sc-map__road sc-map__road--a" />
-      <span class="sc-map__road sc-map__road--b" />
-      <span class="sc-map__road sc-map__road--c" />
-      <span class="sc-map__park" />
-      <span class="sc-map__label sc-map__label--a">Thalkirchner Straße</span>
-      <span class="sc-map__label sc-map__label--b">Ehrengutstraße</span>
-      <span class="sc-map__label sc-map__label--c">Isar</span>
-      <span class="sc-map__pin">
-        <img src="/media/jenomics-signet.png" alt="" width="26" height="26" />
-      </span>
-      <span class="sc-map__ring" />
-    </div>
+    <div class="sc-map" set:html={mapOffice} />
   )
 }
 
@@ -1774,114 +1762,106 @@ const pins = [
     }
   }
 
-  /* ---------- map: a calm city map with the office pin ---------- */
+  /* ---------- map: street map around the office (Thalkirchner Str. 55, Munich), generated SVG ---------- */
   .sc-map {
     position: absolute;
     inset: 0;
-    background:
-      repeating-linear-gradient(0deg, transparent 0 46px, rgba(255, 255, 255, 0.9) 46px 50px),
-      repeating-linear-gradient(90deg, transparent 0 62px, rgba(255, 255, 255, 0.9) 62px 66px),
-      #e9eff4;
+    background: #f1f3f5;
   }
-  .sc-map__river {
-    position: absolute;
-    right: -20%;
-    top: -10%;
-    width: 42%;
-    height: 130%;
-    background: linear-gradient(90deg, #cfe9f6, #bfe1f3 40%, #cfe9f6);
-    transform: rotate(24deg);
+  .sc-map__svg {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
-  .sc-map__road {
-    position: absolute;
-    background: #fff;
-    box-shadow: 0 0 0 1px #dbe3ea;
+  .sc-map .m-blk {
+    fill: #f3f5f7;
   }
-  /* Thalkirchner Straße: the diagonal the office sits on */
-  .sc-map__road--a {
-    left: -10%;
-    right: -10%;
-    top: 46%;
-    height: 12px;
-    transform: rotate(-32deg);
+  /* houses: a dashed band along the inside of each block (perimeter blocks, like the real quarter) */
+  .sc-map .m-b {
+    fill: none;
+    stroke: #dde2e8;
+    stroke-width: 36;
+    stroke-dasharray: 16 1.4 11 1.4 22 1.4 13 1.4;
   }
-  /* Ehrengutstraße */
-  .sc-map__road--b {
-    left: 40%;
-    right: 0;
-    top: 54%;
-    height: 8px;
-    transform: rotate(4deg);
+  .sc-map .m-bc {
+    fill: #f5eedb;
   }
-  .sc-map__road--c {
-    top: -10%;
-    bottom: -10%;
-    left: 18%;
-    width: 7px;
-    transform: rotate(10deg);
+  .sc-map .m-green {
+    fill: #d5eed3;
   }
-  .sc-map__park {
-    position: absolute;
-    left: 4%;
-    top: 8%;
-    width: 22%;
-    height: 24%;
-    border-radius: 30% 40% 35% 45%;
-    background: #cdeccf;
+  .sc-map .m-land {
+    fill: #eef2ee;
   }
-  .sc-map__label {
-    position: absolute;
+  .sc-map .m-water {
+    fill: #a9dcf3;
+  }
+  .sc-map .m-rail {
+    fill: none;
+    stroke: #cfd5dc;
+    stroke-width: 1.4;
+  }
+  .sc-map .m-r,
+  .sc-map .m-rm {
+    fill: none;
+    stroke: #fff;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .sc-map .m-r {
+    stroke-width: 10;
+  }
+  .sc-map .m-rm {
+    stroke-width: 15;
+  }
+  .sc-map .m-l {
+    font-size: 11.5px;
     font-weight: 500;
-    font-size: 11px;
-    letter-spacing: 0.02em;
-    color: #6f7f92;
-    white-space: nowrap;
+    fill: #5f6b78;
+    paint-order: stroke;
+    stroke: rgba(255, 255, 255, 0.9);
+    stroke-width: 3px;
+    letter-spacing: 0.01em;
   }
-  .sc-map__label--a {
-    left: 57%;
-    top: 30%;
-    transform: rotate(-32deg);
-  }
-  .sc-map__label--b {
-    left: 62%;
-    top: 49%;
-    transform: rotate(4deg);
-  }
-  .sc-map__label--c {
-    right: 7%;
-    top: 22%;
-    transform: rotate(66deg);
+  .sc-map .m-lw {
+    fill: #3f86b3;
     font-style: italic;
-    color: #5a9cc0;
+    stroke: rgba(169, 220, 243, 0.6);
   }
-  .sc-map__pin {
-    position: absolute;
-    z-index: 2;
-    left: 48%;
-    top: 46%;
-    display: grid;
-    place-items: center;
-    width: 46px;
-    height: 46px;
-    margin: -46px 0 0 -23px;
-    border-radius: 50% 50% 50% 0;
-    background: #fff;
-    transform: rotate(-45deg);
-    box-shadow: 0 10px 22px rgba(30, 61, 126, 0.3);
-    animation: jx-float 4s ease-in-out infinite;
+  .sc-map .m-ls {
+    font-size: 9.5px;
   }
-  .sc-map__pin img {
-    transform: rotate(45deg);
+  .sc-map__drop {
+    animation: sc-mapdrop 4s ease-in-out infinite;
+    filter: drop-shadow(0 8px 10px rgba(30, 61, 126, 0.28));
   }
-  .sc-map__ring {
-    position: absolute;
-    left: 48%;
-    top: 46%;
-    width: 18px;
-    height: 18px;
-    margin: -9px;
-    border-radius: 50%;
-    border: 2px solid var(--hA);
-    animation: sc-ring 2.4s ease-out infinite;
+  @keyframes sc-mapdrop {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+  .sc-map__halo {
+    fill: color-mix(in oklab, var(--hA, #0e78b1) 18%, transparent);
+    stroke: var(--hA, #0e78b1);
+    stroke-width: 1.5;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: sc-maphalo 3s ease-out infinite;
+  }
+  .sc-map__halo--2 {
+    animation-delay: -1.5s;
+  }
+  @keyframes sc-maphalo {
+    from {
+      transform: scale(0.3);
+      opacity: 0.9;
+    }
+    to {
+      transform: scale(2.6);
+      opacity: 0;
+    }
   }
 </style>

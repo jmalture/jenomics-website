@@ -20,7 +20,7 @@ So konnte man in verschiedenen Workshops lernen, wie man das perfekte Cosplayout
 
 Die Tanzliebhaber:innen konnten danach auf der Tanzfläche in der Disco den Abend ausklingen lassen.
 
-![](/media/blog/jenomics-meets-cosplay-next-level-2.webp)
+![](/media/blog/jenomics-meets-cosplay-next-level-2.webp#cut)
 
 Natürlich vergessen wir auch unsere Mitarbeiter:innen nicht bei unseren Sponsoring-Engagements. Der Besuch der Convention war selbstverständlich kostenfrei für unser Team! Es ist uns ein Anliegen, die Interessen unserer Kolleg:innen zu unterstützen, und wir sind begeistert, dass unser Sponsoring dazu beitragen kann, ihre Leidenschaft zu fördern!
 

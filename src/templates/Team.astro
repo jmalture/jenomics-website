@@ -92,8 +92,15 @@ const board = t.management.slice(1);
         {
           board.map((m: any, i: number) => (
             <li data-reveal style={`--i:${i}`}>
-              <img src={m.img} alt={m.name} width="560" height="560" loading="lazy" decoding="async" />
-              <strong>{m.name}</strong>
+              <img src={m.img} alt={m.name || m.role} width="560" height="560" loading="lazy" decoding="async" />
+              {
+                m.name_img ? (
+                  // Name shown as an image only (not crawlable text), at the wish of the person
+                  <img class="jx-mgmt__nameimg" src={m.name_img[0]} alt="" width={m.name_img[1]} height={m.name_img[2]} loading="lazy" decoding="async" />
+                ) : (
+                  <strong>{m.name}</strong>
+                )
+              }
               <span>{m.role}</span>
             </li>
           ))
@@ -213,6 +220,15 @@ const board = t.management.slice(1);
     margin-bottom: 12px;
     border-radius: var(--jx-r-lg);
     box-shadow: var(--jx-shadow-sm);
+  }
+  .jx-mgmt__grid img.jx-mgmt__nameimg {
+    width: auto;
+    height: 26px;
+    aspect-ratio: auto;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    justify-self: start;
   }
   .jx-mgmt__grid strong {
     font-size: 1.0625rem;

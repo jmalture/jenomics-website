@@ -15,6 +15,8 @@ export default defineConfig({
     format: 'directory',
   },
   compressHTML: true,
+  // IKONA was replaced by Amaze Genius (2026-10)
+  redirects: { '/ikona/': '/amaze-genius/', '/en/ikona/': '/en/amaze-genius/' },
   security: { checkOrigin: false },
   prefetch: { prefetchAll: false, defaultStrategy: 'hover' },
   integrations: [

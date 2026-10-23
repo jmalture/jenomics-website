@@ -2,7 +2,7 @@
 import { pick, type Lang } from '../../i18n';
 import pages from '../../i18n/pages.json';
 
-export type PageKey = 'about' | 'team' | 'career' | 'pricing' | 'contact' | 'ikona' | 'sdx' | 'gm8' | 'blog';
+export type PageKey = 'about' | 'team' | 'career' | 'pricing' | 'contact' | 'ag' | 'sdx' | 'gm8' | 'blog';
 
 /** URL of every page in both languages (DE keeps the jenomics.de slugs). */
 export const PAGE_URLS: Record<PageKey, { de: string; en: string }> = {
@@ -11,7 +11,7 @@ export const PAGE_URLS: Record<PageKey, { de: string; en: string }> = {
   career: { de: '/karriere/', en: '/en/careers/' },
   pricing: { de: '/pricing/', en: '/en/pricing/' },
   contact: { de: '/kontakt/', en: '/en/contact/' },
-  ikona: { de: '/ikona/', en: '/en/ikona/' },
+  ag: { de: '/amaze-genius/', en: '/en/amaze-genius/' },
   sdx: { de: '/sdx/', en: '/en/sdx/' },
   gm8: { de: '/grosmarkt/', en: '/en/grossmarkt/' },
   blog: { de: '/blog/', en: '/en/blog/' },
@@ -24,7 +24,7 @@ export const PAGE_PAL: Record<PageKey, [string, string, string]> = {
   career: ['#0e78b1', '#20d3c2', '#56c657'],
   pricing: ['#1e3d7e', '#0e78b1', '#3fc6f2'],
   contact: ['#0e78b1', '#20d3c2', '#56c657'],
-  ikona: ['#2a3bc8', '#29a8ef', '#2ee59d'],
+  ag: ['#0041f6', '#7029bc', '#ff00d8'],
   sdx: ['#2a73ff', '#29a8ef', '#20d3c2'],
   gm8: ['#3aa856', '#2ee59d', '#20d3c2'],
   blog: ['#0e78b1', '#3fc6f2', '#56c657'],

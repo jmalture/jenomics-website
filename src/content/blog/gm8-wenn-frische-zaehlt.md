@@ -3,6 +3,7 @@ title: 'GM8 – Wenn Frische zählt'
 date: 2022-05-30
 category: Produkte
 image: /media/blog/gm8-wenn-frische-zaehlt.webp
+image_cut: true
 image_w: 1200
 excerpt: 'GM8 bedeutet mehr als nur “Großmarkt Version 8.0”. In unserer GM8 Warenwirtschaftssoftware stecken nämlich 8 Software-Generationen und mehr als 40 Jahre Entwicklung. Gemeinsam mit Firmen von Großmärkten in Deutschland haben wir eine Oberfläche geschaffen, die euch die Arbeit einfacher macht.'
 source: https://www.jenomics.de/gm8-wenn-frische-zaehlt/

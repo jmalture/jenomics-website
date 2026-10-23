@@ -22,19 +22,19 @@ Viel Spaß beim Durchlesen und vielleicht findest du auch die ein oder andere In
 
 ## Logo
 
-![](/media/blog/amaze-genius-brand-identity-2.webp)
+![](/media/blog/amaze-genius-brand-identity-2.webp#cut)
 
 ## Primäres Logo
 
-![](/media/blog/amaze-genius-brand-identity-3.webp)
+![](/media/blog/amaze-genius-brand-identity-3.webp#cut)
 
 ## sekundäres Logo
 
-![](/media/blog/amaze-genius-brand-identity-4.webp)
+![](/media/blog/amaze-genius-brand-identity-4.webp#cut)
 
-![](/media/blog/amaze-genius-brand-identity-5.webp)
+![](/media/blog/amaze-genius-brand-identity-5.webp#cut)
 
-![](/media/blog/amaze-genius-brand-identity-6.webp)
+![](/media/blog/amaze-genius-brand-identity-6.webp#cut)
 
 ## icon
 
@@ -58,11 +58,11 @@ Dazu haben wir noch ein reines weiß und ein tiefes Schwarz, um den Farben eine 
 
 ## Fonts
 
-![](/media/blog/amaze-genius-brand-identity-8.webp)
+![](/media/blog/amaze-genius-brand-identity-8.webp#cut)
 
 ## Logo Font
 
-![](/media/blog/amaze-genius-brand-identity-9.webp)
+![](/media/blog/amaze-genius-brand-identity-9.webp#cut)
 
 ## display font
 
