@@ -36,7 +36,7 @@
 - Menu pages DE + EN (2026-10-19, awaiting review), scraped from jenomics.de via the public WP REST API:
   Über uns, Team, Karriere, Pricing, Kontakt, IKONA, SDX, Großmarkt (GM8), Blog index + all 16 posts.
   Stock photos replaced by animated scenes (`ScenesCompany.astro`, `ScenesProducts.astro`); people photos,
-  product logos and the IHK seal kept. PDFs (job ads, price lists 2025/2026) in `public/files/`.
+  product logos and the IHK seal kept. PDFs (job ads, price lists 2025/2026/2027 (Pricing page links 2027 + 2026, 2025 file kept)) in `public/files/`.
   Notes for Jenomics: the old Karriere page had 3 empty job ads (Assistenz Backoffice, Vertriebsinnendienst,
   Kaufmännischer Mitarbeiter: placeholder or wrong text), so they are left out; the application address was
   shown as job@ but linked to jobs@jenomics.de (we use jobs@, please confirm). SDX feature texts come from the
