@@ -16,7 +16,12 @@ export default defineConfig({
   },
   compressHTML: true,
   // IKONA was replaced by Amaze Genius (2026-10)
-  redirects: { '/ikona/': '/amaze-genius/', '/en/ikona/': '/en/amaze-genius/' },
+  // Short link for the price list, announced by mail (2026-11-24): /preisliste-2027 -> current PDF
+  redirects: {
+    '/ikona/': '/amaze-genius/',
+    '/en/ikona/': '/en/amaze-genius/',
+    '/preisliste-2027/': '/files/jenomics_preisliste_services_flex_2027_v1.0_website.pdf',
+  },
   security: { checkOrigin: false },
   prefetch: { prefetchAll: false, defaultStrategy: 'hover' },
   integrations: [
